@@ -1,0 +1,250 @@
+ <div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                User Profiles
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a  class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a  class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            Users
+                        </span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a  class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            Edit User Profile 
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div>
+<div class="m-content">
+    <form (ngSubmit)="submitForm(f)" #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+        <div class=" row">
+            <div class="col-md-12">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                                <h3 class="m-portlet__head-text">
+                                User information
+                            </h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-portlet__body padding-left-right-5px">
+                        <div class="col-md-12">
+                            <div class=" row">
+                                <div class="col-md-3">
+                                    <div class="c-User_icon">
+                                         <img alt="user" class="m--img-rounded m--marginless m--img-centered" src="../..{{user.profile_pic_path}}">
+                                         
+                                    </div>
+                                    <app-dropzone placeholder="Upload Driver Photo" identifier="profile_pic_path" [inline]="true"  
+                                    name="profile_pic_path" [(ngModel)]="user.profile_pic_path" [config]="config"  ></app-dropzone>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class=" row">
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="firstName" formGroupCssClass="c-form_group" label="First Name:" placeholder="Enter First Name" name="firstName"
+                                             [(ngModel)]="user.first_name" required></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="lastName" formGroupCssClass="c-form_group" label="Last Name:" placeholder="Enter Last Name" name="lastName"
+                                             [(ngModel)]="user.last_name" required></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="email" formGroupCssClass="c-form_group" label="Email Address:" placeholder="Enter Email Address" name="email" 
+                                            [(ngModel)]="user.email" required email></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="phoneNumber" formGroupCssClass="c-form_group" label="Phone Number:" placeholder="Enter Phone Number" name="phoneNumber"
+                                             [(ngModel)]="user.mobileno" required>
+                                            </app-textbox>
+                                        </div>
+                                         <div class="col-md-6 c-marginbtm20">
+                                            <app-datepicker name="tbDOB" identifier="tbDOB" formGroupCssClass="c-form_group"  label="Date of Birth"
+                                            [(ngModel)]="user.dob"  required></app-datepicker>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20 text-center">
+                                            <app-button (onClick)="togglePopUp()" buttonText="Change Password" cssClass="custom-full-button m-btn--pill m-btn--air m-btn m-btn--custom btn-outline-metal">
+                                            </app-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class=" row">
+            <div class="col-md-12">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                                <h3 class="m-portlet__head-text">
+                                Preferences 
+                            </h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-portlet__body padding-left-right-5px">
+                        <div class="col-md-12">
+                            <div class=" row">
+                                <div class="col-md-6 c-marginbtm20">
+                                    <app-selectbox identifier="Language" formGroupCssClass="c-form_group" label="Language:" [options]="Language" name="Language" placeholder="-- Select Language --"></app-selectbox>
+                                </div>
+                                <div class="col-md-6 c-marginbtm20">
+                                    <app-selectbox identifier="dateformat" formGroupCssClass="c-form_group" label="Date Format:" [options]="DD/MM/YYYY" name="dateformat" placeholder="-- Select Date Format --"></app-selectbox>
+                                </div>
+                                <div class="col-md-6 c-marginbtm20">
+                                    <app-selectbox identifier="currencyformat" formGroupCssClass="c-form_group" label="Currency Format:" [options]="Rupee" name="currencyformat" placeholder="-- Select Currency Format --"></app-selectbox>
+                                </div>
+                                <div class="col-md-6 c-marginbtm20">
+                                    <app-selectbox identifier="timezone" formGroupCssClass="c-form_group" label="Time Zone:" [options]="TimeZone" name="timezone" placeholder="-- Select Time  Zone --"></app-selectbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class=" row">
+            <div class="col-md-12">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                                <h3 class="m-portlet__head-text">
+                                Address
+                            </h3>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="m-portlet__body padding-left-right-5px">
+                        <div class="col-md-12">
+                            <div class=" row">
+
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="address" formGroupCssClass="c-form_group" label="Address:" placeholder="Enter Address"
+                                    [(ngModel)]="user.address.address"  name="address" appendIcon="la la-map-marker"  required></app-textbox>
+                                </div>
+
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="tbStreet" formGroupCssClass="c-form_group" label="Street:" placeholder="Enter Street"
+                                    [(ngModel)]="user.address.street" name="street"  required></app-textbox>
+                                </div>
+
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="city" formGroupCssClass="c-form_group" label="City:" placeholder="Enter City" 
+                                    [(ngModel)]="user.address.city" name="city"  required></app-textbox>
+                                </div>
+
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="tbState" formGroupCssClass="c-form_group" label="State:" placeholder="Enter State" 
+                                    [(ngModel)]="user.address.state" name="state"  required></app-textbox>
+                                </div>
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-selectbox identifier="country" formGroupCssClass="c-form_group" label="Country:" [options]="countries"
+                                    optionsValueField="id" optionsTextField="name" [(ngModel)]="user.address.country" name="country"
+                                     placeholder="-- Select Country --"  required></app-selectbox>
+                                </div>
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="zipCode" formGroupCssClass="c-form_group" label="Zip Code:" placeholder="Enter Zip Code"
+                                    [(ngModel)]="user.address.pincode" name="zipCode"  required>
+                                        </app-textbox>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions">
+                <div class=" row c-marginbtm20">
+                    <div class="col-lg-12 text-center">
+                        <app-button buttonType="submit" buttonText="Update" cssClass="m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-refresh">
+                        </app-button>
+                        <app-button buttonText="Cancel" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-close" (onClick)="cancelButtonClick($event)"></app-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<ng-template #cpassword let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Change Password</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="d('Cross click')">
+              <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form  class="m-form m-form--fit m-form--label-align-right" novalidate>
+            <div class="m-portlet__body padding-left-right-5px c-borderbtm  c-marginbtm20">
+                <div class="col-md-12 c-marginbtm20">
+                    <app-textbox identifier="tbcurrentpassword" inputType="password" label="Current Password" placeholder="Enter Current Password" name="tbcurrentpassword" [inline]="true" 
+                    [(ngModel)]="userpassword.oldpassword" labelColumns=4 textBoxColumns=6 required ></app-textbox>
+                </div>
+            </div>
+            <div class="m-portlet__body padding-left-right-5px">
+                <div class="col-md-12 c-marginbtm20">
+                    <app-textbox identifier="tbnewpassword" inputType="password" label="New Password" placeholder="Enter New Password" name="tbnewpassword" [inline]="true" 
+                    [(ngModel)]="userpassword.newpassword" labelColumns=4 textBoxColumns=6 required ></app-textbox>
+                </div>
+                <div class="col-md-12 c-marginbtm20">
+                    <app-textbox identifier="tbreenterpassword" inputType="password" label="Re-enter Password" placeholder="Re-enter Password" name="tbreenterpassword" 
+                    [(ngModel)]="userpassword.confirmpassword" [inline]="true" labelColumns=4 textBoxColumns=6 required ></app-textbox>
+                </div>
+            </div>                
+        </form>
+    </div>
+    <div class="modal-footer m-form__actions--solid">
+        <div class="col-lg-12 text-center">
+            <app-button buttonText="Update" cssClass="m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style"
+             (onClick)="changePassword()" buttonIcon="la la-refresh"></app-button>
+            <app-button buttonText="Cancel" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" 
+            buttonIcon="la la-close" (onClick)="togglePopUp()"></app-button>
+        </div>
+    </div>  
+</ng-template>

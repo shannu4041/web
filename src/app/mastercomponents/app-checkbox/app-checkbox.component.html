@@ -1,0 +1,28 @@
+<div class="form-group m-form__group {{ this.formGroupCssClass }} {{this.inline ? 'row inlineformrow' : '' }}">
+	<label *ngIf="label" for="{{identifier}}" class="{{labelCssClass}}" >
+		{{label}}
+		<span *ngIf="this.validators && this.validators.length > 0" class="validationindicator">*</span>
+	</label>
+	<div class="{{textBoxDivCssClass}}">
+		<div class="{{textBoxGroupCssClass}}">
+			<input [id]="identifier" type="hidden" [(ngModel)]="value" name="{{name}}" #field="ngModel">
+			<label *ngFor="let option of options" class="m-checkbox m-checkbox--air m-checkbox--state-brand">
+				<input type="checkbox" value="{{option.value}}"
+					[(ngModel)]="option.checked" 
+					class="{{option.disabled ? 'm-checkbox--disabled' : ''}} {{cssClass}}"
+					(click)="fireClick($event)" (change)="fireChange($event)">
+					{{option.text}}
+				<span></span>
+			</label>
+			
+		</div>
+		<validation class="{{model.control.touched ? 'ng-touched' : 'ng-untouched'}} {{ (invalid | async) ? 'invalid' : ''}}"
+			[@flyInOut]="'in,out'"
+			*ngIf="(invalid | async)"
+			[messages]="failures | async">
+		</validation>
+		<div *ngIf="helpText" class="m-form__help">
+			{{helpText}}
+		</div>
+	</div>
+</div>

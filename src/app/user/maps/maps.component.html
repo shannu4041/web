@@ -1,0 +1,397 @@
+  <div class="filter-icon" *ngIf="!newLocationPopup">
+    <button class="btn m-btn" [ngClass]="{'c-filter_icon_design_maps' : !showSummary, 'c-filter_icon_design_maps_open': showSummary}" *ngIf="vehicleIcon || locationIcon || routeIcon"
+            (click)="summaryShowAndHide()">
+      <i class="flaticon-interface-7"></i>
+    </button>
+  </div>
+  <div class="summary_data" *ngIf="(vehicleIcon || locationIcon || routeIcon) && showSummary && !newLocationPopup" [@formTrigger]="showSummary" [style.height.px]="summaryViewHeight">
+    <div class="head_data">
+      <h2>SUMMARY VIEW</h2>
+    </div>
+    <div class="body_data">
+      <div class="m-portlet">
+        <div class="m-portlet__body">
+          <ul class="nav nav-tabs mrgnbtm0" role="tablist">
+            <li class="nav-item {{summaryViewTabIndex == 1 ? 'active show' :'' }}" (click)="summaryViewTabIndex=1" *ngIf="vehicleIcon">
+              <a class="nav-link {{summaryViewTabIndex == 1 ? 'active' :'' }}" data-toggle="tab" href="#m_tabs_1_1">Vehicles</a>
+            </li>
+            <li class="nav-item {{summaryViewTabIndex == 2 ? 'active show' :'' }}" *ngIf="locationIcon" (click)="summaryViewTabIndex=2">
+              <a class="nav-link {{summaryViewTabIndex == 2 ? 'active' :'' }}" data-toggle="tab" href="#m_tabs_1_2">Locations</a>
+            </li>
+            <li class="nav-item {{summaryViewTabIndex == 3 ? 'active show' :'' }}" *ngIf="routeIcon" (click)="summaryViewTabIndex=3">
+              <a class="nav-link {{summaryViewTabIndex == 3 ? 'active' :'' }}" data-toggle="tab" href="#m_tabs_1_3">Trips</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane {{summaryViewTabIndex == 1 ? 'active' :'' }}" id="m_tabs_1_1" role="tabpanel" *ngIf="vehicleIcon">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-7">
+                    <app-textbox identifier="Name" formGroupCssClass="c-form_group" style="width:185px" placeholder="Driver Name" name="name" [(ngModel)]="search.name"></app-textbox>
+                  </div>
+                  <div class="col-md-5">
+                    <button class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--outline-2x" (click)="getCurrentVehicles(false)">
+                      <i class="la la-search"></i>
+                    </button>
+                    <button class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--outline-2x" (click)="resetSearch($event)">
+                      <i class="la la-refresh"></i>
+                    </button>
+                    <button class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--outline-2x" [ngClass]="{'filter-icon' : !showFilterIconClose , 'filter-icon-open': showFilterIconClose }" data-toggle="collapse" data-target="#demo" (click)="showFilterIconClose = !showFilterIconClose;" type="button">
+                      <i class="la la-filter"></i>
+                    </button>
+                    <div class="col-md-12" style="margin-left:30px;">
+                      <div id="demo" *ngIf="showFilterIconClose" class=" collapse maps_filter_data">
+                        <div class="col-md-12">
+                          <app-selectbox identifier="businessgroup" formGroupCssClass="c-form_group" label="Business Group:"
+                                         name="business_group_id" [options]="bussinessgroup" (onChange)="getBusinessUnitsList(search.business_group_id)"
+                                         [(ngModel)]="search.business_group_id" placeholder="-- Select --" optionsValueField="id"
+                                         optionsTextField="group_name"></app-selectbox>
+                          <app-selectbox identifier="businessunit" formGroupCssClass="c-form_group" label="Business Unit:"
+                                         name="business_unit_id" [(ngModel)]="search.business_unit_id" placeholder="-- Select --" [options]="busssinessunit"
+                                         optionsValueField="id" optionsTextField="unit_name"></app-selectbox>
+                          <app-typeahead identifier="assignvehicle" name="assignvehicle"
+                                         [searchOptions]="vehicleIds" label="Vehicle:"
+                                         [(ngModel)]="vehicleobj"></app-typeahead>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="vachiles_summary">
+                <div class="vachile_data m-list-search" *ngFor="let vehicleInfo of positions">
+                  <div class="row data-show m-list-search__results">
+                    <div class="col-sm-6 c-form_group m-list-search__result-item ">
+                        <span class="m-list-search__result-item-icon"><i class="fa fa-car m--font-primary"></i></span>
+                        <span class="m-list-search__result-item-text vehicle_data">{{vehicleInfo.registration_number}}</span>
+                    </div>
+                    <div class="col-sm-6 c-form_group m-list-search__result-item">
+                        <span class="m-list-search__result-item-icon"><i class="fa fa-info-circle m--font-primary"></i></span>
+                        <span class="m-list-search__result-item-text vehicle_data">{{vehicleInfo.vehiclestatus==1?'Running':'Off'}}</span>
+                    </div>
+                    <div class="col-sm-6 c-form_group m-list-search__result-item">
+                        <span class="m-list-search__result-item-icon"><i class="fa fa-user m--font-primary"></i></span>
+                        <span class="m-list-search__result-item-text vehicle_data">{{vehicleInfo.drivername}}</span>
+                    </div>
+                    <div class="col-sm-6 c-form_group m-list-search__result-item">
+                        <span class="m-list-search__result-item-icon"><i class="fa fa-user m--font-primary"></i></span>
+                        <span class="m-list-search__result-item-text vehicle_data">{{vehicleInfo.unit_name}}</span>
+                    </div>
+                    <div class="col-sm-6 c-form_group m-list-search__result-item">
+                    <span class="m-list-search__result-item-icon"><i class="fa fa-clock-o m--font-primary"></i></span>
+                    <span class="m-list-search__result-item-text vehicle_data">{{vehicleInfo.createtime}}</span>
+                    </div>
+                    <div class="col-sm-6 c-form_group">
+                    
+                    </div>
+                    <div class="col-sm-6 c-form_group m-list-search__result-item">
+                        <span class="m-list-search__result-item-icon"><i class="fa fa-calendar m--font-primary"></i></span>
+                        <span class="m-list-search__result-item-text vehicle_data">{{vehicleInfo.createdate}}</span>
+                    </div>
+                    <div class="col-sm-6 c-form_group">
+                        <button class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--outline-2x vehicle_summary_card" data-toggle="collapse" data-target="#alert" >
+                          <i class="fa flaticon-cogwheel" style="font-size: 14px;"></i>
+                        </button>
+                      </div>
+                      
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane {{summaryViewTabIndex == 2 ? 'active' :'' }}" id="m_tabs_1_2" role="tabpanel" *ngIf="locationIcon">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-7">
+                    <app-textbox identifier="location" style="width:185px" placeholder="Location name" name="location"
+                                 [(ngModel)]="search.name" formGroupCssClass="c-form_group"></app-textbox>
+                  </div>
+                  <div class="col-md-5">
+                    <button class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--outline-2x" (click)="getGeoCoordinates(false)">
+                      <i class="la la-search"></i>
+                    </button>
+                    <button class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--outline-2x" (click)="resetLocation($event)">
+                      <i class="la la-refresh"></i>
+                    </button>
+                    <button class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--outline-2x" [ngClass]="{'filter-icon' : !showFilterIconClose , 'filter-icon-open': showFilterIconClose }" data-toggle="collapse" data-target="#demo1" (click)="showFilterIconClose = !showFilterIconClose;" type="button">
+                      <i class="la la-filter"></i>
+                    </button>
+                    <div class="col-md-12" style="margin-left:30px;">
+                      <div id="demo1" *ngIf="showFilterIconClose" class=" collapse maps_filter_data">
+                        <div class="col-md-12">
+                          <app-selectbox identifier="businessgroup" formGroupCssClass="c-form_group" label="Business Group:"
+                                         name="business_group_id" [options]="bussinessgroup" (onChange)="getBusinessUnitsList(search.business_group_id)"
+                                         [(ngModel)]="search.business_group_id" placeholder="-- Select --" optionsValueField="id"
+                                         optionsTextField="group_name"></app-selectbox>
+
+                          <app-selectbox identifier="businessunit" formGroupCssClass="c-form_group" label="Business Unit:"
+                                         name="business_unit_id" [(ngModel)]="search.business_unit_id" placeholder="-- Select --" [options]="busssinessunit"
+                                         optionsValueField="id" optionsTextField="unit_name"></app-selectbox>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="location_summary row" *ngFor="let p of GeoCoordinates">
+                <div class="row data-show m-list-search__results">
+                  <div class="col-sm-12 m-list-search__result-item">
+                      <span class="m-list-search__result-item-icon gr_name_data"><i class="la la-map-marker"></i></span>
+                      <span class="m-list-search__result-item-text vehicle_data">{{p.name}}</span>
+                    <!-- <span class="gr_name_data"><i class="la la-map-marker"></i>{{p.name}}</span> -->
+                  </div>
+                  <div class="col-sm-12 m-list-search__result-item">
+                      <span class="m-list-search__result-item-icon"><i class="la la-bank"></i></span>
+                      <span class="m-list-search__result-item-text vehicle_data">{{p.group_name}}</span>
+                   <!--  <span class="gr_name_data"><i class="la la-bank"></i>{{p.group_name}}</span> -->
+                  </div>
+                  <div class="col-sm-8 m-list-search__result-item">
+                      <span class="m-list-search__result-item-icon"><i class="la la-building"></i></span>
+                      <span class="m-list-search__result-item-text vehicle_data">{{p.unit_name}}</span>
+                    <!-- <span class="gr_name_data"><i class="la la-building"></i>{{p.unit_name}}</span> -->
+                  </div>
+                  <div class="col-sm-4">
+                    <span class="gr_name_data"><i class="fa fa-gear"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane {{summaryViewTabIndex == 3 ? 'active' :'' }}" id="m_tabs_1_3" role="tabpanel" *ngIf="routeIcon">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-7">
+                    <app-typeahead identifier="assignvehicle" name="assignvehicle"
+                                   [searchOptions]="vehicleIds" label="Vehicle:"
+                                   [(ngModel)]="vehicleobj"></app-typeahead>
+                  </div>
+                  <div class="col-md-5">
+                    <div style="margin-top:27px">
+                      <button class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--outline-2x" (click)="getCurrentTrips(false)">
+                        <i class="la la-search"></i>
+                      </button>
+                      <button class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--outline-2x" (click)="resetTripsSearch($event)">
+                        <i class="la la-refresh"></i>
+                      </button>
+                      <button class="btn btn-outline-primary m-btn m-btn--icon m-btn--icon-only m-btn--outline-2x" [ngClass]="{'filter-icon' : !showFilterIconClose , 'filter-icon-open': showFilterIconClose }" data-toggle="collapse" data-target="#demo2" (click)="showFilterIconClose = !showFilterIconClose;" type="button">
+                        <i class="la la-filter"></i>
+                      </button>
+                    </div>
+                    <div class="col-md-12" style="margin-left:30px;">
+                      <div id="demo2" *ngIf="showFilterIconClose" class=" collapse maps_filter_data">
+                        <div class="col-md-12">
+                          <app-datepicker identifier="from_date:" formGroupCssClass="c-form_group" placeholder="From Date"
+                                          name="fromdate" [showPickerOnTop]="true" [(ngModel)]="search.from_date"
+                                          (onClick)="DOBClick($event)"></app-datepicker>
+                          <app-datepicker identifier="to_date:" formGroupCssClass="c-form_group" placeholder="To Date"
+                                          name="todate" [showPickerOnTop]="true" [(ngModel)]="search.to_date"
+                                          (onClick)="DOBClick($event)"></app-datepicker>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-md-12">
+                      <div class="row">
+                                  <app-button buttonText="search " (onClick)="getCurrentTrips(false)" cssClass="btn_custom_style_maps btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom" buttonIcon="la la-search" (onClick)="getCurrentTrips()" ></app-button>
+                                  <app-button buttonText="Reset" cssClass="btn_custom_style_maps btn m-btn--pill btn-danger m-btn--air m-btn m-btn--custom" buttonIcon="la la-refresh"(onClick)="resetTripsSearch($event)"></app-button>
+
+                      </div>
+              </div> -->
+              <div class="location_summary">
+                <div class="vachiles_summary" *ngIf="currentTripHistory">
+                  <div class="row vachile_data" *ngFor="let currentTripHistoryData of currentTrips">
+                    <div class="col-sm-6 c-form_group">
+                      <p><i class="la la-car"></i>{{currentTripHistoryData.registration_number}}</p>
+                    </div>
+                    <div class="col-sm-6 c-form_group">
+                      <p><i class="fa fa-info-circle"></i> <span></span>{{currentTripHistoryData.status}}</p>
+                    </div>
+                    <div class="col-sm-12 c-form_group">
+                      <p><i class="fa fa-user"></i> <span></span>{{currentTripHistoryData.driver_name}}</p>
+                    </div>
+                    <a class="row data-show"  style="cursor:pointer;" (click)="getTripsHistory(currentTripHistoryData.trip_id)">
+                      <div class="for_border"><p class="start-pos" style="width:100%;"><span></span>{{currentTripHistoryData.trip_start}}</p><p>{{currentTripHistoryData.start_time}}</p></div>
+                      <p class="end-pos" style="width:100%;"><span></span> {{currentTripHistoryData.trip_end}}</p><p>{{currentTripHistoryData.end_time}}</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="summary_data" *ngIf="newLocationPopup">
+    <div class="head_data">
+      <h2>Locations VIEW</h2>
+    </div>
+    <div class="body_data">
+      <div class="tab-pane">
+        <div class="location_summary">
+          <div class=" row">
+            <div class="col-md-12">
+              <app-textbox identifier="location" label="Location Name:"
+                           placeholder="Location Name" name="location"
+                           [(ngModel)]="map.name" formGroupCssClass="c-form_group" required></app-textbox>
+            </div>
+          </div>
+          <div class=" row">
+            <div class="col-md-12">
+              <app-selectbox identifier="businessgroup" formGroupCssClass="c-form_group" label="Business Group:"
+                             name="business_group_id" [options]="bussinessgroup" (onChange)="getBusinessUnitsList(map.business_group_id)"
+                             [(ngModel)]="map.business_group_id"
+                             placeholder="-- Select --" optionsValueField="id"
+                             optionsTextField="group_name" required></app-selectbox>
+            </div>
+          </div>
+          <div class=" row">
+            <div class="col-md-12">
+              <app-selectbox identifier="businessunit" formGroupCssClass="c-form_group" label="Business Unit:"
+                             name="business_unit_id" [(ngModel)]="map.business_unit_id" placeholder="-- Select --" [options]="busssinessunit"
+                             optionsValueField="id" optionsTextField="unit_name" required></app-selectbox>
+            </div>
+          </div>
+          <div class=" row">
+            <div class="col-md-12">
+              Coordinates: {{newLocationGeoCoordinates != null ? (newLocationGeoCoordinates.lat() | number) :''}} , {{newLocationGeoCoordinates != null ? (newLocationGeoCoordinates.lng()  | number):''}}
+            </div>
+          </div>
+          <div class=" row">
+            <div class="col-md-12">
+              &nbsp;
+            </div>
+          </div>
+          <div class=" row">
+            <div class="col-md-12">
+              <app-button buttonText="Add" (onClick)="addMapLocation()" buttonType="submit" cssClass="btn btn-custom-style m-btn--pill m-btn--air btn-info m-btn m-btn--custom " buttonIcon="la la la-plus"></app-button>
+              <app-button buttonText="cancel" cssClass="btn-custom-style  m-btn--pill m-btn--air btn-warning m-btn m-btn--custom m-demo-icon__class"
+                          buttonIcon="la la-close" (onClick)="cancelButtonClick()"></app-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- check box iocns  -->
+  <div class="m-content c_box_position" *ngIf="!newLocationPopup">
+    <div class="btn-group mr-2" role="group" aria-label="...">
+      <button type="button" class="m-btn btn {{ vehicleIcon ? 'btn-primary':'c-map_top_icons' }}" (click)="showHideVehicleFeature()"><i class="la la-car"></i></button>
+      <button type="button" class="m-btn btn {{ locationIcon ? 'btn-primary':'c-map_top_icons' }}" (click)="showHideLocationFeature()"><i class="la la-map-marker"></i></button>
+      <button type="button" class="m-btn btn {{ routeIcon ? 'btn-primary':'c-map_top_icons' }}" (click)="showHideTripFeature()"><i class="flaticon-route"></i></button>
+    </div>
+  </div>
+  <ngui-map  (mapReady$)="onMapReady($event)" [options]="{streetViewControl:false}"> 
+    <ng-container *ngIf="!newLocationPopup">
+      <marker *ngFor="let pos of positions" [position]="pos" [icon]="{
+        url: pos.vehiclestatus==1? greenCar:blackCar,
+        anchor: [20,20],
+        size: [40,40],
+        scaledSize: [40,40]
+      }" (click)="onMarkerClicked($event,pos.tracker_id)"
+              (initialized$)="onMarkerInit($event)"></marker>
+      <my-info-window *ngFor="let pos of positions; trackBy:tracker_id" [myId]="pos.tracker_id" [maxWidth]="280">
+        <div style="padding-top: 20px;">
+          <div>
+            <div style="padding-left: 45px;">
+              <h3 class="m-widget14__title">
+                Vehicle Information
+              </h3>
+            </div>
+            <div class="m-list-timeline">
+              <div class="m-list-timeline__items c-adding-padding-left">
+                <div class="m-list-timeline__item">
+                  <span class="m-list-timeline__time c-date-left">Status {{pos.vehiclestatus}}</span>
+                  <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                  <span class="m-list-timeline__text"> {{pos.vehiclestatus ==1 ? 'Running':'Off'}}</span>
+                </div>
+                <div class="m-list-timeline__item">
+                  <span class="m-list-timeline__time c-date-left">Last Updated Time</span>
+                  <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                  <span class="m-list-timeline__text"> {{pos.createtime}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </my-info-window>
+      <polyline [editable]="true"
+                [path]="paths"
+                [geodesic]="false"
+                [strokeColor]="'#000000'"
+                [strokeOpacity]="1"
+                [strokeWeight]="7"></polyline>
+      <marker *ngFor="let position of locationPostions" [position]="position">
+      </marker>
+      <!-- for current trips vehicles (As desicions on ram sir meeting)-->
+      <!-- <marker *ngFor="let currentTrip of currentTrips" [position]="currentTrip" [icon]="{
+      url:blackCar,
+      anchor: [20,20],
+      size: [40,40],
+      scaledSize: [40,40]
+    }" (click)="getCurrentTripHistory($event)">
+    <info-window id="iw" [maxWidth]="280">
+          <div  *ngIf="marker.display" style="padding-top: 20px;">
+            <div >
+                <div>
+                    <h3 class="m-widget14__title"  >
+                      Vehicle Trip Information
+                    </h3>
+                  </div>
+                          <div class="m-list-timeline">
+                              <div class="m-list-timeline__items c-adding-padding-left">
+                                      <div class="m-list-timeline__item">
+                                          <span class="m-list-timeline__time c-date-left">Status</span>
+                                          <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                                          <span class="m-list-timeline__text">{{currentTrip.status}}</span>
+                                      </div>
+                                      <div class="m-list-timeline__item">
+                                          <span class="m-list-timeline__time c-date-left">Last Updated Time</span>
+                                          <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                                          <span class="m-list-timeline__text">{{currentTrip.createtime}}</span>
+                                      </div>
+                              </div>
+                          </div>
+            </div>
+            </div>
+        </info-window>
+  </marker> -->
+      <marker *ngFor="let startPos of startMarkerPosition" [position]="startPos" [icon]="{
+            url: '../../../assets/images/startTripMarker.png',
+            anchor: [10,10],
+            size: [20,20],
+            scaledSize: [20,20]
+          }">
+      </marker>
+      <marker *ngFor="let endPos of endMarkerPosition" [position]="endPos" [icon]="{
+            url: '../../../assets/images/endTripMarker.png',
+            anchor: [10,10],
+            size: [20,20],
+            scaledSize: [20,20]
+          }">
+      </marker>
+      <polygon *ngFor="let pd of polydata" [editable]="true"
+               [paths]="pd"
+               [strokeColor]="'#FFC107'"
+               [strokeOpacity]="0.8"
+               [strokeWeight]="2"
+               [fillColor]="'#FFC107'"
+               [clickable]="false"
+               [fillOpacity]="0.35"></polygon>
+    </ng-container>
+    <drawing-manager [drawingControl]="true"
+                     [drawingControlOptions]="{
+            position: 'BOTTOM_CENTER',
+            drawingModes: ['marker','polygon']
+           }"
+                     [circleOptions]="{
+            fillColor: '#E0E0E0',
+            fillOpacity: 0.5,
+            strokeWeight: 3,
+            editable: true,
+            zIndex: 1
+          }"></drawing-manager>
+  </ngui-map>
+  
+
+

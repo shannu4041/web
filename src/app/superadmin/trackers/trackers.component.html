@@ -1,0 +1,314 @@
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+
+    <!-- BEGIN: Subheader -->
+    <div class="m-subheader ">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">{{globals.switchLanguageValue.menu_trackers}}</h3>
+                <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                    <li class="m-nav__item m-nav__item--home">
+                        <a href="#" class="m-nav__link m-nav__link--icon">
+                            <i class="m-nav__link-icon la la-home"></i>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">-</li>
+                    <li class="m-nav__item">
+                        <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text">{{globals.switchLanguageValue.menu_trackers}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- grid start -->
+    <div class="m-content c-page-min-height" *ngIf="showTrackerGrid">
+        <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            {{globals.switchLanguageValue.menu_trackers}}
+                          </h3>
+                    </div>
+                </div>
+                <div class="m-portlet__head-tools">
+                    <app-button buttonText="{{globals.switchLanguageValue.add_tracker}}" cssClass="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" (click)="toggleCreateTracker()" buttonIcon="la la-plus"></app-button>
+                </div>
+                
+            </div>
+            <div class="m-portlet__body">
+                <app-datatable #cd filterText="{{globals.switchLanguageValue.menu_trackers}} {{globals.switchLanguageValue.common_label_filter}}" (onSearchClick)="getTrackerData($event,true)" (onClearClick)="closepopup($event)" (onResetClick)="resetSearch($event)"
+                (onRefreshClick)="getTrackerData($event,false,true)" (onPrintClick)="downloadTrackers(this.paging.sortBy,this.paging.sortDirection,'print', this.paging.search)"
+                (onExportPDFClick)="downloadTrackers(this.paging.sortBy,this.paging.sortDirection,'excel', this.paging.search)"
+                (onExportExcelClick)="downloadTrackers(this.paging.sortBy,this.paging.sortDirection,'pdf', this.paging.search)"
+                filterWidth="700px">
+                <div table-filter-body>
+                    <div class=" row">
+                        <div class="col-md-6 c-marginbtm20">
+                            <app-select2 [options]="useraccounts" [(ngModel)]="paging.search.account_name" identifier="Accountsearch" name="Accountsearch" placeholder="Select Account" class="m-select2 m-select2--air" [multiple]="true" label="{{globals.switchLanguageValue.account}}:" minlengtharray minlength="2" optionsValueField="id" optionsTextField="account_name"></app-select2>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20">
+                            <app-select2 [options]="trackertypes" [(ngModel)]="paging.search.tracker_type" identifier="typesearch" name="typesearch" placeholder="Select Status" class="m-select2 m-select2--air" [multiple]="true" label="{{globals.switchLanguageValue.type}}:" minlengtharray minlength="2" optionsValueField="id" optionsTextField="type"></app-select2>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20">
+                            <app-textbox identifier="imei" [(ngModel)]="paging.search.imei_number" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.trackers_IMEI_Number}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.trackers_IMEI_Number}}" name="imei"></app-textbox>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20">
+                            <app-select2 [options]="trackerstatus" [(ngModel)]="paging.search.status" identifier="statussearch" name="statussearch" placeholder="Select Status" class="m-select2 m-select2--air" [multiple]="true" label="{{globals.switchLanguageValue.account_column_status}}:" minlengtharray minlength="2" optionsValueField="id" optionsTextField="status"></app-select2>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20">
+                            <app-textbox identifier="HardwareVersionsearch" [(ngModel)]="paging.search.hardware_version" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.tracker_Hardware_Version}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.tracker_Hardware_Version}}" name="HardwareVersionsearch"></app-textbox>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20">
+                            <app-textbox identifier="softwareversionsearch" [(ngModel)]="paging.search.software_version" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.tracker_Software_Version}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.tracker_Software_Version}}" name="softwareversionsearch"></app-textbox>
+                        </div>
+                    </div>
+                </div>
+                <p-dataTable table-body [value]="trackerlist" [rows]="10" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,20,25]" [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="getTrackerData($event)" scrollable="true" sortMode="multiple" [hidden]="showEditForm">
+                    <p-column field="tracker_unique_id" header="{{globals.switchLanguageValue.tracker_id}}" [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width180">
+                    </p-column>
+                    <p-column field="tracker_type" header="{{globals.switchLanguageValue.type}}" [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width120"></p-column>
+
+                    <p-column field="account_name" header="{{globals.switchLanguageValue.account}}" [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width120"></p-column>
+                    <p-column field="imei_number" header="{{globals.switchLanguageValue.trackers_IMEI_Number}}" [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width120">
+                    </p-column>
+
+                    <p-column field="status" header="{{globals.switchLanguageValue.account_column_status}}" [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width120">
+                    </p-column>
+                    <p-column styleClass="col-button c-action-width120">
+                        <ng-template let-tackerdt="rowData" pTemplate="body">
+                            <a (click)="editTracker(tackerdt.id)" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="{{globals.switchLanguageValue.common_edit}} "><i class="fa fa-edit"></i></a>
+                            <a (click)="getTrackerHistory(tackerdt.id)" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="{{globals.switchLanguageValue.tracker_History}} "><i class="la la-file-text"></i></a>
+                        </ng-template>
+                    </p-column>
+                </p-dataTable>
+            </app-datatable>
+            </div>
+        </div>
+    </div>
+    <!-- grid over  -->
+
+    <!-- add / edit trackers -->
+
+
+    <div class="m-content" *ngIf="showAddTracker">
+        <form class="m-form m-form--fit m-form--label-align-right" (ngSubmit)="SubmitForm(f)" #f="ngForm" myForm  novalidate>
+            <div class=" row">
+                <div class="col-md-12">
+                    <div class="m-portlet m-portlet--tab">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide"><i class="la la-gear"></i></span>
+                                    <h3 class="m-portlet__head-text">{{showcreatButton ? globals.switchLanguageValue.add_tracker : globals.switchLanguageValue.edit_tracker }}</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="m-portlet__body c-nopadding c-borderbtm">
+                            <div class="m-portlet__body padding-left-right-5px">
+                                <div class="col-md-12">
+                                    <div class=" row">
+                                        <div class="col-md-4 c-marginbtm20">
+                                                <app-textbox identifier="trackerid" [(ngModel)]="tracker.tracker_unique_id" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.tracker_id}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.tracker_id}}" 
+                                                name="trackerid" [setDisabled]="inputDisabled" required></app-textbox>
+                                            <!-- <app-textbox identifier="TrackerID" [(ngModel)]="tracker_id" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.tracker_id}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.tracker_id}}" name="trackerid" required></app-textbox>
+                                            <div class="col m--align-right" (click)="getRandomNumber()">
+                                                <a href="javascript:;" id="m_login_forget_password" class="m-link">
+                                    <a href="extras-forgotpassword.html" class="m-link">
+                                                    Auto Generate Tracker ID
+                                                </a>
+                                             </div> -->
+                                             <div class="col m--align-right" (click)="getRandomNumber()">
+                                                <a href="javascript:;" id="m_login_forget_password" class="m-link">
+                                                        Auto Generate Tracker ID
+                                                    </a>
+                                             </div>
+                                        </div>
+                                        <!-- <div class="col-md-4 c-marginbtm20">
+                                            <app-textbox identifier="trackerName" [(ngModel)]="tracker.tracker_unique_id" formGroupCssClass="c-form_group" label="Tracker Name:" placeholder="Tracker Name" name="trackerName"></app-textbox>
+                                        </div> -->
+                                        <div class="col-md-4 c-marginbtm20">
+                                            <app-selectbox identifier="Type"  [(ngModel)]="tracker.tracker_type" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.type}}:" [options]="trackertypes" name="Type" optionsValueField="id" optionsTextField="type" placeholder="-- Select --" required> </app-selectbox>
+                                        </div>
+                                        <div class="col-md-4 c-marginbtm20">
+                                            <app-textbox identifier="description" [(ngModel)]="tracker.description" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.tracker_Description}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.tracker_Description}}" name="description"></app-textbox>
+                                        </div>
+                                        <div class="col-md-4 c-marginbtm20">
+                                            <app-textbox identifier="imei" [(ngModel)]="tracker.imei_number" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.trackers_IMEI_Number}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.trackers_IMEI_Number}}" name="imei" required></app-textbox>
+                                        </div>
+                                        <div class="col-md-4 c-marginbtm20">
+                                            <app-textbox identifier="HardwareVersion"  [(ngModel)]="tracker.hardware_version" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.tracker_Hardware_Version	}}:" placeholder=" {{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.tracker_Hardware_Version	}}" name="hardwareversion"></app-textbox>
+                                        </div>
+                                        <div class="col-md-4 c-marginbtm20">
+                                            <app-textbox identifier="SoftwareVersion"  [(ngModel)]="tracker.software_version" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.tracker_Software_Version	}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.tracker_Software_Version}}" name="softwareversion"></app-textbox>
+                                        </div>
+                                        <div class="col-md-4 c-marginbtm20">
+                                            <app-selectbox identifier="manufacturer"  [(ngModel)]="tracker.manufacturer_id" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.tracker_Manufacturer}}:" [options]="manufacturers" optionsValueField="id" optionsTextField="manufacturer_name" name="manufacturer"></app-selectbox>
+                                        </div>
+                                        <div class="col-md-4 c-marginbtm20" *ngIf="!showcreatButton">
+                                            <app-selectbox identifier="Status" [(ngModel)]="tracker.status" [setDisabled]="!tracker.canStatusEdit" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.account_column_status}}:" [options]="trackerstatustmp" optionsValueField="id" optionsTextField="status" name="status"></app-selectbox>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__foot m-portlet__foot--fit">
+                                <div class="m-form__actions m-form__actions m-form__actions--solid">
+                                    <div class=" row">
+                                        <div class="col-lg-12 text-center">
+                                            <app-button buttonType="submit" buttonText="{{showcreatButton ? globals.switchLanguageValue.common_button_add : globals.switchLanguageValue.common_button_update }}" buttonIcon="{{showcreatButton ? 'la la-plus' : 'la la-save'}} " cssClass="m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style"></app-button>
+                                            <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" cssClass="btn-custom-style  m-btn--pill m-btn--air btn-warning m-btn m-btn--custom m-demo-icon__class" (click)="toggleCreateTracker()" buttonIcon="la la-close"></app-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- history -->
+    <div class="m-content" *ngIf="showTrackerHistory">
+        <form class="m-form m-form--fit m-form--label-align-right">
+            <div class=" row">
+                <div class="col-md-12">
+                    <div class="m-portlet m-portlet--tab">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide"><i class="la la-gear"></i></span>
+                                    <h3 class="m-portlet__head-text">{{globals.switchLanguageValue.tracker_History}}</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="m-portlet__body c-nopadding">
+                            <div class="m-portlet__body padding-left-right-5px">
+                                <div class="col-md-12 text-right">
+                                    <app-button buttonText="{{globals.switchLanguageValue.tracker_Assign}}" *ngIf="trackerHistory.tracker_status == 2" cssClass="btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-plus-square-o" (onClick)="toggleTrackerAssignPopUp()"></app-button>
+                                    <app-button buttonText="{{globals.switchLanguageValue.tracker_Un_Assign}}" *ngIf="trackerHistory.tracker_status == 1" cssClass="btn m-btn--pill btn-danger m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-minus-square-o" (onClick)="TrackerUnAssign()"></app-button>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="m-list-timeline ">
+                                        <div class="m-list-timeline__items c-adding-padding-left">
+                                            <!--<div class="m-list-timeline__item">
+                                                <span class="m-list-timeline__time c-date-left">10 DEC, 2017</span>
+                                                <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                                <span class="m-list-timeline__text">Asigned to ALJ <span class="m-badge m-badge--danger m-badge--wide">Un Assign</span></span>
+                                                
+                                            </div>
+                                                <div class="m-list-timeline__item" *ngFor="let h of trackerHistory.history ; index as i;">
+                                                    <span class="m-list-timeline__time c-date-left">{{h.date_add}}</span>
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                                                    <span class="m-list-timeline__text">{{h.status}} to  {{h.account_name}}  </span>
+                                                </div>
+                                                <div class="m-list-timeline__item" >
+                                                        <span class="m-list-timeline__time c-date-left">{{trackerHistory.created_on}}</span>
+                                                        <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                                                        <span class="m-list-timeline__text">Tracker Added  </span>
+                                                </div>-->
+											<div class="m-list-timeline__item" *ngFor="let h of trackerHistory.history ; index as i;">
+                                                    <span class="m-list-timeline__time c-date-left">{{h.date_add}}</span>
+                                                    <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                                                    <span class="m-list-timeline__text">{{h.HistoryStatus}}</span>
+                                                </div>
+                                             <!--<ng-template #norecords *ngIf="trackerHistory.length>0;else norecords">
+                                                <span class="m-list-timeline__text">No History for this Tracker 
+                                                <span (click)="toggleTrackerAssignPopUp()" class="m-badge m-badge--success m-badge--wide">Assign Tracker</span></span>
+                                            </ng-template>
+                                           <div class="m-list-timeline__item">
+                                                <span class="m-list-timeline__time c-date-left">10 DEC, 2017</span>
+                                                <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
+                                                <span class="m-list-timeline__text">Tracker Returned</span>
+                                                
+                                            </div>
+                                            <div class="m-list-timeline__item">
+                                                <span class="m-list-timeline__time c-date-left">10 DEC, 2017</span>
+                                                <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                                                <span class="m-list-timeline__text">Tracker Added</span>
+                                                
+                                            </div>
+                                            <div class="m-list-timeline__item">
+                                                <span class="m-list-timeline__time c-date-left">10 DEC, 2017</span>
+                                                <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
+                                                <span class="m-list-timeline__text">Tracker Returned</span>
+                                                
+                                            </div>
+                                            <div class="m-list-timeline__item">
+                                                <span class="m-list-timeline__time c-date-left">10 DEC, 2017</span>
+                                                <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                                                <span class="m-list-timeline__text">Tracker Added</span>
+                                                
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__foot m-portlet__foot--fit">
+                            <div class="m-form__actions m-form__actions m-form__actions--solid">
+                                <div class=" row">
+                                    <div class="col-lg-12 text-center">
+                                        <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" cssClass="btn-custom-style  m-btn--pill m-btn--air btn-warning m-btn m-btn--custom m-demo-icon__class" (click)="toggleTrackerHistory()" buttonIcon="la la-close"></app-button>
+                                    </div>
+                                </div>
+                            </div>
+                     </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <ng-template #showhistorypopup let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel">{{globals.switchLanguageValue.tracker_History}}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+        <div class="m-portlet__body padding-left-right-5px">
+            <div class=" row">
+                <div class="col-md-6 c-marginbtm20">
+                    <app-selectbox identifier="Account" [(ngModel)]="trackerAssignment.currently_assigned_account_id"  formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.account}}:" 
+                    [options]="useraccounts" optionsValueField="id" optionsTextField="account_name"  name="account" placeholder="-- Select --" 
+                    (onChange)="getBusinessGroupsLocations(trackerAssignment.currently_assigned_account_id)" required></app-selectbox>
+                </div>
+                <div class="col-md-6 c-marginbtm20">
+                    <app-selectbox identifier="businessgroup" [(ngModel)]="trackerAssignment.business_group_id"  formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_Business_Group}}:" 
+                    [options]="bussinessgroup" optionsValueField="id" optionsTextField="group_name" name="business_group" placeholder="-- Select --" 
+                    (onChange)="getBusinessUnits(tracker.business_group_id)"></app-selectbox>
+
+                </div>
+                <div class="col-md-6 c-marginbtm20">
+                    <app-selectbox identifier="businessunit" [(ngModel)]="trackerAssignment.business_unit_id"  formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_Business_Unit}}:" 
+                    [options]="busssinessunit" optionsValueField="id" optionsTextField="unit_name" name="business_unit" placeholder="-- Select --"></app-selectbox>
+
+                </div>
+                <div class="col-md-6 c-marginbtm20">
+                    <app-selectbox identifier="Location" [(ngModel)]="trackerAssignment.location_id"  formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_Location}}:" 
+                    [options]="locations" optionsValueField="id" optionsTextField="name" name="Location" placeholder="-- Select --" required ></app-selectbox>
+
+                </div>
+                <div class="col-md-12 c-marginbtm20">
+                    <app-textarea identifier="Comments" [(ngModel)]="trackerAssignment.comments" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_Comments}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_Comments}}" name="Comments"></app-textarea>
+                </div>
+            </div>
+        </div>
+
+        </div>
+        <div class="modal-footer m-form__actions--solid">
+            <div class="col-lg-12 text-center">
+                <app-button buttonText="{{globals.switchLanguageValue.tracker_Assign}}" cssClass="btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-plus" (onClick)="assignTracker()"></app-button>
+                <app-button buttonText="{{globals.switchLanguageValue.common_button_close}}" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-close" (onClick)="toggleTrackerAssignPopUp()"></app-button>
+            </div>
+        </div>
+    </ng-template>

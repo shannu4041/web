@@ -1,0 +1,463 @@
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{globals.switchLanguageValue.menu_users}}
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a  class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a  class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            {{globals.switchLanguageValue.menu_users}}
+                        </span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a class="m-nav__link" *ngIf="!showUpdateUser">
+                        <span class="m-nav__link-text">
+                            {{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.menu_users}}
+                        </span>
+                    </a>
+                    <a  class="m-nav__link" *ngIf="showUpdateUser">
+                        <span class="m-nav__link-text">
+                            {{globals.switchLanguageValue.common_button_update}} {{globals.switchLanguageValue.menu_users}}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div>
+<div class="m-content" *ngIf="showCreateUser">
+    <form (ngSubmit)="submitForm(f)" #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+        <div class=" row">
+            <div class="col-md-12">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head" *ngIf="!showUpdateUser">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    {{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.menu_users}}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head" *ngIf="showUpdateUser">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    {{globals.switchLanguageValue.common_button_update}} {{globals.switchLanguageValue.menu_users}}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px c-borderbtm">
+                        <div class="col-md-12">
+                            <div class=" row">
+                                <!-- <div class="col-md-3">
+                                    <div class="c-User_icon">
+                                        <img alt="user" class="m--img-rounded m--marginless m--img-centered" src="../../assets/images/user5.jpg">
+                                    </div>
+                                </div> -->
+                                <div class="col-md-3 c-margintop20">
+                                    <app-dropzone placeholder="Upload Profile Photo" identifier="profile_pic_path" [inline]="true" name="profile_pic_path" [(ngModel)]="user.profile_pic_path"
+                                        [config]="config"></app-dropzone>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class=" row">
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="first_name" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_firstname}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_firstname}}" name="first_name" [(ngModel)]="user.first_name" required></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="lastName" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_lastname}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_lastname}}" name="last_name" [(ngModel)]="user.last_name" required></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="email" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_email}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_email}}" name="email" [(ngModel)]="user.email" required email></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="phoneNumber" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_phone}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_phone}}" name="mobileno" inputType="number" [(ngModel)]="user.mobileno" required>
+                                            </app-textbox>
+                                        </div>
+                                        <div class="col-md-6 " *ngIf="!showUpdateUser && page=='superadmin'" >
+                                            <label class="m-checkbox m-checkbox--state-primary">
+                                                <input type="checkbox" name="sameasbusiness" (change)="hideAccountRole($event)" [(ngModel)]="user.is_superadmin"> {{globals.switchLanguageValue.users_Is_Super_Admin}}
+                                                <span></span>
+                                            </label>
+                                        </div>
+										<div class="col-md-6" *ngIf="page=='admin' && !showUpdateUser">
+                                            <label class="m-checkbox m-checkbox--state-primary">
+                                                <input type="checkbox" name="sameasbusiness" [(ngModel)]="user.is_accountadmin"> {{globals.switchLanguageValue.users_Is_Account_Admin}}
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px c-borderbtm" *ngIf="hideAccountAndRole && page=='superadmin'">
+                        <div class="col-md-12" *ngFor="let userac of user.userAccounts; let i = index">
+                            <div class=" row">
+                                <div class="col-md-6  c-marginbtm20">
+                                    <app-selectbox identifier="accounts-{{i}}" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.account_pagetitle}}:" [options]="accounts" name="accounts-{{i}}" placeholder="-- Select Account --" [(ngModel)]="userac.account_id" (onChange)="accountRoleSelected(i)"></app-selectbox>
+                                </div>
+                                <div class="col-md-6  c-marginbtm20">
+                                    <app-selectbox identifier="role-{{i}}" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.users_Role}}:" [options]="roles" name="roles-{{i}}" placeholder="-- Select Role --" [(ngModel)]="userac.role_id" (onChange)="accountRoleSelected(i)"></app-selectbox>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+					<div class="m-portlet__body padding-left-right-5px c-borderbtm" *ngIf="page=='admin'">
+                        <div class="col-md-12" *ngIf="!user.is_accountadmin">
+                            <div class=" row">
+                                <div class="col-md-6  c-marginbtm20">
+                                    <app-select2 [options]="bussinessgroup" [(ngModel)]="user.business_group_id"  placeholder="Select Bussiness Group" identifier="business_group_id" name="business_group_id" class="m-select2 m-select2--air" [inline]="false" [multiple]="true" label="{{globals.switchLanguageValue.common_Business_Group}}:" optionsValueField="id" optionsTextField="group_name" required></app-select2>
+									
+                                </div>
+                                <div class="col-md-6  c-marginbtm20">
+                                   <app-select2 [options]="profiles" formGroupCssClass="c-form_group" identifier="tbprofis" name="profile_id"  class="m-select2 m-select2--air" [multiple]="true" label="{{globals.switchLanguageValue.users_Profiles}}:" [(ngModel)]="user.profile_id" optionsValueField="id" optionsTextField="name" required></app-select2>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px">
+                        <div class="col-md-12">
+                            <div class=" row">
+
+                                <div class="col-md-4  c-marginbtm20">
+                                    <app-textbox identifier="address" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_address}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_address}}" name="address" appendIcon="la la-map-marker" [(ngModel)]="user.address.address" required></app-textbox>
+                                </div>
+
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="tbStreet" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_street}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_street}}" name="street" [(ngModel)]="user.address.street" required></app-textbox>
+                                </div>
+
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="city" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_city}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_city}}" name="city" [(ngModel)]="user.address.city" required></app-textbox>
+                                </div>
+
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="tbState" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_state}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_state}}" name="state" [(ngModel)]="user.address.state" required></app-textbox>
+                                </div>
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-selectbox identifier="country" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_country}}:" [options]="countries" name="country" placeholder="-- Select Country --" [(ngModel)]="user.address.country" required></app-selectbox>
+                                </div>
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="zipCode" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_zipcode}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_zipcode}}" name="pincode" [(ngModel)]="user.address.pincode" required></app-textbox>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions m-form__actions--solid">
+                            <div class=" row">
+                                <div class="col-lg-12 text-center">
+                                    <app-button buttonType="submit" buttonText="{{globals.switchLanguageValue.common_button_add}}" buttonIcon="la la-plus" *ngIf="!showUpdateUser" cssClass="m-btn--pill btn-info m-btn--air m-btn m-btn--custom btn-custom-style">
+                                    </app-button>
+                                    <app-button buttonType="submit" buttonText="{{globals.switchLanguageValue.common_button_update}}" buttonIcon="la la-refresh" *ngIf="showUpdateUser && page=='superadmin'" cssClass="m-btn--pill btn-info m-btn--air m-btn m-btn--custom btn-custom-style">
+                                    </app-button>
+                                    <app-button buttonType="submit" buttonText="{{globals.switchLanguageValue.common_button_update}}" buttonIcon="la la-refresh" *ngIf="(globals.getprofileaction == null ? true : globals.getprofileaction.updateUser) && (showUpdateUser ) && page=='admin'" cssClass="m-btn--pill btn-info m-btn--air m-btn m-btn--custom btn-custom-style">
+                                    </app-button>
+                                    <!--<app-button buttonType="submit" buttonText="Update" buttonIcon="la la-plus" *ngIf="showUpdateUser" cssClass="m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style">
+                                    </app-button>-->
+                                    <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" (click)="cancelCreate()" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-close"></app-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="m-content" *ngIf="showUserTable && page=='superadmin'">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        {{globals.switchLanguageValue.menu_users}}
+                    </h3>
+                </div>
+            </div>
+
+            <div class="m-portlet__head-tools">
+               <app-button (click)="toggleCreateUser()" buttonText="{{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.users_user}}" cssClass="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" buttonIcon="la la-plus"></app-button>
+
+            </div>
+        </div>
+
+        <div class="m-portlet__body">
+            <!--<div class="m-form m-form--label-align-right">
+                <div class="m-form m-form--label-align-right m--margin-bottom-30">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12 order-xl-2 m--align-right">
+                            <app-button (onClick)="togglePopUp()" buttonText="Filter" cssClass="custom-full-button m-btn--pill m-btn--air m-btn m-btn--custom btn-primary c-nomargin" buttonIcon="la la-filter">
+                            </app-button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>-->
+            <!-- <app-datatable (onRefreshClick)="getAllUsers($event,false,true)" (onSearchClick)="getAllUsers($event,true)" (onClearClick)="closepopup()"
+            (onResetClick)="resetSearch()" filterWidth="700px"> -->
+            <app-datatable #cd filterText="{{globals.switchLanguageValue.menu_users}} {{globals.switchLanguageValue.common_label_filter}}" (onSearchClick)="getAllUsers($event)" (onClearClick)="closepopup($event)" (onResetClick)="resetSearch($event)"
+            (onRefreshClick)="getAllUsers($event,false,true)" (onPrintClick)="downloadUser(this.paging.sortBy,this.paging.sortDirection,'print', this.paging.search,'superadmin')"
+            (onExportPDFClick)="downloadUser(this.paging.sortBy,this.paging.sortDirection,'excel', this.paging.search,'superadmin')"
+            (onExportExcelClick)="downloadUser(this.paging.sortBy,this.paging.sortDirection,'pdf', this.paging.search, 'superadmin')"
+            filterWidth="700px">
+            <div table-filter-body>
+                    <div class="row">
+                        <div class="col-md-6 c-marginbtm20" *ngIf="this.page == 'superadmin'">
+                            <app-textbox identifier="companeName" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.users_Company_Name}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.users_Company_Name}}" name="account_name" [(ngModel)]="paging.search.account_name"></app-textbox>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20" *ngIf="this.page == 'admin'">
+                            <app-textbox identifier="name" formGroupCssClass="c-form_group" label="Name:" placeholder="Enter Name" name="name" [(ngModel)]="paging.search.name"></app-textbox>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20">
+                            <app-textbox identifier="Contact Email" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.users_Contact_Email}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.users_Contact_Email}}" name="contact_email" [(ngModel)]="paging.search.contact_email"></app-textbox>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 c-marginbtm20" *ngIf="this.page == 'superadmin'">
+                            <app-select2 [options]="allRoles" [(ngModel)]="paging.search.allRoles" identifier="allRoles" name="allRoles" class="m-select2 m-select2--air" [inline]="false" [multiple]="true" label="{{globals.switchLanguageValue.users_Roles}}" labelColumns="2" textBoxColumns="6" optionsValueField="id" optionsTextField="name"></app-select2>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20" *ngIf="this.page == 'admin'">
+                            <app-select2 [options]="bussinessgroup" [(ngModel)]="paging.search.business_group_id" identifier="business_group_id" name="business_group_id" class="m-select2 m-select2--air" [inline]="false" [multiple]="true" label="business_group_id" labelColumns="2" textBoxColumns="6" optionsValueField="id" optionsTextField="group_name"></app-select2>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20">
+            
+                            <app-select2 [options]="Status" [(ngModel)]="paging.search.status" identifier="status" name="status" class="m-select2 m-select2--air" [multiple]="true" label="{{globals.switchLanguageValue.account_column_status}}:" minlengtharray minlength="2" optionsValueField="id" optionsTextField="name"></app-select2>
+                        </div>
+            
+                    </div>
+                    <div class="row">
+                        
+                        <div class="col-md-6 c-marginbtm20" *ngIf="this.page == 'admin'">
+                            <app-select2 [options]="profiles" [(ngModel)]="paging.search.profile_id" identifier="profile_id" name="profile_id" class="m-select2 m-select2--air" [inline]="false" [multiple]="true" label="profile_id" labelColumns="2" textBoxColumns="6" optionsValueField="id" optionsTextField="name"></app-select2>
+                        </div>
+                        
+            
+                    </div>
+                </div>
+            <p-dataTable table-body [value]="users" [rows]="10" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,20,25]" [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="getAllUsers($event)" scrollable="true" sortMode="multiple" [globalFilter]="gb" #dt [hidden]="showEditForm">
+                <p-column header="{{globals.switchLanguageValue.users_user}}" [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width180">
+                    <ng-template let-userdt="rowData" pTemplate="body">
+                        <span class="c-action-width180">
+                            <div class="row">
+                                <div class="col-4 mrgntop10">
+                                    <!-- <img alt="user" class="m--img-rounded m--marginless m--img-centered" src="../../assets/images/user5.jpg" width="40px"> -->
+                                     <img alt="user" class="m--img-rounded m--marginless m--img-centered" src="{{userdt.profile_pic_path}}" width="30px" height="30px">
+                                </div>
+                                <div class="col-8 c-form_group">
+                                    <p class="text-left mrgntop10">{{userdt.first_name}}
+                                        <br/> {{userdt.last_name}}</p>
+                                </div>
+                            </div>
+                        </span>
+                    </ng-template>
+                </p-column>
+                <p-column field="account_name" header="{{globals.switchLanguageValue.account}}" [sortable]="true" [style]="{'width':'150px'}" styleClass="text-center m-datatable__cell--center m-datatable__cell"></p-column>
+                <p-column [style]="{'width':'150px'}" field="name" header="{{globals.switchLanguageValue.users_Role}}" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell"></p-column>
+                <p-column [style]="{'width':'250px'}" header=" {{globals.switchLanguageValue.users_Contact_Info}} " [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+                    <ng-template let-userdt="rowData" pTemplate="body">
+                        <span style="width: 150px;">
+                            <p>{{userdt.email}}
+                                <br/> {{userdt.mobileno}}</p>
+                        </span>
+                    </ng-template>
+                </p-column>
+                <p-column [style]="{'width':'150px'}" header="{{globals.switchLanguageValue.account_column_status}}" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+                    <ng-template let-a="rowData" pTemplate="body">
+                       <!-- <span class="m-badge c-badge m-badge--wide" [ngClass]="(a.status==1)?'m-badge--success':'m-badge--danger'">{{a.status==1?'Active':'In-Active'}}</span>-->
+                       <span class="m-switch m-switch--outline m-switch--icon m-switch--brand">
+                        <label>
+                          <input type="checkbox" checked="checked" name="status" id="status" [checked]="a.status == true"  (click)="SuperadminStatusChange(a.id)">
+                          <span></span>
+
+                  </label>
+                  </span>
+                    </ng-template>
+                </p-column>
+                <p-column styleClass="col-button c-action-width120">
+                    <ng-template let-userdt="rowData" pTemplate="body">
+                        <a (click)="editUser(userdt.id)" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="{{globals.switchLanguageValue.common_edit}} ">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="{{globals.switchLanguageValue.users_Reset_Password}}" (click)="Restpassword(userdt.id)">
+                            <i class="fa fa-unlock-alt"></i>
+                        </a>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+            </app-datatable>
+        </div>
+    </div>
+</div>
+<div class="m-content" *ngIf="showUserTable && this.page=='admin'">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        {{globals.switchLanguageValue.menu_users}}
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+               <app-button (click)="toggleCreateUser()" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.addUser" buttonText="{{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.users_user}}" cssClass="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" buttonIcon="la la-plus"></app-button>
+            </div>
+        </div>
+
+        <div class="m-portlet__body">
+            <!--<div class="m-form m-form--label-align-right">
+                <div class="m-form m-form--label-align-right m--margin-bottom-30">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12 order-xl-2 m--align-right">
+                            <app-button (onClick)="togglePopUp()" buttonText="Filter" cssClass="custom-full-button m-btn--pill m-btn--air m-btn m-btn--custom btn-primary c-nomargin" buttonIcon="la la-filter">
+                            </app-button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>-->
+            <!-- <app-datatable (onRefreshClick)="getAllUsers($event,false,true)" (onSearchClick)="getAllUsers($event,true)" (onClearClick)="closepopup()"
+            (onResetClick)="resetSearch($event)" filterWidth="700px"> -->
+            <app-datatable #cd filterText="{{globals.switchLanguageValue.menu_users}} {{globals.switchLanguageValue.common_label_filter}}" (onSearchClick)="getAllUsers($event)" (onClearClick)="closepopup($event)" (onResetClick)="resetSearch($event)"
+            (onRefreshClick)="getAllUsers($event,false,true)" (onPrintClick)="downloadUser(this.paging.sortBy,this.paging.sortDirection,'print', this.paging.search,'admin')"
+            (onExportPDFClick)="downloadUser(this.paging.sortBy,this.paging.sortDirection,'excel', this.paging.search,'admin')" [showDownload]="globals.getprofileaction == null ? true : globals.getprofileaction.userExport"
+            (onExportExcelClick)="downloadUser(this.paging.sortBy,this.paging.sortDirection,'pdf', this.paging.search,'admin')" [showPrint]="globals.getprofileaction == null ? true : globals.getprofileaction.userExport"
+            filterWidth="700px" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getUserAll">
+            <div table-filter-body>
+                    <div class="row">
+                        <div class="col-md-6 c-marginbtm20" *ngIf="this.page == 'superadmin'">
+                            <app-textbox identifier="companeName" formGroupCssClass="c-form_group" label="Company Name:" placeholder="Enter Company Name" name="account_name" [(ngModel)]="paging.search.account_name"></app-textbox>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20" *ngIf="this.page == 'admin'">
+                            <app-textbox identifier="name" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.users_Name}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.users_Name}}" name="name" [(ngModel)]="paging.search.name"></app-textbox>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20">
+                            <app-textbox identifier="Contact Email" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.users_Contact_Email}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.users_Contact_Email}}" name="contact_email" [(ngModel)]="paging.search.contact_email"></app-textbox>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 c-marginbtm20" *ngIf="this.page == 'superadmin'">
+                            <app-select2 [options]="allRoles" [(ngModel)]="paging.search.allRoles" identifier="allRoles" name="allRoles" class="m-select2 m-select2--air" [inline]="false" [multiple]="true" label="{{globals.switchLanguageValue.users_Roles}}" labelColumns="2" textBoxColumns="6" optionsValueField="id" optionsTextField="name"></app-select2>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20" *ngIf="this.page == 'admin'">
+                            <app-select2 [options]="bussinessgroup" [(ngModel)]="paging.search.business_group_id" identifier="business_group_id" name="business_group_id" class="m-select2 m-select2--air" [inline]="false" [multiple]="true" label="{{globals.switchLanguageValue.users_business_group_id}}" labelColumns="2" textBoxColumns="6" optionsValueField="id" optionsTextField="group_name"></app-select2>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20">
+            
+                            <app-select2 [options]="Status" [(ngModel)]="paging.search.status" identifier="status" name="status" class="m-select2 m-select2--air" [multiple]="true" label="{{globals.switchLanguageValue.account_column_status}}:" minlengtharray minlength="2" optionsValueField="id" optionsTextField="name"></app-select2>
+                        </div>
+            
+                    </div>
+                    <div class="row">
+                        
+                        <div class="col-md-6 c-marginbtm20" *ngIf="this.page == 'admin'">
+                            <app-select2 [options]="profiles" [(ngModel)]="paging.search.profile_id" identifier="profile_id" name="profile_id" class="m-select2 m-select2--air" [inline]="false" [multiple]="true" label="{{globals.switchLanguageValue.users_profile_id}}" labelColumns="2" textBoxColumns="6" optionsValueField="id" optionsTextField="name"></app-select2>
+                        </div>
+                        
+            
+                    </div>
+                </div>
+            <p-dataTable table-body [value]="users" [rows]="10" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,20,25]" [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="getAllUsers($event)" scrollable="true" sortMode="multiple" [globalFilter]="gb" #dt [hidden]="showEditForm">
+                <p-column header="{{globals.switchLanguageValue.users_user}}" [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width180">
+                    <ng-template let-userdt="rowData" pTemplate="body">
+                        <span class="c-action-width180">
+                            <div class="row">
+                                <div class="col-4 mrgntop10">
+                                    <!-- <img alt="user" class="m--img-rounded m--marginless m--img-centered" src="../../assets/images/user5.jpg" width="40px"> -->
+                                    <img alt="user" class="m--img-rounded m--marginless m--img-centered" src="{{userdt.profile_pic_path}}" width="30px" height="30px">
+                                </div>
+                                <div class="col-8 c-form_group">
+                                    <p class="text-left mrgntop10">{{userdt.name}}
+                                </div>
+                            </div>
+                        </span>
+                    </ng-template>
+                </p-column>
+                <p-column field="business_group" header="{{globals.switchLanguageValue.users_Bussiness_Group}}" [sortable]="true" [style]="{'width':'150px'}" styleClass="text-center m-datatable__cell--center m-datatable__cell"></p-column>
+                <p-column [style]="{'width':'150px'}" field="profile_name" header="{{globals.switchLanguageValue.users_Profile}}" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell"></p-column>
+                <p-column [style]="{'width':'250px'}" header="{{globals.switchLanguageValue.users_Contact_Info}}" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+                    <ng-template let-userdt="rowData" pTemplate="body">
+                        <span style="width: 150px;">
+                            <p>{{userdt.email}}
+                                <br/> {{userdt.mobileno}}</p>
+                        </span>
+                    </ng-template>
+                </p-column>
+                <p-column [style]="{'width':'150px'}" header="{{globals.switchLanguageValue.account_column_status}}" [sortable]="true" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.userStatus" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+                    <ng-template let-a="rowData" pTemplate="body">
+                       <!-- <span class="m-badge c-badge m-badge--wide" [ngClass]="(a.status==1)?'m-badge--success':'m-badge--danger'">{{a.status==1?'Active':'In-Active'}}</span>-->
+                       <span class="m-switch m-switch--outline m-switch--icon m-switch--brand">
+                        <label>
+                          <input type="checkbox" checked="checked" name="status" id="status" [checked]="a.status == true"  (click)="AdminStatusChange(a.id)">
+                          <span></span>
+
+                  </label>
+                  </span>
+                    </ng-template>
+                </p-column>
+                <p-column styleClass="col-button c-action-width120">
+                    <ng-template let-userdt="rowData" pTemplate="body">
+                        <a (click)="editUser(userdt.id)" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getUserById" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="{{globals.switchLanguageValue.common_edit}} ">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="{{globals.switchLanguageValue.users_Reset_Password}}" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.resetPassword" (click)="Restpassword(userdt.id)">
+                            <i class="fa fa-unlock-alt"></i>
+                        </a>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+            </app-datatable>
+        </div>
+    </div>
+</div>
+<!-- popups -->
+
+<ng-template #showsuccesspopup let-c="close" let-d="dismiss">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Message</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="d('Cross click')">
+                      <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{{message}}</p>
+            </div>
+            <div class="modal-footer m-form__actions--solid">
+                <div class="col-lg-12 text-center">
+                    <app-button buttonText="{{globals.switchLanguageValue.common_button_close}}" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" 
+                    buttonIcon="la la-close" (onClick)="cancelPopup()"></app-button>
+                </div>
+            </div>  
+ </ng-template>

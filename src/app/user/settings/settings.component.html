@@ -1,0 +1,473 @@
+<div class="m-subheader ">
+   <div class="d-flex align-items-center">
+      <div class="mr-auto">
+         <h3 class="m-subheader__title m-subheader__title--separator">
+            {{globals.switchLanguageValue.common_settings}}
+         </h3>
+         <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+            <li class="m-nav__item m-nav__item--home">
+               <a  class="m-nav__link m-nav__link--icon">
+               <i class="m-nav__link-icon la la-home"></i>
+               </a>
+            </li>
+            <li class="m-nav__separator">
+               -
+            </li>
+            <li class="m-nav__item">
+               <a  class="m-nav__link">
+               <span class="m-nav__link-text">
+                  {{globals.switchLanguageValue.common_settings}}
+               </span>
+               </a>
+            </li>
+            <li class="m-nav__separator">
+               -
+            </li>
+            <li class="m-nav__item">
+               <a  class="m-nav__link">
+               <span class="m-nav__link-text">
+                  {{globals.switchLanguageValue.common_settings}}
+               </span>
+               </a>
+            </li>
+         </ul>
+      </div>
+      <div>
+      </div>
+   </div>
+</div>
+<div class="m-content" *ngIf="!showCreateGroup && !createVehicleSettings">
+   <div class="row">
+      <div class="col-sm-6 col-md-3" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getBusinessGroups">
+         <div class="tile-container">
+            <a class="tile-content" (click)="ShowBusinessGroup();">
+            <span class="tile-icon">
+            <i class="la la-sitemap"></i>
+            </span>
+            <span class="m-nav-grid__text tile-heading">Organisation Setup</span>
+            </a>
+         </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+         <div class="tile-container">
+            <a class="tile-content" (click)="ShowVehicleSettings();">
+            <span class="tile-icon">
+            <i class="la la-sitemap"></i>
+            </span>
+            <span class="m-nav-grid__text tile-heading">{{globals.switchLanguageValue.vehicle_settings}}</span>
+            </a>
+         </div>
+      </div>
+      <!-- <div class="col-sm-6 col-md-3">
+         <div class="tile-container">
+            <a href="" class="tile-content">
+            <span class="tile-icon">
+            <i class="la la-sitemap"></i>
+            </span>
+            <span class="m-nav-grid__text tile-heading">Organisation Setup</span>
+            </a>
+         </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+         <div class="tile-container">
+            <a href="" class="tile-content">
+            <span class="tile-icon">
+            <i class="la la-sitemap"></i>
+            </span>
+            <span class="m-nav-grid__text tile-heading">Organisation Setup</span>
+            </a>
+         </div></div> -->
+   </div>
+</div>
+<div class="m-content" *ngIf="showCreateGroup">
+   <div class="m-portlet--mobile">
+      <div class="row">
+         <div class="col-xl-12">
+            <!--begin:: Widgets/Support Tickets -->
+            <div class="m-portlet m-portlet--full-height ">
+               <div class="m-portlet__head">
+                  <div class="m-portlet__head-caption">
+                     <div class="m-portlet__head-title head-title">
+                        <h3 class="m-portlet__head-text">
+                              {{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.users_Bussiness_Group}}
+                        </h3>
+                        <span class="back-button">
+                           <app-button buttonText="{{globals.switchLanguageValue.common_back}}"  cssClass="btn btn-sm m-btn--pill m-btn--air btn-info m-btn m-btn--custom m-pull-right vertical-middle" buttonIcon="la la-backward"
+                              (onClick)="ShowBusinessGroup()"></app-button>
+                        </span>
+                     </div>
+                  </div>
+               </div>
+               <div class="m-portlet__body">
+                  <div class="row align-items-center">
+                     <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.addBusinessGroup">
+                        <div class="add-file-content" >
+                           <button type="button" class="add-file-tile" data-toggle="modal" data-target="#m_modal_4" 
+                              (click)="togglePopUp()">
+                           <span class="add-file-tile-icon">
+                           <i class="m-nav-grid__icon flaticon-add"></i>
+                           </span>
+                           <span class="add-file-tile-text">{{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.users_Bussiness_Group}}</span>
+                           </button>
+                        </div>
+                     </div>
+                     <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4"  *ngFor="let groupdata of BusinessDate ; index as i;">
+                        <div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet--bordered_gray" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getBusinessGroups">
+                           <div class="m-portlet__head c_portlet__head">
+                              <div class="m-portlet__head-caption">
+                                 <div class="m-portlet__head-title">                       
+                                    <h3 class="m-portlet__head-text">
+                                       <span> {{groupdata.group_name}}</span>
+                                    </h3>
+                                 </div>
+                              </div>
+                              <div class="m-portlet__head-tools">
+                                 <ul class="m-portlet__nav">
+                                    <li class="m-portlet__nav-item" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.addUpdateBusinessUnit">
+                                       <button  class="m-nav__link btn btn-bg-none m-btn--icon m-btn--icon-only m-btn--pill" 
+                                          (click)="ShowAddBusinessUnit(groupdata.id)" title="{{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.common_Business_Unit}}">
+                                       <i class="la la-plus"></i>
+                                       </button>
+                                    </li>
+									
+						<li class="m-portlet__nav-item" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getBusinessGroupById">
+                                       <button  class="m-nav__link btn btn-bg-none m-btn--icon m-btn--icon-only m-btn--pill" 
+                                          (click)="editBusiness(groupdata.id)" title="{{globals.switchLanguageValue.common_tooltipedit}} ">
+                                       <i class="fa fa-edit"></i>
+                                       </button>
+                                    </li>
+									
+									
+                                    <li class="m-portlet__nav-item" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.deleteBusinessGroup">
+                                       <a class="m-nav__link btn m-btn btn-bg-none m-btn--icon m-btn--icon-only m-btn--pill" 
+                                          (click)="DeleteBusiness(groupdata.id)" title="{{globals.switchLanguageValue.common_delete}} ">
+                                       <i class="fa fa-trash-o"></i>
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                           <div class="m-portlet__body c-portlet__body_padding">
+                              <div class="add-group-box-body" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getBusinessUnitsList">
+                                 <span class="unit-name" *ngFor="let unitdata of groupdata.business_units ; index as j;">{{unitdata.unit_name}}
+                                 <span class="flotright">
+                                 <button  class="m-portlet__nav-link btn m-btn c-btn-hover-design m-btn--icon m-btn--icon-only m-btn--pill"
+                                    (click)="editBusinessUnit(unitdata.id)" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getBusinessUnitById" title="{{globals.switchLanguageValue.common_tooltipedit}} ">
+                                 <i class="fa fa-edit"></i>
+                                 </button>
+                                 <a class="m-portlet__nav-link btn m-btn c-btn-hover-design m-btn--icon m-btn--icon-only m-btn--pill"
+                                    (click)="DeleteBusinessUnit(unitdata.id)" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.deleteBusinessUnit"  title="{{globals.switchLanguageValue.common_delete}} ">
+                                 <i class="fa fa-trash-o"></i>
+                                 </a>
+                                 </span>
+                                 </span>
+                              </div>                             
+                           </div>
+						 
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!--end:: Widgets/Support Tickets -->
+         </div>
+      </div>
+   </div>
+</div>
+
+<ng-template #businessgroup let-c="close" let-d="dismiss">
+   <form (ngSubmit)="addBusiness(f)"  #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+   <div class="modal-header">
+      <h4 class="modal-title" id="exampleModalLabel">{{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.users_Bussiness_Group}}</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+         (click)="d('Cross click')">
+      <span aria-hidden="true">×</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <ul class="nav nav-tabs  m-tabs-line m-tabs-line--success" role="tablist">
+         <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_6_1" role="tab" aria-expanded="true">
+            <i class="la la la-group"></i> {{globals.switchLanguageValue.users_Bussiness_Group}}</a>
+         </li>
+         <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_3" role="tab" aria-expanded="false">
+            <i class="la la la-user"></i>{{globals.switchLanguageValue.common_Business_Unit}}</a>
+         </li>
+      </ul>
+      <div class="tab-content">
+         <div class="tab-pane active" id="m_tabs_6_1" role="tabpanel">
+            <div class="container">
+               <div class="row c-borderbtm mrgnbtm20">
+                  <div class="col-lg-4 col-md-6 mrgnbtm20">
+                     <app-textbox identifier="groupname" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.users_Bussiness_Group}} {{globals.switchLanguageValue.users_Name}}:" 
+                     placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.users_Bussiness_Group}} {{globals.switchLanguageValue.users_Name}}" [(ngModel)]="business.group_name"
+                     name="groupname" required ></app-textbox>
+                  </div>
+                  <div class="col-lg-4 col-md-6 mrgnbtm20" style="margin-top:35px;">
+                      
+                              <label class="m-checkbox m-checkbox--state-primary">
+                                    <input type="checkbox" name="sameasbusiness" [(ngModel)]="business.is_mastergroup"> {{globals.switchLanguageValue.bussiness_master_group}}
+                                    <span></span>
+                                </label>
+                             
+                           
+                     </div>
+                     <div class="col-lg-4 col-md-6 mrgnbtm20 text-right" style="margin-top:29px; " *ngIf="edit_mode">
+                        <span class="m-switch m-switch--outline m-switch--icon m-switch--brand">
+                              <label>
+                                  <input type="checkbox" checked="checked" name="status" id="status" [checked]="" 
+                                  [(ngModel)]="business.is_active">
+                                  <span></span>
+
+                              </label>
+                          </span>   
+                     </div>
+               </div>
+               <div class="row c-marginbtm20">
+                  <div class="col-lg-4 col-md-6 mrgnbtm20">
+                     <app-textbox identifier="groupaddress" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_address}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_address}}" name="groupaddress"
+                     appendIcon="la la-map-marker" [(ngModel)]="business.group_address.address"
+                     required></app-textbox>
+                  </div>
+                  <div class="col-lg-4 col-md-6 mrgnbtm20">
+                     <app-textbox identifier="groupstreet" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_street}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_street}}" [(ngModel)]="business.group_address.street"
+                     name="groupstreet" required ></app-textbox>
+                  </div>
+                  <div class="col-lg-4 col-md-6 mrgnbtm20">
+                     <app-textbox identifier="groupcity" helpText="" formGroupCssClass="c-form_group"  label="{{globals.switchLanguageValue.common_label_city}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_city}}" [(ngModel)]="business.group_address.city"
+                     name="groupcity" required ></app-textbox>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-lg-4 col-md-6 mrgnbtm20">
+                     <app-textbox identifier="groupstate" formGroupCssClass="c-form_group"  helpText="" label="{{globals.switchLanguageValue.common_label_state}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_state}}" [(ngModel)]="business.group_address.state"
+                     name="groupstate"   required ></app-textbox>
+                  </div>
+                  <div class="col-lg-4 col-md-6 mrgnbtm20">
+                     <app-selectbox identifier="groupcountry" formGroupCssClass="c-form_group" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_country}}:" [options]="countries" optionsValueField="id"
+                     optionsTextField="name" name="country" placeholder="-- Select --" required
+                     name="groupcountry" [(ngModel)]="business.group_address.country"></app-selectbox>
+                  </div>
+                  <div class="col-lg-4 col-md-6 mrgnbtm20">
+                     <app-textbox identifier="grouppin" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_placeholder_enter}}:" placeholder="{{globals.switchLanguageValue.common_label_zipcode}} {{globals.switchLanguageValue.common_label_zipcode}}" 
+                     name="grouppin"  [(ngModel)]="business.group_address.pincode" required ></app-textbox>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="tab-pane" id="m_tabs_6_3" role="tabpanel">
+            <div class="container">
+               <div *ngFor="let rows of business.business_units ; index as i;" class="mrgntopbtm15">
+                  <div class="row">
+                  </div>
+                  <div class="row c-borderbtm c-marginbtm20">
+                     <div class="col-md-12 text-right" >
+                        <app-button buttonText="{{globals.switchLanguageValue.common_delete}}" cssClass="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill m-btn--air" buttonIcon="la la-trash-o" (onClick)="deleteBusinessUnit($event, i)"></app-button>
+                     </div>
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-textbox identifier="unitname{{i}}" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_Business_Unit}} {{globals.switchLanguageValue.users_Name}}:" name="unitname{{i}}" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.settings_Business_Name}}"
+                        [(ngModel)]="rows.unit_name" required ></app-textbox>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-textbox identifier="address{{i}}" formGroupCssClass="c-form_group" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_address}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_address}}" name="address{{i}}"
+                        appendIcon="la la-map-marker" [(ngModel)]="rows.unit_address.address" required></app-textbox>
+                     </div>
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-textbox identifier="street{{i}}" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_street}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_street}}" name="street{{i}}"
+                        [(ngModel)]="rows.unit_address.street"  required ></app-textbox>
+                     </div>
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-textbox identifier="city{{i}}" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.account_column_city}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.account_column_city}}"name="city{{i}}"
+                        [(ngModel)]="rows.unit_address.city"  required ></app-textbox>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-textbox identifier="state{{i}}" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.account_column_status}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.account_column_status}}" name="state{{i}}" 
+                        [(ngModel)]="rows.unit_address.state" required ></app-textbox>
+                     </div>
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-selectbox identifier="country{{i}}" formGroupCssClass="c-form_group" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.account_column_country}}:" [options]="countries" optionsValueField="id"
+                        optionsTextField="name" name="country{{i}}" placeholder="-- Select --" required
+                        [(ngModel)]="rows.unit_address.country"></app-selectbox>
+                     </div>
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-textbox identifier="zip{{i}}" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_zipcode}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_zipcode}}" name="zip{{i}}"
+                        [(ngModel)]="rows.unit_address.pincode" required ></app-textbox>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-lg-12">
+                     <app-button buttonText="{{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.common_Business_Unit}}" cssClass="btn m-btn--pill m-btn--air btn-info m-btn m-btn--custom " buttonIcon="la la la-plus"
+                        (onClick)="addBusinessUnit($event)"></app-button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="modal-footer">
+      <div class="col-lg-12 text-center">
+         <app-button buttonText="{{globals.switchLanguageValue.common_button_add}}" *ngIf="!showUpdateBusiness" buttonType="submit" cssClass="btn btn-custom-style m-btn--pill m-btn--air btn-info m-btn m-btn--custom " buttonIcon="la la la-plus"
+            ></app-button>
+         <app-button buttonText="{{globals.switchLanguageValue.common_button_update}}" *ngIf="(showUpdateBusiness) && (globals.getprofileaction == null ? true : globals.getprofileaction.updateBusinessGroup)" buttonType="submit" cssClass="m-btn--pill btn-primary m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la la-refresh"
+            ></app-button>
+         <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" cssClass="btn btn-custom-style  m-btn--pill m-btn--air btn-warning m-btn m-btn--custom m-demo-icon__class m-btn--icon"
+            buttonIcon="la la-close" (onClick)="togglePopUp()"></app-button>
+      </div>
+   </div>
+   </form>
+</ng-template>
+<ng-template #businessunit let-c="close" let-d="dismiss" >
+   <form  (ngSubmit)="businessUnitAdd(f1)" #f1="ngForm" method="post" class="m-form m-form--fit m-form--label-align-right" novalidate>  
+   <div class="modal-header">
+      <h4 class="modal-title" id="exampleModalLabel"> {{globals.switchLanguageValue.common_Business_Unit}}</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+         (click)="d('Cross click')">
+      <span aria-hidden="true">×</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <ul class="nav nav-tabs  m-tabs-line m-tabs-line--success" role="tablist">
+         <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_3" role="tab" aria-expanded="false">
+            <i class="la la la-user"></i>{{globals.switchLanguageValue.common_Business_Unit}}</a>
+         </li>
+      </ul>
+      <div class="tab-content">
+         <div class="tab-pane active c-borderbtm" id="m_tabs_6_3" role="tabpanel">
+            <div class="container">
+               <div *ngFor="let rows of business.business_units ; index as i;" class="mrgntopbtm15 ">
+                  <div class="row c-marginbtm20 c-borderbtm">
+                     <div class="col-sm-12 text-right" *ngIf="!showUpdateBusinessUnit" >
+                        <app-button buttonText="{{globals.switchLanguageValue.common_delete}}" cssClass="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill m-btn--air" buttonIcon="la la-trash-o" (onClick)="deleteBusinessUnit($event, i)"></app-button>
+                     </div>
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-textbox identifier="unitname{{i}}" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_Business_Unit}} {{globals.switchLanguageValue.users_Name}}:" name="unitname{{i}}" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_Business_Unit}}"
+                        [(ngModel)]="rows.unit_name" required ></app-textbox>
+                     </div>
+                  </div>
+                  <div class="row c-marginbtm20">
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-textbox identifier="address{{i}}" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_address}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_address}}" name="address{{i}}"
+                        appendIcon="la la-map-marker" [(ngModel)]="rows.unit_address.address" required></app-textbox>
+                     </div>
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-textbox identifier="street{{i}}" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_street}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_street}}" name="street{{i}}"
+                        [(ngModel)]="rows.unit_address.street"  required ></app-textbox>
+                     </div>
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-textbox identifier="city{{i}}" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_city}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_city}}"name="city{{i}}"
+                        [(ngModel)]="rows.unit_address.city"  required ></app-textbox>
+                     </div>
+                  </div>
+                  <div class="row c-marginbtm20">
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-textbox identifier="state{{i}}" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_state}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_state}}" name="state{{i}}" 
+                        [(ngModel)]="rows.unit_address.state" required ></app-textbox>
+                     </div>
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-selectbox identifier="country{{i}}" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_country}}:" [options]="countries" optionsValueField="id"
+                        optionsTextField="name" name="country{{i}}" placeholder="-- Select --" required
+                        [(ngModel)]="rows.unit_address.country"></app-selectbox>
+                     </div>
+                     <div class="col-lg-4 col-md-6 mrgnbtm20">
+                        <app-textbox identifier="zip{{i}}" helpText="" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_zipcode}} :" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_zipcode}}" name="zip{{i}}"
+                        [(ngModel)]="rows.unit_address.pincode" required ></app-textbox>
+                     </div>
+                  </div>
+               </div>
+               <div class="row" *ngIf="!showUpdateBusinessUnit">
+                  <div class="col-lg-12">
+                     <app-button buttonText="{{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.common_Business_Unit}}" cssClass="btn m-btn--pill m-btn--air btn-info m-btn m-btn--custom " buttonIcon="la la la-plus"
+                        (onClick)="addBusinessUnit($event)"></app-button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="modal-footer">
+      <div class="col-lg-12 text-center">
+         <app-button  buttonText="{{globals.switchLanguageValue.common_button_add}}" *ngIf="!showUpdateBusinessUnit" 
+            buttonType="submit" cssClass="btn btn-custom-style m-btn--pill m-btn--air btn-info m-btn m-btn--custom " buttonIcon="la la la-plus"
+            ></app-button>
+         <app-button   buttonText="{{globals.switchLanguageValue.common_button_update}}" *ngIf="(showUpdateBusinessUnit) && (globals.getprofileaction == null ? true : globals.getprofileaction.addUpdateBusinessUnit)" buttonType="submit" cssClass="m-btn--pill btn-primary m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la la-refresh"
+            ></app-button>
+         <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" cssClass="btn btn-custom-style  m-btn--pill m-btn--air btn-warning m-btn m-btn--custom m-demo-icon__class m-btn--icon"
+            buttonIcon="la la-close" (onClick)="toggleUnitPopUp()"></app-button>
+      </div>
+   </div>
+   </form> 
+</ng-template>
+<div class="m-content" *ngIf="createVehicleSettings">
+            <form (ngSubmit)="updateVehicleSettings(f2)"  #f2="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+       <div class="row">
+            <div class="col-lg-12">  
+               <!--begin::Portlet-->
+            <div class="m-portlet m-portlet--head-sm" data-portlet="true" id="m_portlet_tools_3">
+                  <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                           <div class="m-portlet__head-title head-title">
+                              <h3 class="m-portlet__head-text">
+                                    {{globals.switchLanguageValue.vehicle_settings}}
+                              </h3>
+                              <span class="back-button">
+                                 <app-button buttonText="{{globals.switchLanguageValue.common_back}}"  cssClass="btn btn-sm m-btn--pill m-btn--air btn-info m-btn m-btn--custom m-pull-right vertical-middle" buttonIcon="la la-backward"
+                                    (onClick)="ShowVehicleSettings()"></app-button>
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+               <div class="m-portlet__body">
+                  <div class="row">
+                  <div class="col-md-6 c-marginbtm20">
+                  <app-selectbox identifier="groupcountry" formGroupCssClass="c-form_group" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.vehicle_distance_type}}:" [options]="distancetypes" optionsValueField="id"
+                  optionsTextField="unit_type"  placeholder="-- Select --" required name="distance_type" [(ngModel)]="vehiclesettings.distance_type"></app-selectbox>
+                  </div>
+                              
+                  </div>
+                  <div class="row">
+                     <div class="col-md-6 c-marginbtm20">
+                        <app-textbox identifier="tbEmailSMTP" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.vehicle_speed}} ({{vehiclesettings.distance_type==2?'mph':'kmph'}})" placeholder="Speed Limits" name="tbSpeedLimits"
+                         required [(ngModel)]="vehiclesettings.speed_limit">
+                        </app-textbox>
+                     </div>
+                     <div class="col-md-6 c-marginbtm20">
+                        <app-textbox identifier="tbusername" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.vehicle_distance}} ({{vehiclesettings.distance_type==2?'mph':'kmph'}})" placeholder="Vehicle Distance" name="tbVehicleDistance"
+                        required [(ngModel)]="vehiclesettings.vehicle_distance">
+                        </app-textbox>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-6 c-marginbtm20">
+                        <app-textbox identifier="tbPort" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.vehicle_excessive}} (Mints)" placeholder="Excessive Idling Time" name="tbExcessiveIdlingTime"
+                        required [(ngModel)]="vehiclesettings.idling_time">
+                       </app-textbox>
+                     </div>
+                     
+                  </div>
+               </div>
+            </div>    
+            <!--end::Portlet-->
+            </div>
+            <!--begin::Portlet-->
+            <div class="col-12 text-center">
+            <div class="m-portlet__foot m-portlet__foot--fit">
+                      <div class="m-form__actions m-form__actions">
+                          <div class=" row">
+                              <div class="col-lg-12 text-center">
+                                   <app-button buttonType="{{globals.switchLanguageValue.common_button_update}}" buttonText="Update" cssClass="btn-custom-style m-btn--pill m-btn--air btn-success m-btn m-btn--custom" buttonIcon="la la-refresh" ></app-button>
+                                  <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" cssClass="btn-custom-style  m-btn--pill m-btn--air btn-warning m-btn m-btn--custom m-demo-icon__class" buttonIcon="la la-remove" (onClick)="ShowVehicleSettings()"></app-button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>    
+         </div>  
+      </form>
+      </div>

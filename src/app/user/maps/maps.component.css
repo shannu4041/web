@@ -1,0 +1,22 @@
+ngui-map{
+    height: 100% !important;
+
+}
+
+@media (min-width: 993px) {
+    .m-footer--push.m-aside-left--enabled:not(.m-footer--fixed) .m-aside-right,
+    .m-footer--push.m-aside-left--enabled:not(.m-footer--fixed) .m-wrapper {
+        margin-bottom: 0px !important;
+    }
+}
+.custom-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color:blue;
+        border: 2px solid white;
+        color:white;
+        font-size:20px;
+        text-align:center;
+}
+    

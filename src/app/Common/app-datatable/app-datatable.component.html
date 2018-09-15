@@ -1,0 +1,67 @@
+<div my-header class="m-form m-form--label-align-right c-marginbtm20" *ngIf="showHeader">
+  <div class="row align-items-center">
+    <div class="col-xl-12 order-xl-2">
+      <div class="m--align-left">
+        <ng-content select="[table-header-left]"></ng-content>
+      </div>
+      <div class="m--pull-right" *ngIf="showGridControls">
+        <div aria-label="... " class="m-btn-group m-btn-group--pill btn-group mr-2 " role="group ">
+            <ng-content select="[table-header-right-before]"></ng-content>
+          <app-customdropdown #cd [width]="filterWidth" [style]="filterStyle" isModal="true" *ngIf="showFilter" persistent="true">
+            <button class="m-btn btn btn-secondary m-dropdown__toggle btn-group-firstbtn" (onClick)="filterClick($event)" type="button" card-head>
+              <i class="la la-filter "></i>
+            </button>
+            <ul class="m-nav " card-body>
+              <li class="m-nav__section m-nav__section--first ">
+                <span class="m-nav__section-text ">
+                  {{filterText}}
+                </span>
+              </li>
+              <li class="m-nav__item ">
+                <div class="col-md-12 c-marginbtm20 ">
+                    <ng-content select="[table-filter-body]"></ng-content>
+                </div>
+              </li>
+              <li class="m-nav__separator m-nav__separator--fit "></li>
+              <li class="m-nav__item ">
+                <app-button buttonText="search " cssClass="btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom
+      btn-custom-style " buttonIcon="la la-search " (onClick)="searchClick($event)"></app-button>
+                <app-button buttonText="Close " cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom
+      btn-custom-style " buttonIcon="la la-close " (onClick)="clearClick($event)"></app-button>
+                <app-button buttonText="Reset " cssClass="btn m-btn--pill btn-danger m-btn--air m-btn m-btn--custom
+      btn-custom-style " buttonIcon="la la-refresh " (onClick)="resetClick($event)"></app-button>
+              </li>
+            </ul>
+          </app-customdropdown>
+          <button class="m-btn btn btn-secondary" type="button" *ngIf="showRefresh" (click)="refreshClick($event) ">
+            <i class="la la-refresh "></i>
+          </button>
+          <button (click)="printClick($event)" *ngIf="showPrint" class="m-btn btn btn-secondary " type="button ">
+            <i class="la la-print "></i>
+          </button>
+          <app-customdropdown #cdd [width]="exportSubMenuWidth" toggle="hover" persistent="true" *ngIf="showDownload">
+              <button class="m-btn btn btn-secondary btn-style-cusatom" card-head>
+                  <i class="la la-cloud-download "></i>
+                </button>
+                <ul class="m-nav " card-body>
+                  <li class="m-nav__item mrgnbtm10 mrgntop10" *ngIf="showDownloadExcel">
+                    <a class="m-nav__link" (click)="exportExcelClick($event)">
+                      <i class="m-nav__link-icon fa fa-file-pdf-o "></i>
+                      <span class="m-nav__link-text ">Export PDF</span>
+                    </a>
+                  </li>
+                  <li class="m-nav__item mrgnbtm10 mrgntop10" *ngIf="showDownloadPDF">
+                    <a (click)="exportPDFClick($event)" class="m-nav__link">
+                      <i class="m-nav__link-icon fa fa-file-excel-o "></i>
+                      <span class="m-nav__link-text ">Export Excel</span>
+                    </a>
+                  </li>
+                </ul>
+          </app-customdropdown>
+          <ng-content select="[table-header-right-after]"></ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-content select="[table-body]"></ng-content>

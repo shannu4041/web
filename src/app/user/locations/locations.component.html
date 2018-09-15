@@ -1,0 +1,135 @@
+<div class="m-subheader ">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">{{globals.switchLanguageValue.common_Locations}}</h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+        <li class="m-nav__item m-nav__item--home">
+          <a class="m-nav__link m-nav__link--icon" >
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+        <li class="m-nav__separator">-</li>
+        <li class="m-nav__item">
+          <a class="m-nav__link" >
+            <span class="m-nav__link-text">{{globals.switchLanguageValue.common_Locations}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <button (click)="addLocationComponent.togglePopUp()" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.addLocation" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+      <span>
+        <i class="la la-plus"></i>
+        <span>{{globals.switchLanguageValue.common_button_add}}</span>
+      </span>
+    </button>
+  </div>
+</div>
+<div class="m-content">
+  <div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__body">
+      <!--begin: Search Form -->
+      <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+        <div class="row align-items-center">
+          <div class="col-lg-10 col-md-9 order-1 order-xl-1">
+            <div class="form-group m-form__group row align-items-center">
+              <div class="col-md-4 c-marginbtm20">
+                <app-select2 [options]="locations" [(ngModel)]="pageData.search.location_id" placeholder="Select Location" identifier="locations"
+                  name="locations" class="m-select2 m-select2--air" [inline]="false" [multiple]="true" label="{{globals.switchLanguageValue.common_Locations}}" optionsValueField="id"
+                  optionsTextField="name"></app-select2>
+                <!--<app-selectbox identifier="tblocation" label="Locations:" [options]="locations" name="locations"
+                               [(ngModel)]="pageData.search.location_id" placeholder="Select Location" optionsValueField="id" optionsTextField="name"></app-selectbox>-->
+              </div>
+              <div class="col-md-4 c-marginbtm20">
+                <app-select2 [options]="bussinessgroup" [(ngModel)]="pageData.search.business_group_id" placeholder="Select Bussiness Group"
+                  identifier="bussinessgroup" name="bussinessgroup" class="m-select2 m-select2--air" [inline]="false" [multiple]="true"
+                  label="{{globals.switchLanguageValue.business_Group}}:" optionsValueField="id" optionsTextField="group_name"></app-select2>
+                <!--<app-selectbox identifier="bussinessgroup" label="Business Group:" [options]="bussinessgroup" name="bussinessgroup"
+                               [(ngModel)]="pageData.search.business_group_id" placeholder="Select Bussiness Group" optionsValueField="id" optionsTextField="group_name"></app-selectbox>-->
+              </div>
+              <div class="col-md-4 c-marginbtm20">
+                <app-select2 [options]="busssinessunitlist" [(ngModel)]="pageData.search.business_unit_id" placeholder="Select Bussiness Unit"
+                  identifier="busssinessunit" name="busssinessunit" class="m-select2 m-select2--air" [inline]="false" [multiple]="true"
+                  label="{{globals.switchLanguageValue.business_Unit}}:" optionsValueField="id" optionsTextField="unit_name"></app-select2>
+                <!--<app-selectbox identifier="busssinessunit" label="Business Unit:" [options]="busssinessunit" name="busssinessunit"
+                               [(ngModel)]="pageData.search.business_unit_id" placeholder="Select Busssiness Unit" optionsValueField="id" optionsTextField="unit_name"></app-selectbox>-->
+              </div>
+
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 order-2 order-xl-2 m--align-center">
+            <app-button buttonText="{{globals.switchLanguageValue.common_button_search}}"  buttonType="Search" cssClass="btn btn-custom-style m-btn--pill m-btn--air btn-primary m-btn m-btn--custom "
+              (onClick)="getLocations()" buttonIcon="la la la-search" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.locationSearch"></app-button>
+          </div>
+        </div>
+      </div>
+      <!--end: Search Form -->
+    </div>
+  </div>
+  <div class="row" *ngIf="locationView == lView.BoxView ||globals.getprofileaction == null ? true : globals.getprofileaction.getLocations">
+    <div class="col-xl-4 c-marginbtm20" *ngFor="let rows of LocationData; index as i">
+      <div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet--bordered">
+        <div class="m-portlet__head c_portlet__head">
+          <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+              <span class="m-portlet__head-icon">
+                <i class="flaticon-placeholder-2"></i>
+              </span>
+              <h3 class="m-portlet__head-text">
+                <span>{{rows.name}}</span>
+              </h3>
+            </div>
+          </div>
+          <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+              <li class="m-portlet__nav-item">
+                <a (click)="addLocationComponent.editLocation(rows.id)" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getLocationById" class="m-nav__link btn btn-bg-none m-btn--icon m-btn--icon-only m-btn--pill"
+                  title="Edit ">
+                  <i class="fa fa-edit"></i>
+                </a>
+              </li>
+              <li class="m-portlet__nav-item">
+                <a (click)="DeleteLocation(rows.id)" class="m-nav__link btn btn-bg-none m-btn--icon m-btn--icon-only m-btn--pill" title="Delete"
+                *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.deleteLocation">
+                  <i class="fa fa-trash-o"></i>
+                </a>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+        <div class="m-portlet__body c-portlet__body ">
+          <div class="ibox-content">
+            <p class="ibox-text">
+              <span>
+                {{rows.address}}, {{rows.street}}, {{rows.city}}, {{rows.state}}, {{rows.country}}, {{rows.pincode}}
+              </span>
+            </p>
+            <p class="ibox-text">
+              <span>
+                <b>Business Group:</b>
+              </span>
+              <span>{{rows.group_name}}</span>
+            </p>
+            <p class="ibox-text">
+              <span>
+                <b>Business Unit:</b>
+              </span>
+              <span>{{rows.unit_name}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="locationView == lView.ListView">
+    <div *ngFor="let rows of LocationData; index as i">{{rows.name}}, {{rows.address}}, {{rows.street}}</div>
+  </div>
+</div>
+<div class="col-lg-12 text-center" *ngIf="LocationData.length<totalrecords">
+  <app-button (onClick)="getLocations(true)" buttonText="{{globals.switchLanguageValue.location_load_more}}" cssClass="btn-success m-btn m-btn--icon m-btn--pill m-btn--air"
+    buttonIcon="la la-refresh"></app-button>
+</div>
+
+<app-addlocation (onClose)="onPopupClose($event)">
+</app-addlocation>

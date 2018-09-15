@@ -1,0 +1,73 @@
+<form #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+  <ng-template #add let-c="close" let-d="dismiss">
+
+    <div class="modal-header c-marginbtm20" *ngIf="!showUpdatelocations">
+      <h4 class="modal-title" id="exampleModalLabel">{{globals.switchLanguageValue.common_button_add}}</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-header c-marginbtm20" *ngIf="showUpdatelocations">
+      <h4 class="modal-title" id="exampleModalLabel">{{globals.switchLanguageValue.common_tooltipedit}}</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <div class="tab-content">
+        <div class="row c-marginbtm20 c-borderbtm">
+          <div class="col-md-4 c-marginbtm20">
+            <app-textbox identifier="location" label="{{globals.switchLanguageValue.tracker_location}}:" 
+            placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.tracker_location}}" name="location"
+            [(ngModel)]="location.name" formGroupCssClass="c-form_group" required></app-textbox>
+          </div>
+          <div class="col-md-4 c-marginbtm20">
+            <app-selectbox identifier="businessgroup" label="{{globals.switchLanguageValue.business_Group}}:" formGroupCssClass="c-form_group" [options]="bussinessgroup"
+            [(ngModel)]="location.business_group_id" name="businessgroup" placeholder="Business Group" (onChange)="getBusinessUnitsList(location.business_group_id)" optionsValueField="id" optionsTextField="group_name" required></app-selectbox>
+          </div>
+          <div class="col-md-4 c-marginbtm20">
+            <app-selectbox identifier="businessunit" label="{{globals.switchLanguageValue.business_Unit}}:" [options]="busssinessunit" name="businessunit"
+                           [(ngModel)]="location.business_unit_id" formGroupCssClass="c-form_group" placeholder="Business Unit" optionsValueField="id" optionsTextField="unit_name" required></app-selectbox>
+          </div>
+
+        </div>
+        <div class="row c-marginbtm20">
+          <div class="col-md-4 c-marginbtm20">
+            <app-textbox identifier="address" label="{{globals.switchLanguageValue.common_label_address}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_address}}" formGroupCssClass="c-form_group"
+                         [(ngModel)]="location.address_info.address" name="address" appendIcon="la la-map-marker" required></app-textbox>
+          </div>
+          <div class="col-md-4 c-marginbtm20">
+            <app-textbox identifier="street" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_street}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_street}}"
+                         [(ngModel)]="location.address_info.street" name="street" required></app-textbox>
+          </div>
+          <div class="col-md-4 c-marginbtm20">
+            <app-textbox identifier="city" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_city}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_city}}"
+                         [(ngModel)]="location.address_info.city" name="city" required></app-textbox>
+          </div>
+        </div>
+        <div class="row c-marginbtm20">
+          <div class="col-md-4 c-marginbtm20">
+            <app-textbox identifier="state" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_state}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_state}}"
+                         [(ngModel)]="location.address_info.state" name="state" required></app-textbox>
+          </div>
+          <div class="col-md-4 c-marginbtm20">
+            <app-selectbox identifier="country" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_country}}:" [options]="countries"
+                           [(ngModel)]="location.address_info.country" name="country" placeholder="Select Country" optionsValueField="id" optionsTextField="name" required></app-selectbox>
+          </div>
+          <div class="col-md-4 c-marginbtm20">
+            <app-textbox identifier="zip" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_zipcode}}:"
+                         [(ngModel)]="location.address_info.pincode" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_zipcode}}" name="zip" required></app-textbox>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="col-lg-12 text-center">
+        <app-button buttonText="{{globals.switchLanguageValue.common_button_add}}" (onClick)="addLocation()" buttonType="submit" *ngIf="!showUpdatelocations" cssClass="btn btn-custom-style m-btn--pill m-btn--air btn-info m-btn m-btn--custom " buttonIcon="la la la-plus"></app-button>
+        <app-button buttonText="{{globals.switchLanguageValue.common_button_update}}" (onClick)="addLocation()" buttonType="submit" *ngIf="(showUpdatelocations) && (globals.getprofileaction == null ? true : globals.getprofileaction.updateLocation)" cssClass="m-btn--pill btn-primary m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la la-refresh"></app-button>
+        <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" cssClass="btn btn-custom-style  m-btn--pill m-btn--air btn-warning m-btn m-btn--custom m-demo-icon__class m-btn--icon" buttonIcon="la la-close" (onClick)="togglePopUp()"></app-button>
+      </div>
+    </div>
+  </ng-template>
+</form>

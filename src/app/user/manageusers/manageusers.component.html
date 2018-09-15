@@ -1,0 +1,380 @@
+<!--<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Manage Users
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            Users
+                        </span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            Manage Users
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div>
+<div class="m-content">
+    <form (ngSubmit)="submitForm(f)" #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+        <div class=" row">
+            <div class="col-md-12">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                <i class="la la-gear"></i>
+                            </span>
+                                <h3 class="m-portlet__head-text">
+                                Add User
+                            </h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-portlet__body padding-left-right-5px c-borderbtm">
+                        <div class="col-md-12">
+                            <div class=" row">
+                                <div class="col-md-3">
+                                    <div class="c-User_icon">
+                                        <app-dropzone placeholder="Image Upload" formGroupCssClass="c-form_group" identifier="tbFileUpload" name="lstfileupload" required [config]="config"></app-dropzone>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class=" row">
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="firstName" formGroupCssClass="c-form_group" label="First Name:" placeholder="Enter First Name" name="firstName" ngModel required></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="lastName" formGroupCssClass="c-form_group" label="Last Name:" placeholder="Enter Last Name" name="lastName" ngModel required></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="email" formGroupCssClass="c-form_group" label="Email Address:" placeholder="Enter Email Address" name="email" ngModel required email></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="phoneNumber" formGroupCssClass="c-form_group" label="Phone Number:" placeholder="Enter Phone Number" name="phoneNumber" ngModel required>
+                                            </app-textbox>
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <label class="m-checkbox m-checkbox--state-primary">
+                                                <input type="checkbox" name="sameasbusiness">Is Account Admin<span></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px c-borderbtm">
+                        <div class="col-md-12">
+                            <div class=" row c-marginbtm20">
+                                <div class="col-md-6">
+                                    <app-select2 [options]="select2options" formGroupCssClass="c-form_group" identifier="tbBusinessgroup" name="tbBusinessgroup" (onSelect)="onSelect($event)" class="m-select2 m-select2--air"  [multiple]="true" label="Business Group" required minlengtharray minlength="2"></app-select2>
+                                </div>
+                                <div class="col-md-6">
+                                    <app-select2 [options]="select2options" formGroupCssClass="c-form_group" identifier="tbBusinessgroup" name="tbBusinessgroup" (onSelect)="onSelect($event)" class="m-select2 m-select2--air"  [multiple]="true" label="Select Profile" required minlengtharray minlength="2"></app-select2>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px">
+                        <div class="col-md-12">
+                            <div class=" row c-marginbtm20">
+
+                                <div class="col-md-4">
+                                    <app-textbox identifier="address" formGroupCssClass="c-form_group" label="Address:" placeholder="Enter Address" name="address" appendIcon="la la-map-marker" ngModel required></app-textbox>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <app-textbox identifier="tbStreet" formGroupCssClass="c-form_group" label="Street:" placeholder="Enter Street" name="street" ngModel required></app-textbox>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <app-textbox identifier="city" formGroupCssClass="c-form_group" label="City:" placeholder="Enter City" name="city" ngModel required></app-textbox>
+                                </div>
+
+                            </div>
+                            <div class=" row c-marginbtm20">
+                                <div class="col-md-4">
+                                    <app-textbox identifier="tbState" formGroupCssClass="c-form_group" label="State:" placeholder="Enter State" name="state" ngModel required></app-textbox>
+                                </div>
+                                <div class="col-md-4">
+                                    <app-selectbox identifier="country" formGroupCssClass="c-form_group" label="Country:" [options]="country" name="country" placeholder="-- Select Country --" ngModel required></app-selectbox>
+                                </div>
+                                <div class="col-md-4">
+                                    <app-textbox identifier="zipCode" formGroupCssClass="c-form_group" label="Zip Code:" placeholder="Enter Zip Code" name="zipCode" ngModel required></app-textbox>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions m-form__actions--solid">
+                            <div class=" row c-marginbtm20">
+                                <div class="col-lg-12 text-center">
+                                    <app-button buttonText="Add" cssClass="m-btn--pill btn-primary m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-plus">
+                                    </app-button>
+                                    <app-button buttonText="Cancel" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-close" (onClick)="cancelButtonClick($event)"></app-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Manage Users
+                    </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                        <app-button buttonText="Add User" cssClass="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" buttonIcon="la la-plus" ></app-button>
+        </div>
+        </div>
+        <div class="m-portlet__body">
+
+            <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded" id="ajax_data" style="">
+                <table class="m-datatable__table" id="m-datatable--952839221580" style="display: block; height: auto; overflow-x: auto;">
+                    <thead class="m-datatable__head">
+                        <tr class="m-datatable__row" style="height: 53px;"> 
+                            <th data-field="RecordID" class="m-datatable__cell--center m-datatable__cell m-datatable__cell--sort"><span style="width: 150px;">User Name </span></th>
+                            <th data-field="OrderID" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 150px;">Business Group</span></th>
+                            <th data-field="ShipCountry" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 150px;">Profile</span></th>
+                            <th data-field="ShipCity" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 110px;">Contact Info</span></th>
+                            <th data-field="Currency" class="m-datatable__cell m-datatable__cell--sort"><span style="width: 100px;">Status</span></th>
+                            <th data-field="ShipDate" class="m-datatable__cell m-datatable__cell--sort" data-sort="asc"><span class="ci"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody class="m-datatable__body" style="">
+                        <tr data-row="0" class="m-datatable__row m-datatable__row--even" style="height: 55px;">
+                            <td data-field="RecordID" class="m-datatable__cell--center m-datatable__cell"><span style="width: 170px;">
+                                <div class="row">
+                                    <div class="col-4"><img alt="user" class="m--img-rounded m--marginless m--img-centered" src="../../assets/images/user5.jpg" width="40px"></div> 
+                                    <div class="col-8 c-form_group"><p class="text-left">Ram Mohan <br/> Venkatraman</p></div>
+                                </div></span>
+                            </td>
+                            <td data-field="OrderID" class="m-datatable__cell"><span style="width: 150px;">55154-5393 - NG</span></td>
+                            <td data-field="ShipCountry" class="m-datatable__cell"><span style="width: 150px;">NG - Sapele</span></td>
+                            <td data-field="ShipCity" class="m-datatable__cell"><span style="width: 110px;">Sapele</span></td>
+                            <td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge   m-badge--wide m-badge--danger">In-Active</span></span>
+                            </td>
+
+                            <td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; width: 110px;">
+                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit User"><i class="fa fa-edit"></i></a>
+                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reset Password"><i class="fa fa-unlock-alt"></i></a>
+
+            </span>
+                            </td>
+                        </tr>
+                        <tr data-row="1" class="m-datatable__row" style="height: 55px;">
+                            <td data-field="RecordID" class="m-datatable__cell--center m-datatable__cell"><span style="width: 170px;">
+                                <div class="row">
+                                    <div class="col-4"><img alt="user" class="m--img-rounded m--marginless m--img-centered" src="../../assets/images/user5.jpg" width="40px"></div> 
+                                    <div class="col-8 c-form_group"><p class="text-left">Ram Mohan <br/> Venkatraman</p></div>
+                                </div></span>
+                            </td>
+                            <td data-field="OrderID" class="m-datatable__cell"><span style="width: 150px;">43406-0032 - US</span></td>
+                            <td data-field="ShipCountry" class="m-datatable__cell"><span style="width: 150px;">US - Fort Pierce</span></td>
+                            <td data-field="ShipCity" class="m-datatable__cell"><span style="width: 110px;">Fort Pierce</span></td>
+
+                            <td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge   m-badge--wide m-badge--success">Active</span></span>
+                            </td>
+
+                            <td data-field="Actions" class="m-datatable__cell"><span style="overflow: visible; width: 110px;">
+                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit User"><i class="fa fa-edit"></i></a>
+                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Reset Password"><i class="fa fa-unlock-alt"></i></a>
+
+            </span>
+                            </td>
+                        </tr>
+   
+                        
+
+                    </tbody>
+                </table>
+                <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                    <ul class="m-datatable__pager-nav">
+                        <li><a title="First" class="m-datatable__pager-link m-datatable__pager-link--first m-datatable__pager-link--disabled" data-page="1" disabled="disabled"><i class="la la-angle-double-left"></i></a></li>
+                        <li><a title="Previous" class="m-datatable__pager-link m-datatable__pager-link--prev m-datatable__pager-link--disabled" data-page="1" disabled="disabled"><i class="la la-angle-left"></i></a></li>
+                        <li style="display: none;"><a title="More pages" class="m-datatable__pager-link m-datatable__pager-link--more-prev" data-page="1"><i class="la la-ellipsis-h"></i></a></li>
+                        <li style="display: none;">
+                            <input type="text" class="m-pager-input form-control" title="Page number">
+                        </li>
+                        <li style=""><a class="m-datatable__pager-link m-datatable__pager-link-number m-datatable__pager-link--active" data-page="1" title="1">1</a></li>
+                        <li style=""><a class="m-datatable__pager-link m-datatable__pager-link-number" data-page="2" title="2">2</a></li>
+                        <li style=""><a title="More pages" class="m-datatable__pager-link m-datatable__pager-link--more-next" data-page="7"><i class="la la-ellipsis-h"></i></a></li>
+                        <li><a title="Next" class="m-datatable__pager-link m-datatable__pager-link--next" data-page="2"><i class="la la-angle-right"></i></a></li>
+                        <li><a title="Last" class="m-datatable__pager-link m-datatable__pager-link--last" data-page="35"><i class="la la-angle-double-right"></i></a></li>
+                    </ul>
+                    <div class="m-datatable__pager-info">
+                        <div class="btn-group bootstrap-select m-datatable__pager-size" style="width: 70px;">
+                            <button type="button" class="btn dropdown-toggle btn-default" data-toggle="dropdown" role="button" title="Select page size"><span class="filter-option pull-left">10</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span>
+                            </button>
+                            <div class="dropdown-menu open" role="combobox">
+                                <ul class="dropdown-menu inner" role="listbox" aria-expanded="false">
+                                    <li data-original-index="1" class="selected"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="true"><span class="text">10</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                    <li data-original-index="2"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">20</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                    <li data-original-index="3"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">30</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                    <li data-original-index="4"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">50</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                    <li data-original-index="5"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">100</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                                </ul>
+                            </div>
+
+                        </div><span class="m-datatable__pager-detail">Displaying 1 - 10 of 350 records</span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>-->
+
+<!-- edit user -->
+<!--
+<div class="m-content">
+    <form (ngSubmit)="submitForm(f)" #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+        <div class=" row">
+            <div class="col-md-12">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+
+                        <div class=" col-xl-6 m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide"><i class="la la-gear"></i></span>
+                                <h3 class="m-portlet__head-text">Edit User</h3>
+                            </div>
+                            
+                        </div>
+                        <div class=" col-xl-6 text-right  m-portlet__head-caption">
+                                <app-switch identifier="tbSwitch" label="Active" name="tbSwitch" [inline]="true" labelColumns=6 switchColumns=3></app-switch>
+                        </div>
+                    </div>
+
+                    <div class="m-portlet__body padding-left-right-5px c-borderbtm">
+                        <div class="col-md-12">
+                            <div class=" row">
+                                <div class="col-md-3">
+                                    <div class="c-User_icon">
+                                        <img alt="user" class="m--img-rounded m--marginless m--img-centered" src="../../assets/images/user5.jpg">
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class=" row">
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="firstName" formGroupCssClass="c-form_group" label="First Name:" placeholder="Enter First Name" name="firstName" ngModel required></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="lastName" formGroupCssClass="c-form_group" label="Last Name:" placeholder="Enter Last Name" name="lastName" ngModel required></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="email" formGroupCssClass="c-form_group" label="Email Address:" placeholder="Enter Email Address" name="email" ngModel required email></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="phoneNumber" formGroupCssClass="c-form_group" label="Phone Number:" placeholder="Enter Phone Number" name="phoneNumber" ngModel required>
+                                            </app-textbox>
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <label class="m-checkbox m-checkbox--state-primary">
+                                                <input type="checkbox" name="sameasbusiness">Is Account Admin<span></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px c-borderbtm">
+                        <div class="col-md-12">
+                            <div class=" row c-marginbtm20">
+                                <div class="col-md-6">
+                                    <app-select2 [options]="select2options" formGroupCssClass="c-form_group" identifier="tbBusinessgroup" name="tbBusinessgroup" (onSelect)="onSelect($event)" class="m-select2 m-select2--air"  [multiple]="true" label="Business Group" required minlengtharray minlength="2"></app-select2>
+                                </div>
+                                <div class="col-md-6">
+                                    <app-select2 [options]="select2options" formGroupCssClass="c-form_group" identifier="tbBusinessgroup" name="tbBusinessgroup" (onSelect)="onSelect($event)" class="m-select2 m-select2--air"  [multiple]="true" label="Select Profile" required minlengtharray minlength="2"></app-select2>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px">
+                        <div class="col-md-12">
+                            <div class=" row c-marginbtm20">
+
+                                <div class="col-md-4">
+                                    <app-textbox identifier="address" formGroupCssClass="c-form_group" label="Address:" placeholder="Enter Address" name="address" appendIcon="la la-map-marker" ngModel required></app-textbox>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <app-textbox identifier="tbStreet" formGroupCssClass="c-form_group" label="Street:" placeholder="Enter Street" name="street" ngModel required></app-textbox>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <app-textbox identifier="city" formGroupCssClass="c-form_group" label="City:" placeholder="Enter City" name="city" ngModel required></app-textbox>
+                                </div>
+
+                            </div>
+                            <div class=" row c-marginbtm20">
+                                <div class="col-md-4">
+                                    <app-textbox identifier="tbState" formGroupCssClass="c-form_group" label="State:" placeholder="Enter State" name="state" ngModel required></app-textbox>
+                                </div>
+                                <div class="col-md-4">
+                                    <app-selectbox identifier="country" formGroupCssClass="c-form_group" label="Country:" [options]="country" name="country" placeholder="-- Select Country --" ngModel required></app-selectbox>
+                                </div>
+                                <div class="col-md-4">
+                                    <app-textbox identifier="zipCode" formGroupCssClass="c-form_group" label="Zip Code:" placeholder="Enter Zip Code" name="zipCode" ngModel required></app-textbox>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions m-form__actions--solid">
+                            <div class=" row c-marginbtm20">
+                                <div class="col-lg-12 text-center">
+                                    <app-button buttonText="Update" cssClass="m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-refresh">
+                                    </app-button>
+                                    <app-button buttonText="Cancel" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-close" (onClick)="cancelButtonClick($event)"></app-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>-->
+<app-users></app-users>

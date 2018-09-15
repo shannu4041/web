@@ -1,0 +1,587 @@
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <!-- BEGIN: Subheader -->
+    <div class="m-subheader ">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">{{globals.switchLanguageValue.common_vehicles}}</h3>
+                <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                    <li class="m-nav__item m-nav__item--home">
+                        <a  class="m-nav__link m-nav__link--icon">
+                            <i class="m-nav__link-icon la la-home"></i>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">-</li>
+                    <li class="m-nav__item">
+                        <a  class="m-nav__link">
+                            <span class="m-nav__link-text">{{globals.switchLanguageValue.common_vehicles}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- end Side bar -->
+
+    <!-- table start -->
+    <div class="m-content c-page-min-height" *ngIf="showTable">
+        <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            {{globals.switchLanguageValue.common_vehicles}}
+                        </h3>
+                    </div>
+                </div>
+                <div class="m-portlet__head-tools">
+                    <app-button buttonText="{{globals.switchLanguageValue.vehicles_add_vehicle}}" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.addUpdateVehicle" cssClass="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" (click)="createVechicle()"
+                        buttonIcon="la la-plus"></app-button>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <app-datatable #cd filterText="{{globals.switchLanguageValue.vehicle}} {{globals.switchLanguageValue.common_label_filter}}" (onSearchClick)="getVehicles($event)" (onClearClick)="closepopup($event)" (onResetClick)="resetSearch($event)"
+                    (onRefreshClick)="getVehicles($event,false,true)" (onPrintClick)="downloadVehicle(this.paging.sortBy,this.paging.sortDirection,'print', this.paging.search)"
+                    (onExportPDFClick)="downloadVehicle(this.paging.sortBy,this.paging.sortDirection,'excel', this.paging.search)"
+                    (onExportExcelClick)="downloadVehicle(this.paging.sortBy,this.paging.sortDirection,'pdf', this.paging.search)"
+                    filterWidth="700px" [showDownload]="globals.getprofileaction == null ? true : globals.getprofileaction.vehicleExport"
+                    [showPrint]="globals.getprofileaction == null ? true : globals.getprofileaction.vehicleExport" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getVehicles">
+                    <div table-filter-body>
+                        <div class="col-md-6 c-marginbtm20">
+                            <app-textbox identifier="Search" formGroupCssClass="c-form_group" placeholder="{{globals.switchLanguageValue.search_registration_no}}" prependIcon="la la-search"
+                                name="Search" label="{{globals.switchLanguageValue.vehicles_register_no}}:" [(ngModel)]="paging.search.registration_no"></app-textbox>
+                        </div>
+                        <div class="col-md-6 c-marginbtm20">
+
+                            <app-select2 [options]="Status" [(ngModel)]="paging.search.vehicles_status" identifier="vehicles_status" 
+                                name="vehicles_status"
+                                class="m-select2 m-select2--air" [multiple]="true" label="{{globals.switchLanguageValue.account_column_status}}:" optionsValueField="status"
+                                optionsTextField="status_name"></app-select2>
+                        </div>
+                    </div>
+                    <p-dataTable table-body [value]="vehicleList" [rows]="10" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,20,25]" [totalRecords]="totalRecords"
+                        [lazy]="true" (onLazyLoad)="getVehicles($event)" scrollable="true" [hidden]="showform">
+                        <p-column header="{{globals.switchLanguageValue.vehicles_register_no}}" [sortable]="true" [style]="{'width':'170px'}" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+                            <ng-template let-vehicle="rowData" pTemplate="body">
+                                <span style="width: 170px;">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img alt="user" class="m--img-rounded m--marginless m--img-centered" src="{{vehicle.vehicle_photo}}" height="40px" width="40px">
+                                        </div>
+                                        <div class="col-8 c-form_group">
+                                            <p class="text-left mrgntop10">{{vehicle.registration_number}}</p>
+                                        </div>
+                                    </div>
+                                </span>
+                            </ng-template>
+                        </p-column>
+                        <p-column field="currentlocation" [style]="{'width':'170px'}" header="{{globals.switchLanguageValue.current_location}}" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell c-action-width120">
+                        </p-column>
+                        <p-column field="currentstatus" [style]="{'width':'150px'}" 
+                        header="{{globals.switchLanguageValue.current_status}}" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell c-action-width120">
+                        </p-column>
+                        <p-column field="currentdriver" [style]="{'width':'150px'}" header="{{globals.switchLanguageValue.current_driver}}" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell c-action-width120">
+                        </p-column>
+                        <p-column field="lastupdated" [style]="{'width':'150px'}" header="{{globals.switchLanguageValue.last_updated}}" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell c-action-width120">
+                        </p-column>
+                        <p-column field="status" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.updateVehicleStatus" [style]="{'width':'170px'}"
+                         header="{{globals.switchLanguageValue.account_column_status}}" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell c-action-width120">
+                            <ng-template pTemplate="body" let-vehicle="rowData">
+                                <app-selectbox identifier="status" formGroupCssClass="c-nomargin" [options]="Status" name="status" [(ngModel)]="vehicle.status"
+                                    (onChange)="selectChanged(vehicle.id,vehicle.status)" optionsTextField="status_name"
+                                    optionsValueField="status" ></app-selectbox>
+                            </ng-template>
+                        </p-column>
+                        <p-column [style]="{'width':'170px'}" styleClass="col-button c-action-width120">
+                            <ng-template let-vehicle="rowData" pTemplate="body">
+                                <a (click)="editVehicle(vehicle.id)" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getVehiclebyID" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="Edit ">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a (click)="getVehicleHistory(vehicle.id, vehicle.status)" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="{{globals.switchLanguageValue.tracker_History}}"
+                                *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getVehicleHistory"><i class="la la-file-text"
+                                ></i></a>
+                            </ng-template>
+                        </p-column>
+                    </p-dataTable>
+                </app-datatable>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- add vehicle  -->
+<div class="m-content" *ngIf="showform">
+    <form (ngSubmit)="submitForm(f)" #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+        <div class=" row">
+            <div class="col-md-12">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    {{editMode ? globals.switchLanguageValue.vehicles_edit_vehicle : globals.switchLanguageValue.vehicles_add_vehicle }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px c-borderbtm">
+                        <div class="col-md-12">
+                            <div class=" row">
+                                <div class="col-md-3 c-margintop20">
+                                    <app-dropzone placeholder="Upload Vehicle Photo" identifier="vehicle_photo" [inline]="true" name="vehicle_photo" [(ngModel)]="vehicle.vehicle_photo"
+                                        [config]="config"></app-dropzone>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="row">
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="RegistrationNo" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.vehicles_register_no}}:" placeholder="{{globals.switchLanguageValue.enter_vehicle_regNo}}"
+                                                name="registration_number" [(ngModel)]="vehicle.registration_number" required></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="EngineNumber" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.engine_number}}:" 
+                                            placeholder="{{globals.switchLanguageValue.enter_engine_no}}"
+                                                name="engine_no" [(ngModel)]="vehicle.engine_no" required></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="ChassisNo" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.chassis_number}}:" 
+                                            placeholder="{{globals.switchLanguageValue.enter_Chassis_Number}}"
+                                                name="chassis_number" [(ngModel)]="vehicle.chassis_number" required></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="Make" formGroupCssClass="c-form_group" 
+                                            placeholder="{{globals.switchLanguageValue.enter_make}}" label="{{globals.switchLanguageValue.make}}:" name="make" [(ngModel)]="vehicle.make"
+                                                required>
+                                            </app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="Model" formGroupCssClass="c-form_group" 
+                                            placeholder="{{globals.switchLanguageValue.enter_model}}" label="{{globals.switchLanguageValue.model}}:" [(ngModel)]="vehicle.model"
+                                                name="model" required>
+                                            </app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-selectbox identifier="purchasedyear" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.purchased_year}}:" [options]="years" name="purchase_year"
+                                                placeholder="-- Select year --" [(ngModel)]="vehicle.purchase_year" optionsTextField="yearText"
+                                                optionsValueField="yearText" required></app-selectbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px">
+                        <div class="col-md-12">
+                            <div class=" row">
+                                <div class="col-md-3 text-left c-margintop20">
+                                    <div class="m-form__group form-group c-form_group">
+                                        <div class="">
+                                            <label class="col-form-label">{{globals.switchLanguageValue.business_Group_Unit}}:</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="row">
+                                        <div class="col-md-6 c-margintop20">
+                                            <app-selectbox identifier="businessgroup" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.business_Group}}:" [options]="businessGroup"
+                                                name="business_group_id" placeholder="-- Select --" [(ngModel)]="vehicle.business_group_id"
+                                                optionsValueField="id" optionsTextField="group_name" (onChange)="getBusinessUnitsList(vehicle.business_group_id)"
+                                                required></app-selectbox>
+                                        </div>
+                                        <div class="col-md-6 c-margintop20">
+                                            <app-selectbox identifier="businessunit" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.business_Unit}}:" [options]="businessUnit"
+                                                name="business_unit_id" placeholder="-- Select --" [(ngModel)]="vehicle.business_unit_id"
+                                                optionsValueField="id" optionsTextField="unit_name" required></app-selectbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- contact info -->
+        <div class="row c-for-tab-desktop">
+            <div class="col-md-12">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    {{globals.switchLanguageValue.common_label_contactinfo}}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="col-md-2 text-center">
+                                <label>{{globals.switchLanguageValue.common_label_primary}}</label>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <label>{{globals.switchLanguageValue.common_label_contactperson}}</label>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <label>{{globals.switchLanguageValue.common_label_email}}</label>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <label>{{globals.switchLanguageValue.common_label_phone}}</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label></label>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row align-items-center" *ngFor="let contact of vehicle.contacts; index as i;">
+                            <div class="col-md-2 text-center">
+                                <div class="m-form__group form-group c-form_group">
+                                    <div class="">
+                                        <label class="m-radio m-radio--bold">
+                                            <input type="radio" name="isprimary" [checked]="contact.is_primary == true" (change)="isdefaultchange(i)">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <app-textbox identifier="contactperson{{i}}" formGroupCssClass="c-form_group" 
+                                placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_contactperson}}" name="contactperson{{i}}"
+                                    [(ngModel)]="contact.contact_name" [inline]="true"></app-textbox>
+                            </div>
+                            <div class="col-md-3">
+                                <app-textbox identifier="emailaddress{{i}}" formGroupCssClass="c-form_group" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_email}}" name="emailaddress{{i}}"
+                                    [(ngModel)]="contact.email" [inline]="true"></app-textbox>
+                            </div>
+                            <div class="col-md-3">
+                                <app-textbox identifier="phonenumber{{i}}" formGroupCssClass="c-form_group" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_phone}}" name="phonenumber{{i}}"
+                                    [(ngModel)]="contact.mobileno" [inline]="true" inputType="number"></app-textbox>
+                            </div>
+                            <div class="col-md-1" *ngIf="i>0">
+                                <app-button buttonText="Delete" cssClass="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill m-btn--air" buttonIcon="la la-trash-o"
+                                    (onClick)="deleteContactInfo($event, i)"></app-button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide" (click)="addContactInfo($event)">
+                                    <i class="la la-plus"></i> {{globals.switchLanguageValue.common_button_add}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions">
+                            <div class="row">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact info Mobile div start  -->
+        <div class="row c-for-mobile">
+            <div class="col-md-12">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text c-heading">
+                                    {{globals.switchLanguageValue.common_label_contactinfo}}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px">
+                        <div class="form-group m-form__group row align-items-center c-borderbtm c-marginbtm20" *ngFor="let contact of vehicle.contacts; index as i;">
+
+                            <div class="col-xl-12 text-left  c-marginbtm20">
+                                <div class="m-form__group form-group c-form_group">
+                                    <div class="">
+                                        <label class="m-radio m-radio--bold">
+                                            <input type="radio" name="is_primary" [checked]="contact.is_primary == true" (change)="isdefaultchange(i)">
+                                            <span></span> {{globals.switchLanguageValue.common_label_primary}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 c-marginbtm20 c-form_group">
+                                <app-textbox identifier="contactperson{{i}}" formGroupCssClass="c-form_group" placeholder="Enter Contact Person" name="contactperson{{i}}"
+                                    [(ngModel)]="contact.contact_name" label="{{globals.switchLanguageValue.common_label_contactperson}}"></app-textbox>
+                            </div>
+                            <div class="col-xl-12 c-marginbtm20 c-form_group">
+                                <app-textbox identifier="emailaddress{{i}}" formGroupCssClass="c-form_group" placeholder="Enter Email Address" name="emailaddress{{i}}"
+                                    [(ngModel)]="contact.email" label="{{globals.switchLanguageValue.common_label_email}}"></app-textbox>
+                            </div>
+                            <div class="col-xl-12 c-marginbtm20 c-form_group">
+                                <app-textbox identifier="phonenumber{{i}}" formGroupCssClass="c-form_group" placeholder="Enter Phone Number" name="phonenumber{{i}}"
+                                    [(ngModel)]="contact.mobileno" label="{{globals.switchLanguageValue.common_label_phone}}" inputType="number"></app-textbox>
+
+                            </div>
+                            <div class="col-xl-12  c-marginbtm20 text-center" *ngIf="i>0">
+                                <app-button buttonText="Delete" cssClass="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill m-btn--air" buttonIcon="la la-trash-o"
+                                    (onClick)="deleteContactInfo($event, i)"></app-button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide" (click)="addContactInfo($event)">
+                                    <i class="la la-plus"></i>{{globals.switchLanguageValue.common_button_add}}
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions">
+                            <div class="row">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contact info Mobile div end  -->
+        <div class="m-portlet__foot m-portlet__foot--fit">
+            <div class="m-form__actions m-form__actions">
+                <div class=" row">
+                    <div class="col-lg-12 text-center">
+                        <app-button buttonType="submit" buttonText="{{globals.switchLanguageValue.common_button_update}}" *ngIf="showUpdateButton" cssClass="btn-custom-style m-btn--pill m-btn--air btn-success m-btn m-btn--custom"></app-button>
+                        <app-button buttonType="submit" buttonText="{{globals.switchLanguageValue.common_button_add}}" *ngIf="!showUpdateButton" cssClass="btn-custom-style m-btn--pill m-btn--air btn-info m-btn m-btn--custom"
+                            buttonIcon="la la-plus"></app-button>
+                        <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-close"
+                            (onClick)="cancel($event)"></app-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<!-- Modal for Filter  -->
+<ng-template #showsuccesspopup let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Message</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>{{message}}</p>
+    </div>
+    <div class="modal-footer m-form__actions--solid">
+        <div class="col-lg-12 text-center">
+            <app-button buttonText="Close" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-close"
+                (onClick)="cancelPopup()"></app-button>
+        </div>
+    </div>
+</ng-template>
+
+<!-- history -->
+<div class="m-content" *ngIf="showVehicleHistory">
+    <form class="m-form m-form--fit m-form--label-align-right">
+        <div class=" row">
+            <div class="col-md-12">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide"><i class="la la-gear"></i></span>
+                                <h3 class="m-portlet__head-text">Vehicle History</h3>
+                            </div>
+                        </div>
+                        <div class="m-portlet__head-tools">
+                                <!-- <app-button buttonText="{{globals.switchLanguageValue.tracker_Assign}}" 
+                                cssClass="btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-plus" 
+                                (onClick)="toggleVehicleAssignPopUp(vehicle.id,vehicle.status)" 
+                                *ngIf="vehicleDriverHistory.length==0 || vehicleDriverHistory[0].end_date!=null"></app-button>
+                                <app-button buttonText="{{globals.switchLanguageValue.tracker_Un_Assign}}" cssClass="btn m-btn--pill btn-danger m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-cross"
+                                *ngIf="vehicleDriverHistory.length !=0 && vehicleDriverHistory[0].end_date==null"
+                                (onClick)="getUnassignedDriver(vehicleDriverHistory[0].id,vehicle.status)"></app-button> -->
+                        </div>
+                    </div>
+
+                    <div class="m-portlet__body c-nopadding">
+                        <div class="m-portlet__body padding-left-right-5px">
+                            
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="row ">
+                                    <div class="col-md-6">
+                                            <h6 style="margin: 13px 0px 10px 5px;">Driver History</h6>
+                                    </div>
+                                    <div class="col-md-6 text-right" style="margin-bottom: 13px;">
+                                            <app-button buttonText="{{globals.switchLanguageValue.tracker_Assign}}" 
+                                            cssClass="btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-plus" 
+                                            (onClick)="toggleVehicleDriverAssignPopUp(vehicle.id,vehicle.status)" 
+                                            *ngIf=" globals.getprofileaction == null ? true : globals.getprofileaction.AssignedDrivertoVehicle && (vehicleDriverHistory.length==0 || vehicleDriverHistory[0].end_date!=null)"></app-button>
+                                            <app-button buttonText="{{globals.switchLanguageValue.tracker_Un_Assign}}" cssClass="btn m-btn--pill btn-danger m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-cross"
+                                            *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.unAssignedDriver && (vehicleDriverHistory.length !=0 && vehicleDriverHistory[0].end_date==null)"
+                                            (onClick)="getUnassignedDriverById(vehicleDriverHistoryId)"></app-button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                        <div class="m-list-timeline " *ngIf="vehicleDriverHistory.length==0? false: true; else noHistroy">
+                                                <div class="m-list-timeline__items c-adding-padding-left"  *ngFor="let vDHistory of vehicleDriverHistory; index as i">
+                                                        <div class="m-list-timeline__item">
+                                                            <span class="m-list-timeline__time c-date-left">{{vDHistory.name}}</span>
+                                                            <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                                                            <span class="m-list-timeline__text">Start date: {{vDHistory.start_date}} To End date: {{vDHistory.end_date}}</span>
+                                                        </div>
+                                                        
+                                                </div>
+                                                
+                                            </div>
+                                           <ng-template #noHistroy>
+                                                    <p style="margin-left: 52px;">No history available</p>
+                                           </ng-template>
+                                </div>
+                                
+                                
+                               
+                            </div>
+                           <div class="col-md-6">
+                                    <div class="row">
+                                            <div class="col-md-6">
+                                                <h6 style="margin: 13px 0px 10px 5px;">Tracker History</h6>
+                                            </div>
+                                            <div class="col-md-6 text-right" style="margin-bottom: 13px;">
+                                                    <app-button buttonText="{{globals.switchLanguageValue.tracker_Assign}}" 
+                                                    cssClass="btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-plus" 
+                                                    (onClick)="toggleVehicleTrackerAssignPopUp(vehicle.id,vehicle.status)" 
+                                                    *ngIf=" globals.getprofileaction == null ? true : globals.getprofileaction.AssignedTrackertoVehicle && (vehicleTrackerHistory.length==0 || vehicleTrackerHistory[0].end_date!=null)"></app-button>
+                                                    <app-button buttonText="{{globals.switchLanguageValue.tracker_Un_Assign}}" cssClass="btn m-btn--pill btn-danger m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-cross"
+                                                    *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.unAssignedTracker && (vehicleTrackerHistory.length !=0 && vehicleTrackerHistory[0].end_date==null)"
+                                                    (onClick)="getunAssignedTrackerById(vehicleTrackerHistoryId)"></app-button>
+                                            </div>
+                                    </div>
+                                    <div class="row"   *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getVehicleTraHistory">
+                                            <div class="m-list-timeline" *ngIf="vehicleTrackerHistory.length==0? false: true; else noTrackerHistroy">
+                                                    <div class="m-list-timeline__items c-adding-padding-left">
+                                                            <div class="m-list-timeline__item" *ngFor="let vTHistory of vehicleTrackerHistory">
+                                                                    <span class="m-list-timeline__time c-date-left">{{vTHistory.tracker_unique_id}}</span>
+                                                                    <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                                                                    <span class="m-list-timeline__text">Start date: {{vTHistory.start_date}} To End date: {{vTHistory.end_date}}</span>
+                                                            </div>
+                                                         
+                                                    </div>
+                                                </div>
+                                                <ng-template #noTrackerHistroy>
+                                                    <p style="margin-left: 52px;">No history available</p>
+                                           </ng-template>
+                                    </div>
+                                   
+                                </div> 
+                                </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions m-form__actions--solid">
+                            <div class=" row">
+                                <div class="col-lg-12 text-center">
+                                    <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" cssClass="btn-custom-style  m-btn--pill m-btn--air btn-warning m-btn m-btn--custom m-demo-icon__class" (click)="cancelTrackerHistory()" buttonIcon="la la-close"></app-button>
+                                </div>
+                            </div>
+                        </div>
+                 </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<ng-template #showTrackerhistorypopup let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Vehicle Tracker Assignment</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+    <div class="m-portlet__body padding-left-right-5px">
+        <div class=" row">
+            <div class="col-md-6 c-marginbtm20">
+                    <app-selectbox identifier="businessgroup" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.business_Group}}:" [options]="businessGroup"
+                    name="business_group_id" placeholder="-- Select --" [(ngModel)]="trackerHistory.business_group_id"
+                    optionsValueField="id" optionsTextField="group_name" (onChange)="getBusinessUnitsList(trackerHistory.business_group_id)"
+                    ></app-selectbox>
+            </div>
+            <div class="col-md-6 c-marginbtm20">
+                    <app-selectbox identifier="businessunit" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.business_Unit}}:" [options]="businessUnit"
+                    name="business_unit_id" placeholder="-- Select --" [(ngModel)]="trackerHistory.business_unit_id"
+                    optionsValueField="id" optionsTextField="unit_name" (onChange)="getUnassignedTrackersList(trackerHistory.business_group_id,trackerHistory.business_unit_id)"></app-selectbox>
+
+            </div>
+            <div class="col-md-6 c-marginbtm20">
+                <app-selectbox identifier="Tracker" [(ngModel)]="trackerHistory.tracker_id"  formGroupCssClass="c-form_group" label="Tracker:" 
+                [options]="trackerAssignment" optionsValueField="id" optionsTextField="tracker_id" name="Tracker" placeholder="-- Select --" required ></app-selectbox>
+
+            </div>
+            
+        </div>
+    </div>
+
+    </div>
+    <div class="modal-footer m-form__actions--solid">
+        <div class="col-lg-12 text-center">
+            <app-button buttonText="{{globals.switchLanguageValue.tracker_Assign}}" cssClass="btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-plus" 
+            (onClick)="assignTrackerToVehicle(vehicle.id)"
+            ></app-button>
+            <app-button buttonText="{{globals.switchLanguageValue.common_button_close}}" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-close" 
+            (onClick)="closePopUp()"></app-button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #showDriverhistorypopup let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel">Vehicle Driver Assignment</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+    
+        <div class="m-portlet__body padding-left-right-5px">
+            <div class=" row">
+                <div class="col-md-6 c-marginbtm20">
+                        <app-selectbox identifier="businessgroup" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.business_Group}}:" [options]="businessGroup"
+                        name="business_group_id" placeholder="-- Select --" [(ngModel)]="driverHistory.business_group_id"
+                        optionsValueField="id" optionsTextField="group_name" (onChange)="getBusinessUnitsList(driverHistory.business_group_id)"
+                       ></app-selectbox>
+    
+                </div>
+                <div class="col-md-6 c-marginbtm20">
+                        <app-selectbox identifier="businessunit" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.business_Unit}}:" [options]="businessUnit"
+                        name="business_unit_id" placeholder="-- Select --" [(ngModel)]="driverHistory.business_unit_id"
+                        optionsValueField="id" optionsTextField="unit_name" (onChange)="getUnassignedDriversList(driverHistory.business_group_id,driverHistory.business_unit_id)"></app-selectbox>
+    
+                </div>  
+                <div class="col-md-6 c-marginbtm20">
+                    <app-selectbox identifier="driver" [(ngModel)]="driverHistory.id"  formGroupCssClass="c-form_group" label="Driver:" 
+                    [options]="drivers" optionsValueField="id" optionsTextField="name" name="driver" placeholder="-- Select --" required ></app-selectbox>
+    
+                </div>
+                
+            </div>
+        </div>
+    
+        </div>
+        <div class="modal-footer m-form__actions--solid">
+            <div class="col-lg-12 text-center">
+                <app-button buttonText="{{globals.switchLanguageValue.tracker_Assign}}" cssClass="btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-plus" 
+                (onClick)="assignDriverToVehicle(vehicle.id)"></app-button>
+                <app-button buttonText="{{globals.switchLanguageValue.common_button_close}}" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-close" 
+                (onClick)="closeDriverAssignPopUp()"></app-button>
+            </div>
+        </div>
+    </ng-template>

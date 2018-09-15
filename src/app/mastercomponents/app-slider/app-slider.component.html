@@ -1,0 +1,27 @@
+<div class="form-group m-form__group {{ this.formGroupCssClass }} {{this.inline ? 'row inlineformrow' : '' }}">
+	<label *ngIf="label" for="{{identifier}}" class="{{labelCssClass}}" >
+		{{label}}
+		<span *ngIf="this.validators && this.validators.length > 0" class="validationindicator">*</span>
+	</label>
+	<div class="{{textBoxDivCssClass}}">
+		<div class="row align-items-center">
+			<div class="{{ 'col-' + sliderTextBoxColumns }}">
+				<input type="text" class="form-control m-input m-input--air {{cssClass}} {{ (invalid | async) ? 'invalid' : ''}}" [id]="identifier" 
+				placeholder="{{placeholder}}" #field="ngModel" [(ngModel)]="value" name="{{name}}"
+				(click)="fireClick($event)" (change)="fireChange($event)" (blur)="fireBlur($event)" (focus)="fireFocus($event)">
+			</div>
+			<div class="{{ 'col-' + sliderControlColumns }}">
+				<nouislider [connect]="true" [min]="min" [max]="max" [step]="step" name="mySlider" [(ngModel)]="value"></nouislider>
+			</div>
+		</div>
+		<validation class="{{model.control.touched ? 'ng-touched' : 'ng-untouched'}} {{ (invalid | async) ? 'invalid' : ''}}"
+			[@flyInOut]="'in,out'"
+			*ngIf="(invalid | async)"
+			[messages]="failures | async">
+		</validation>
+		<div *ngIf="helpText" class="m-form__help">
+			{{helpText}}
+		</div>
+	</div>
+</div>
+

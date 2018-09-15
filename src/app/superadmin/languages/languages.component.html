@@ -1,0 +1,213 @@
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{globals.switchLanguageValue.common_languages}}
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            {{globals.switchLanguageValue.common_settings}}
+                        </span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            {{globals.switchLanguageValue.common_languages}}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div>
+<div class="m-content" *ngIf="!showLanguageGrid">
+    <form (ngSubmit)="submitForm(f)" #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+        <div class=" row">
+            <div class="col-md-12">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    {{globals.switchLanguageValue.add_language}}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="m-portlet__body padding-left-right-5px c-borderbtm" >
+                        <div class="col-md-12" >
+                            <div class=" row">
+                                <div class="col-md-6 text-center c-marginbtm20 ">
+                                        <app-textbox identifier="key" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_key}} :" placeholder="Enter Key" 
+                                        [inline]="true" labelColumns=4  [(ngModel)] ="languagedata.lang_key" textBoxColumns=8 name="key"  required></app-textbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" >
+                            <div class=" row">
+                                <div class="col-md-6 text-center ">
+                                    <app-selectbox identifier="menu" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_menu}}:" [options]="menus" name="menu"
+                                        placeholder="-- Select Menu --" [(ngModel)]="languagedata.menu_id"  optionsValueField="id" 
+                                        optionsTextField="menuname" [inline]="true" labelColumns=4  textBoxColumns=8></app-selectbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="m-portlet__body padding-left-right-5px" >
+                            <div class="col-md-12" >
+                                <div class="row" *ngFor="let item of languagedata.lang_words; index as k;" >
+                                       
+                                    <div class="col-md-6 text-center c-marginbtm20">
+                                            <app-textbox identifier="value{{k}}" name="value{{k}}" formGroupCssClass="c-form_group" label="{{item.language_name}} :" 
+                                            [(ngModel)] ="item.lang_value" placeholder="Enter Value" [inline]="true" labelColumns=4 textBoxColumns=8 name="key"  >
+                                            </app-textbox>
+                                            
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions m-form__actions--solid">
+                            <div class=" row">
+                                <div class="col-lg-12 text-center">
+                                    <app-button buttonType="submit" *ngIf="showCreateButton" buttonText="{{globals.switchLanguageValue.common_button_add}}" buttonIcon="la la-plus"  cssClass="m-btn--pill btn-info m-btn--air m-btn m-btn--custom btn-custom-style">
+                                    </app-button>
+                                    <app-button buttonType="submit" *ngIf="!showCreateButton" buttonText="{{globals.switchLanguageValue.common_button_update}}" buttonIcon="la la-refresh"  cssClass="m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style">
+                                    </app-button>
+                                    <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}"  cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-close" (onClick)="toggleCreateLanguage()"></app-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<!-- gird -->
+
+<div class="m-content c-page-min-height" *ngIf="showLanguageGrid">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        {{globals.switchLanguageValue.common_languages}}
+                </h3>
+                </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <button class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" (click)="toggleCreateLanguage()">
+                    <span><i class="la la la-plus"></i><span>{{globals.switchLanguageValue.add_language}}</span></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="m-portlet__body">
+            <!--<div class="m-form m-form--label-align-right m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 order-xl-2 m--align-right">
+                        <app-button (onClick)="togglePopUp()" buttonText="Filter" cssClass="custom-full-button m-btn--pill m-btn--air m-btn m-btn--custom btn-primary c-nomargin" buttonIcon="la la-filter">
+                        </app-button>
+                    </div>
+                </div>
+            </div>-->
+            <div my-header class="m-form m-form--label-align-right c-marginbtm20">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12 order-xl-2 m--align-right">
+                            <!-- <app-button (onClick)="togglePopUp()" cssClass="custom-full-button m-btn--pill m-btn--air m-btn m-btn--custom btn-primary c-nomargin btn-custom " buttonIcon="la la-filter">
+                            </app-button> -->
+                            <div aria-label="..." class="m-btn-group m-btn-group--pill btn-group mr-2" role="group">
+                                <button (click)="togglePopUp()" class="m-btn btn btn-secondary" type="button">
+                                    <i class="la la-filter"></i>
+                                </button>
+                                <button class="m-btn btn btn-secondary" type="button" (click)="getLanguageData($event,false,true)">
+                                    <i class="la la-refresh"></i>
+                                </button>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <p-dataTable [value]="languagelist" [rows]="10" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,20,25]"
+             [totalRecords]="totalRecords"  [lazy]="true" (onLazyLoad)="getLanguageData($event)" sortMode="multiple" [hidden]="showEditForm">
+
+                <p-column field="lang_key" header="{{globals.switchLanguageValue.languages_key}}"  styleClass="text-left m-datatable__cell--center m-datatable__cell">
+                </p-column>
+                <p-column field="lang_value" header="{{globals.switchLanguageValue.language_value}}"  styleClass="text-left m-datatable__cell--center m-datatable__cell">
+                </p-column>
+                <p-column header="{{globals.switchLanguageValue.language_menu}}" field="menuname" [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell">
+                </p-column>
+
+                <p-column styleClass="col-button c-action-width160">
+                    <ng-template let-acc="rowData" pTemplate="body">
+                        <a (click)="editLanguage(acc.id)" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="{{globals.switchLanguageValue.common_edit}} ">
+                            <i class="la la-edit"></i>
+                        </a>
+                        <!--<a (click)="deleteLanguage(acc.id)" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="Delete ">
+                            <i class="la la-trash"></i>
+                        </a>-->
+                    </ng-template>
+                </p-column>
+
+            </p-dataTable>
+
+        </div>
+    </div>
+</div>
+
+<!-- gird end -->
+
+<ng-template #showfilterpopup let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Filter</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 text-center ">
+                <app-select2 [options]="menus" [(ngModel)]="paging.search.menuids" identifier="tbSkills" name="tbSkills" placeholder="Select Menu" class="m-select2 m-select2--air" [multiple]="true" [inline]="true" label="Menus:" optionsValueField="id" optionsTextField="menuname" labelColumns=4 textBoxColumns=8 ></app-select2>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer m-form__actions--solid">
+        <div class="col-lg-12 text-center">
+            <app-button buttonText="search" cssClass="btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-search" (onClick)="getLanguageData($event,true)" ></app-button>
+            <app-button buttonText="Close" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-close" (onClick)="togglePopUp()"></app-button>
+            <app-button buttonText="Reset" cssClass="btn m-btn--pill btn-danger m-btn--air m-btn m-btn--custom btn-custom-style" buttonIcon="la la-refresh" (onClick)="resetSearch()"></app-button>
+        </div>
+    </div>
+</ng-template>
+
+
+

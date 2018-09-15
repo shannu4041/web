@@ -1,0 +1,587 @@
+.ui-datatable {
+    position: relative;
+}
+
+.ui-datatable table {
+	border-collapse:collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.ui-datatable .ui-datatable-header,
+.ui-datatable .ui-datatable-caption,
+.ui-datatable .ui-datatable-footer {
+    text-align: center;
+	padding: .5em .75em;
+    box-sizing: border-box;
+}
+
+.ui-datatable .ui-datatable-caption,
+.ui-datatable .ui-datatable-header {
+    border-bottom: 0 none;
+}
+
+.ui-datatable .ui-datatable-footer {
+    border-top: 0 none;
+}
+
+.ui-datatable thead th, .ui-datatable tfoot td {
+    text-align: center;
+}
+
+.ui-datatable thead tr {
+    border-width: 0;
+}
+
+.ui-datatable .ui-datatable-thead > tr > th,
+.ui-datatable .ui-datatable-tfoot > tr > td,
+.ui-datatable .ui-datatable-data > tr > td {
+    border-color: inherit;
+    box-sizing: border-box;
+    padding: .25em .5em; 
+    /*border-width: 1px;*/    /*Pavan Modified*/
+    /*border-style: solid;/* /*Pavan Modified*/
+}
+
+
+.ui-datatable.ui-datatable-resizable .ui-datatable-thead > tr > th,
+.ui-datatable.ui-datatable-resizable .ui-datatable-tfoot > tr > td,
+.ui-datatable.ui-datatable-resizable .ui-datatable-data > tr > td {
+    overflow: hidden;
+}
+
+.ui-datatable .ui-datatable-thead > tr > th,
+.ui-datatable .ui-datatable-tfoot > tr > td {
+    font-weight: normal;
+}
+
+.ui-datatable tbody {
+    outline: 0;
+}
+
+.ui-datatable .ui-sortable-column {
+    cursor: pointer;
+}
+
+.ui-datatable .ui-sortable-column-icon {
+    display: inline-block;
+    margin-left: .125em;
+}
+
+.ui-datatable tr.ui-state-highlight {
+    cursor: pointer;
+}
+
+/* Scrollable */
+.ui-datatable-scrollable-body {
+    overflow: auto;
+    overflow-anchor: none;
+    min-height: 0%;
+}
+
+.ui-datatable-scrollable-header,
+.ui-datatable-scrollable-footer {
+    overflow: hidden;
+}
+
+.ui-datatable-scrollable .ui-datatable-scrollable-header,
+.ui-datatable-scrollable .ui-datatable-scrollable-footer {
+    position: relative;
+    border: 0 none;
+}
+
+.ui-datatable-scrollable .ui-datatable-scrollable-header td {
+    font-weight: normal;
+}
+
+.ui-datatable-scrollable-body .ui-datatable-data,
+.ui-datatable-scrollable-body .ui-datatable-data > tr:first-child {
+    border-top-color: transparent;
+}
+
+.ui-datatable .ui-datatable-data tr.ui-state-hover,
+.ui-datatable .ui-datatable-data tr.ui-state-highlight {
+    border-color: inherit;
+    font-weight: inherit;
+    cursor: pointer;
+}
+
+.ui-datatable .ui-datatable-data tr.ui-rowgroup-header td a,
+.ui-datatable .ui-datatable-data tr.ui-rowgroup-header td span.ui-rowgroup-header-name {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.ui-datatable-scrollable-theadclone {
+    height: 0;
+}
+
+.ui-datatable-scrollable-theadclone tr {
+    height: 0;
+}
+
+.ui-datatable-scrollable-theadclone th.ui-state-default {
+    height: 0;
+    border-bottom-width: 0;
+    border-top-width: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    outline: 0 none;
+}
+
+.ui-datatable-scrollable-theadclone th span.ui-column-title {
+  display: block;
+  height: 0;
+}
+
+.ui-datatable .ui-paginator {
+    padding: .125em;
+	float:left;
+}
+
+.ui-datatable .ui-paginator-top {
+    border-bottom-width: 0;
+}
+
+.ui-datatable .ui-paginator-bottom {
+    border-top-width: 0;
+}
+
+.ui-datatable-rtl {
+    direction: rtl;
+}
+
+.ui-datatable-rtl.ui-datatable thead th,
+.ui-datatable-rtl.ui-datatable tfoot td {
+    text-align: right;
+}
+
+/* Row Toggler */
+.ui-row-toggler {
+    cursor: pointer;
+}
+
+/* Resizable */
+.ui-datatable .ui-column-resizer {
+    display: block;
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    margin: 0;
+    width: .5em;
+    height: 100%;
+    padding: 0px;
+    cursor:col-resize;
+    border: 1px solid transparent;
+}
+
+.ui-datatable .ui-column-resizer-helper {
+    width: 1px;
+    position: absolute;
+    z-index: 10;
+    display: none;
+}
+
+.ui-datatable-resizable {
+    padding-bottom: 1px;     /*fix for webkit overlow*/
+    overflow:auto;
+}
+
+.ui-datatable-resizable thead th,
+.ui-datatable-resizable tbody td,
+.ui-datatable-resizable tfoot td {
+    white-space: nowrap;
+}
+
+.ui-datatable-resizable th.ui-resizable-column {
+    background-clip: padding-box;
+    position: relative;
+}
+
+/** Reflow **/
+.ui-datatable-reflow .ui-datatable-data td .ui-column-title {
+    display: none;
+}
+
+/* Filter */
+.ui-datatable .ui-column-filter {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: .25em;
+}
+
+/* Editing */
+.ui-datatable .ui-editable-column input {
+    width: 100%;
+    outline: 0;
+}
+
+.ui-datatable .ui-datatable-data > tr > td.ui-editable-column {
+    padding: .5em;
+}
+
+.ui-datatable .ui-editable-column > .ui-cell-editor {
+    display: none;
+}
+
+.ui-datatable .ui-datatable-data > tr > td.ui-editable-column.ui-cell-editing {
+    padding: 1px;
+}
+
+.ui-datatable .ui-editable-column.ui-cell-editing > .ui-cell-editor {
+    display: block;
+}
+
+.ui-datatable .ui-editable-column.ui-cell-editing > .ui-cell-data {
+    display: none;
+}
+
+.ui-datatable-stacked thead th,
+.ui-datatable-stacked tfoot td {
+    display: none !important;
+}
+
+.ui-datatable.ui-datatable-stacked .ui-datatable-data > tr > td {
+    text-align: left;
+    display: block;
+    border: 0 none;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    clear: left;
+}
+
+.ui-datatable.ui-datatable-stacked .ui-datatable-data.ui-widget-content {
+    border: 0 none;
+}
+
+.ui-datatable-stacked .ui-datatable-data tr.ui-widget-content {
+    border-left: 0 none;
+    border-right: 0 none;
+}
+
+.ui-datatable-stacked .ui-datatable-data td .ui-column-title {
+    padding: .4em;
+    min-width: 30%;
+    display: inline-block;
+    margin: -.4em 1em -.4em -.4em;
+    font-weight: bold;
+}
+
+.ui-datatable .ui-selection-column .ui-chkbox,
+.ui-datatable .ui-selection-column .ui-radiobutton {
+     margin: 0;
+     display: block;
+}
+
+.ui-datatable .ui-selection-column .ui-chkbox-box,
+.ui-datatable .ui-selection-column .ui-radiobutton-box {
+    display: block;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.ui-datatable-scrollable-wrapper {
+    position: relative;
+}
+
+.ui-datatable-scrollable-view {
+    
+}
+
+.ui-datatable-frozen-view .ui-datatable-scrollable-body {
+    overflow: hidden;
+}
+
+.ui-datatable-unfrozen-view {
+    position: absolute;
+    top: 0px;
+}
+
+.ui-datatable .ui-datatable-load-status {
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+}
+
+.ui-datatable .ui-datatable-virtual-table {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.ui-datatable .ui-datatable-loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=10)";
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.ui-datatable .ui-datatable-loading-content {
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    z-index: 2;
+}
+
+@media ( max-width: 35em ) {
+    .ui-datatable-reflow thead th,
+    .ui-datatable-reflow tfoot td {
+        display: none !important;
+    }
+
+    .ui-datatable-reflow .ui-datatable-data > tr > td {
+        text-align: left;
+        display: block;
+        border: 0 none;
+        width: 100% !important;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		float: left;
+		clear: left;
+    }
+
+    .ui-datatable-reflow .ui-datatable-data.ui-widget-content {
+        border: 0 none;
+    }
+
+    .ui-datatable-reflow .ui-datatable-data tr.ui-widget-content {
+        border-left: 0 none;
+        border-right: 0 none;
+    }
+
+    .ui-datatable-reflow .ui-datatable-data td .ui-column-title {
+        padding: .4em;
+        min-width: 30%;
+        display: inline-block;
+        margin: -.4em 1em -.4em -.4em;
+        font-weight: bold;
+    }
+    
+    .ui-datatable-reflow.ui-datatable-scrollable .ui-datatable-scrollable-body colgroup {
+        display: block;
+    }
+}
+
+/*Pavan modified*/
+.ui-datatable .ui-datatable-thead > tr > th
+{
+    color:#575962;
+    background-color: #f4f3fb;
+    font-weight:600;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:16px;
+    padding-bottom: 16px; 
+
+}
+.ui-datatable .ui-datatable-data > tr
+{
+    height:60px;
+}
+.ui-datatable .ui-datatable-even td{
+    background-color: rgb(251, 251, 254);
+}
+ /*Pavan Modified*/
+/*.ui-datatable .ui-datatable-data tr :hover,
+.ui-datatable .m-datatable_body tr :hover
+{
+    /*background-color:#f7f7fc !important;
+}*/
+.ui-datatable .ui-sortable-column-icon
+{
+    color:#4d44bd;
+    font-size: 1.1rem;
+}
+.m-btn--hover-accent:hover, 
+.m-btn--hover-accent.active,
+.m-btn--hover-accent:active,
+.m-btn--hover-accent:focus {
+  border-color: #00c5dc !important;
+  color: #ffffff !important;
+  background-color: #00c5dc !important;
+  }
+
+  .ui-paginator-element
+  {
+    height: 34px;
+    width: 34px;
+    cursor: pointer;
+    padding: 0px;
+    align-items: center;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1rem !important;
+    line-height: 1rem;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 26px;
+    margin-left:5px;
+    color: #716aca;
+    cursor: pointer;
+  }
+
+  .ui-paginator .ui-paginator-page,
+  .ui-paginator .ui-paginator-pages,
+  .ui-paginator .ui-paginator-next,
+  .ui-paginator .ui-paginator-last,
+  .ui-paginator .ui-paginator-first,
+  .ui-paginator .ui-paginator-prev,
+  .ui-paginator .ui-paginator-current {
+      padding: 4px 4px !important;
+      margin-left: 1px !important;
+      margin-right: 1px !important;
+      
+  }
+
+  .ui-paginator-element:hover{
+	background:#dddcf2;
+	cursor: pointer;
+  }
+  
+  .ui-paginator-first,
+  .ui-paginator-prev,
+  .ui-paginator-next,
+  .ui-paginator-last
+  {
+    background: #edecf8;
+  }
+  .ui-paginator-first :hover,
+  .ui-paginator-prev :hover,
+  .ui-paginator-next :hover,
+  .ui-paginator-last :hover
+  {
+   cursor: pointer;
+  }
+
+  .ui-paginator .ui-corner-all
+  {
+      border-radius:17px;
+	  
+	 
+      
+  }
+  .ui-paginator a.ui-paginator-page.ui-paginator-element.ui-state-default.ui-corner-all
+  {
+
+  color: #898b96;
+}
+
+.ui-paginator a.ui-paginator-page.ui-paginator-element.ui-state-default.ui-corner-all.ui-state-active
+  {
+    background: #716ac8 !important;
+    color: #ffffff !important;
+	margin-left: 4px !important;
+    margin-right: 4px !important;
+  }
+  .pagelength
+  {
+    
+    float:left;
+  }
+  .pagelength:hover
+  {
+      background-color: transparent;
+  }
+  .pagelength .ui-dropdown-panel
+  {
+   left:5px !important;
+    position: absolute;
+    top: -165px !important;
+     
+  }
+  .pagelength .ui-dropdown-panel ul{
+      margin: 0 !important;
+      padding:0 !important;
+  }
+  .pagelength .ui-dropdown-panel li
+  {
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
+  .pagelength .ui-dropdown-panel li:hover
+  {
+    background-color: #e7e4e4;
+  }
+  
+ .pagelength label{
+	 margin-bottom:0px;
+ }
+  .recordcount
+  {
+    padding: 6px;
+    margin-left: 20px;
+    float: left;
+  }
+.m-datatable__pager-nav {
+	margin: 0;
+    padding: 0;
+	float:left;
+}
+.m-datatable__pager-nav li{
+	    display: inline-block;
+   }
+.m-datatable__pager-info{
+	float:right;
+	position:relative;
+	top:5px;
+}
+.pagination-container{
+	width: 100%;
+    padding: 20px 0px 35px 0px;
+}
+.ui-paginator-pages, .m-datatable__pager-nav li .ui-paginator-first, .m-datatable__pager-nav li .ui-paginator-prev, .m-datatable__pager-nav li .ui-paginator-next, .m-datatable__pager-nav li .ui-paginator-last {
+	display:table !important;
+}
+.ui-paginator-pages{
+	position: relative;
+    /* top: 2px; */
+}
+.m-datatable__pager-nav li a span, .ui-paginator-pages a{
+	display:table-cell;
+	vertical-align:middle;
+	
+}
+.ui-dropdown{
+	background-color: #edecf8 !important;
+    padding: 4px 21px !important;
+    border-radius: 15px !important;
+    cursor: pointer !important;
+	border: 1px solid #706aca;
+}
+.ui-dropdown .ui-dropdown-trigger .fa{
+	margin-left: -4px !important;
+    line-height: 30px !important;
+	margin-top: 0 !important;
+}
+element.style {
+}
+@media (max-width: 768px){
+	.m-datatable__pager-info{
+		float:none;
+		width:100%;
+		clear:both;
+		margin-top:10px;
+	}
+  .ui-datatable .ui-paginator{
+	  margin-bottom:10px;	  
+  }
+  .radio-style{
+	margin-top: 0px !important;
+    margin-bottom: 30px !important;
+}
+
+}
+/*Pavan Modified*/
+
+
+   

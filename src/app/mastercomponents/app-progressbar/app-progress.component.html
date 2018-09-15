@@ -1,0 +1,20 @@
+<div class="form-group m-form__group {{ this.formGroupCssClass }} {{this.inline ? 'row inlineformrow' : '' }}">
+	<label *ngIf="label" for="{{identifier}}" class="{{labelCssClass}}" >
+		{{label}}
+	</label>
+	<div class="{{progressbarDivCssClass}}" >
+        <div class="m-section__content">
+          <div class="progress ">
+            <div *ngFor="let progressbar of progressBarData" class="progress-bar bg-{{progressbar.color}}" 
+				role="progressbar" [style.width]="progressbar.value" [style.height.px]="progressBarSize"
+				[style.font-size.px]="progressBarTextSize" [style.line-height.px]="progressBarSize">
+                 {{displayText ? progressbar.text : ''}}{{displayText && displayValue ? ' ' + textValueSeperator + ' ' : ''}}
+				 {{displayValue ? progressbar.value : ''}}
+            </div>
+          </div>
+        </div>
+        <div *ngIf="helpText" class="m-form__help">
+            {{helpText}}
+        </div>
+	</div>
+</div>

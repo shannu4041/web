@@ -1,0 +1,192 @@
+<div class="m-content">
+	<div class="row">
+		<div class="col-md-8">
+			<div class="m-portlet m-portlet--tab">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<span class="m-portlet__head-icon m--hide">
+								<i class="la la-gear"></i>
+							</span>
+							<h3 class="m-portlet__head-text">
+								Form Controls
+							</h3>
+						</div>
+					</div>
+				</div>
+				<form (ngSubmit)="SubmitForm(f)" #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+					<div class="m-portlet__body">
+						<app-textbox identifier="tbEmail" helpText="We'll never share your email with anyone else." label="Email Address"
+							placeholder="Enter email" [(ngModel)]="person.email" name="tbEmail" [inline]="true" labelColumns=2 textBoxColumns=10
+							required email></app-textbox>
+						<br/>
+						<br/>
+						<app-textbox identifier="tbEmail" helpText="We'll never share your email with anyone else." label="Email Address"
+							placeholder="Enter email" [(ngModel)]="person.email" name="tbEmail1"
+							required email></app-textbox>
+						<br/>
+						<br/>
+						<app-textbox identifier="tbEmail" helpText="We'll never share your email with anyone else." label="Email Address"
+							placeholder="Enter email" [(ngModel)]="person.email" name="tbEmail2" [inline]="true" labelColumns=2 textBoxColumns=10 
+							prependIcon="la la-envelope-o" appendIcon="la la-user"
+							required email></app-textbox>
+						<br/>
+						<br/>
+						<app-textbox identifier="tbEmail" helpText="We'll never share your email with anyone else." label="Email Address"
+							placeholder="Enter email" [(ngModel)]="person.email" name="tbEmail2" 
+							prependIcon="la la-envelope-o" appendIcon="la la-user"
+							required email></app-textbox>
+						<br/>
+						<br/>
+						<app-textarea identifier="tbAddress" helpText="Enter personal address" label="Address"
+							placeholder="Enter Address" [(ngModel)]="person.address" name="tbAddress" [inline]="true" labelColumns=2 textBoxColumns=10 
+							textAreaRows=4 required></app-textarea>
+						<br/>
+						<br/>
+						<app-textbox identifier="tbGender" helpText="Enter your gender" label="Gender" [placeholder]="genderHelpText"
+							prependIcon="flaticon-profile-1" [(ngModel)]="person.gender" name="tbGender" required></app-textbox>
+						<br/>
+						<br/>
+						<app-checkbox identifier="lstHobbies" helpText="Select your hobbies" label="Hobbies"
+							name="lstHobbies" [(ngModel)]="person.hobbies" [options]="hobbylist" [inline]="true"
+							labelColumns=2 checkBoxListColumns=10 [inlineCheckbox]="true" required>
+						</app-checkbox>
+						<br/>
+						<br/>
+
+						<app-switch identifier="tbSwitch" helpText="Enter the Switch." label="Switch"
+						 name="tbSwitch" [inline]="true" labelColumns=2 switchColumns=10 
+						 	[(ngModel)]="person.switchval" ></app-switch>
+						<br/>
+						<br/>
+
+
+						<app-selectbox identifier="tbCountry" helpText="Select Country" label="Select State"
+							 [(ngModel)]="person.countries" [options]="countries" name="lstselect" [inline]="true" labelColumns=2 placeholder="Select Country"  textBoxColumns=10  
+							 required></app-selectbox>
+
+						<br/>
+						<br/>
+
+
+            <app-radiobutton identifier="lstFoodType" helpText="Select your Food Type" label="Food Type"
+							name="lstfoodtypes" [(ngModel)]="person.foodtype" [options]="foodtype" [inline]="true"
+							labelColumns=2 radioBoxListColumns=10 [inlineRadio]="true" required>
+						</app-radiobutton>
+						
+            <br/>
+            <br/>
+						<app-slider identifier="tbAge" label="Age" name="tbAge" placeholder="Enter Age" [(ngModel)]="person.age" 
+							helpText="Please Enter Your Age" labelColumns="4" sliderColumns="8" [min]="0" [max]="100" required></app-slider>
+						<br/>
+						<br/>
+						<app-dropzone label="File Upload" identifier="tbFileUpload" [inline]="true" 
+						labelColumns=3 [(ngModel)]="person.image"
+						textBoxColumns=5 name="lstfileupload" required
+						[config]="config">
+						</app-dropzone>
+						<br/>
+						<br/>
+						<app-datepicker name="tbDOB" identifier="tbDOB" [(ngModel)]="person.DOB" (onClick)="DOBClick($event)"
+							label="Date of Birth" helpText="Please select your DOB"
+							[inline]="true" labelColumns=3 textBoxColumns=5 [showPickerOnTop]="true" required></app-datepicker>
+						<br/>
+						<br/>
+						
+						<app-typeahead identifier="tbState" name="tbState" [searchOptions]="statesWithFlags"label="State" helpText="Please select your state" [(ngModel)]="person.State"
+							[inline]="true" labelColumns=3 textBoxColumns=4 
+								prependIcon="flaticon-profile-1" required></app-typeahead>
+												<br/>
+							<br/>
+							<app-progress name="tbProgressbar" identifier="tbProgressbar" placeholder="Enter Progress" 
+							label="Progressbar" helpText="Person Technical Skill Set"
+							 labelColumns="2" progressColumns="10" progressBarSize="26"
+							[progressBarData]="progressBarData" >
+							</app-progress>
+						  <br>
+						
+						<br/>
+						<br/>
+						<app-select2 [options]="select2options" [(ngModel)]="person.skillset" 
+							identifier="tbSkills" name="tbSkills" (onSelect)="onSelect($event)" 
+							class="m-select2 m-select2--air" [inline]="true" [multiple]="true"
+							label="Skill Sets" helpText="Person Technical Skill Set"
+							 labelColumns="2" textBoxColumns="6" required minlengtharray minlength="2"></app-select2>
+						<br/>
+						<br/>
+						<div class="form-group m-form__group {{ this.formGroupCssClass }}">
+						<app-button buttonText="Save" cssClass="m-btn--pill m-btn--air btn-outline-primary m-btn m-btn--custom" (onClick)="buttonClick($event)"></app-button>
+						<app-button buttonText="Cancel" cssClass="btn-outline-warning m-btn m-btn--icon m-btn--pill m-btn--air" buttonIcon="la la-close"
+							(onClick)="cancelButtonClick($event)"></app-button>
+						<app-button buttonText="Cancel All" cssClass="btn-outline-info m-btn m-btn--icon m-btn--pill m-btn--air" buttonIcon="la la-close"
+							(onClick)="cancelAllButtonClick($event)"></app-button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="m-portlet m-portlet--tab">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<span class="m-portlet__head-icon m--hide">
+								<i class="la la-gear"></i>
+							</span>
+							<h3 class="m-portlet__head-text">
+								Person Info
+							</h3>
+						</div>
+					</div>
+				</div>
+				<div class="m-portlet__body">
+					<div class="row">
+						<label class="col-md-4">Name</label> <label class="col-md-8">{{person.name}}</label>
+					</div>
+					<div class="row">
+						<label class="col-md-4">Email Address:</label> <label class="col-md-8">{{person.email}}</label>
+					</div>
+					<div class="row">
+						<label class="col-md-4">Gender:</label> <label class="col-md-8">{{person.gender}}</label>
+					</div>
+					<div class="row">
+						<label class="col-md-4">Address:</label> <label class="col-md-8">{{person.address}}</label>
+					</div>
+					<div class="row">
+						<label class="col-md-4">Description:</label> <label class="col-md-8">{{person.description}}</label>
+					</div>
+					<div class="row">
+						<label class="col-md-4">Hobbies:</label> <label class="col-md-8">{{person.hobbies}}</label>
+					</div>
+
+					<div class="row">
+							<label class="col-md-4">Switch:</label> <label class="col-md-8">{{person.switchval}}</label>
+						</div>
+
+					<div class="row">
+						<label class="col-md-4">Country:</label> <label class="col-md-8">{{person.countries}}</label>
+					</div>
+					<div class="row">
+						<label class="col-md-4">Veg or the Non Veg?</label> <label class="col-md-8">{{person.foodtype}}</label>
+					</div>
+					<div class="row">
+						<label class="col-md-4">Age?</label> <label class="col-md-8">{{person.age}}</label>
+					</div>
+					<div class="row">
+						<label class="col-md-4">DOB</label> <label class="col-md-8">{{person.DOB}}</label>
+					</div>
+					<div class="row">
+						<label class="col-md-4">State</label> <label class="col-md-8">{{person.State | json }}</label>
+					</div>
+					<div class="row">
+							<label class="col-md-4">Image</label> <label class="col-md-8">{{person.image}}</label>
+							<img src="{{key[0].dataURL}}" style="height: 200px;" *ngFor="let key of person.image;" />
+					</div>
+					<div class="row">
+							<label class="col-md-4">Skill Sets</label> <label class="col-md-8">{{person.skillset | json}}</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,36 @@
+<div class="form-group m-form__group {{ this.formGroupCssClass }} {{ inline && label && !labelColumns ? 'm-form__group--inline' : '' }} {{ inline && label && labelColumns ? ' row inlineformrow' : '' }}">
+	<label *ngIf="label && labelColumns" for="{{identifier}}" class="{{labelCssClass}}" >
+		{{label}}
+		<span *ngIf="this.validators && this.validators.length > 0" class="validationindicator">*</span>
+	</label>
+	<div class="m-form__label" *ngIf="label && !labelColumns">
+		<label class="{{labelCssClass}}" for="{{identifier}}">{{label}}</label>
+		<span *ngIf="this.validators && this.validators.length > 0" class="validationindicator">*</span>
+	</div>
+	<div class="{{ textBoxColumns ? textBoxDivCssClass : 'm-form__control' }}">
+		<div class="{{textBoxGroupCssClass}}">
+			<input class="form-control m-input m-input--air {{cssClass}} {{ (invalid | async) ? 'invalid' : ''}}" [id]="identifier" placeholder="{{placeholder}}" 
+			type="{{inputType}}" [(ngModel)]="value" #field="ngModel" name="{{name}}" disabled="{{setDisabled}}" 
+			pattern="{{patternType}}" 
+				(click)="fireClick($event)" (change)="fireChange($event)" (blur)="fireBlur($event)" (focus)="fireFocus($event)">
+			<span *ngIf="prependIcon.length > 0" class="m-input-icon__icon m-input-icon__icon--left">
+				<span>
+					<i class="{{prependIcon}}"></i>
+				</span>
+			</span>
+			<span *ngIf="appendIcon.length > 0" class="m-input-icon__icon m-input-icon__icon--right">
+				<span>
+					<i class="{{appendIcon}}"></i>
+				</span>
+			</span>
+		</div>
+		<validation class="{{model.control.touched ? 'ng-touched' : 'ng-untouched'}} {{ (invalid | async) ? 'invalid' : ''}}"
+			[@flyInOut]="'in,out'"
+			*ngIf="(invalid | async)"
+			[messages]="failures | async">
+		</validation>
+		<div *ngIf="helpText" class="m-form__help">
+			{{helpText}}
+		</div>
+	</div>
+</div>

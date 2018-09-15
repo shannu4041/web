@@ -1,0 +1,126 @@
+
+      <div class="m-subheader">
+        <div class="d-flex align-items-center">
+          <div class="mr-auto">
+            <h3 class="m-subheader__title">
+              Dashboard
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="m-content">
+        <div class="row">
+          <div class="col-xl-3">
+            <!--begin:: Widgets/Sales Stats-->
+          <div class="m-portlet m-portlet--bordered-semi m-portlet--half-height m-portlet--fit " style="min-height: 300px">
+              <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                  <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                      Vehicles  <i class="la la-car m--font-brand"></i>
+                    </h3>
+                  </div>
+                </div>
+                
+              </div>
+              <div class="m-portlet__body">
+                <!--begin::Widget5-->
+                <div class="m-widget20">
+                  <div class="m-widget20__number m--font-success">{{dashBoardData.vehicalCount}}</div>
+                  <div class="m-widget20__chart" style="height:160px;">
+                    <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                      <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                      <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0">
+                      </div>
+                    </div>
+                    <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                      <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                    <canvas id="m_chart_bandwidth1" width="325" height="160" class="chartjs-render-monitor" style="display: block; width: 325px; height: 160px;"></canvas>
+                  </div>
+                </div>
+                <!--end::Widget 5-->				 
+              </div>
+            </div>
+        <!--end:: Widgets/Sales Stats-->	</div>
+          <div class="col-xl-3">
+            <!--begin:: Widgets/Inbound Bandwidth-->
+        <div class="m-portlet m-portlet--bordered-semi m-portlet--half-height m-portlet--fit " style="min-height: 300px">
+          <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+              <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                  Trips  <i class="flaticon-route m--font-brand"></i>
+                </h3>
+              </div>
+            </div>
+            
+          </div>
+          <div class="m-portlet__body">
+            <!--begin::Widget5-->
+            <div class="m-widget20">
+              <div class="m-widget20__number m--font-success">{{dashBoardData.tripsCount}}</div>
+              <div class="m-widget20__chart" style="height:160px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                <canvas id="m_chart_bandwidth1" width="325" height="160" class="chartjs-render-monitor" style="display: block; width: 325px; height: 160px;"></canvas>
+              </div>
+            </div>
+            <!--end::Widget 5-->				 
+          </div>
+        </div>
+        <!--end:: Widgets/Inbound Bandwidth-->		<div class="m--space-30"></div>
+            <!--begin:: Widgets/Outbound Bandwidth-->
+        
+        <!--end:: Widgets/Outbound Bandwidth-->	</div>
+          <div class="col-xl-3">
+            <!--begin:: Widgets/Top Products-->
+            <div class="m-portlet m-portlet--bordered-semi m-portlet--half-height m-portlet--fit " style="min-height: 300px">
+              <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                  <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                      Drivers  <i class="m--font-brand">
+                        <img class="m--font-brand" src="../../assets/images/drivericon.png">
+                      </i>
+                    </h3>
+                  </div>
+                </div>
+                
+              </div>
+              <div class="m-portlet__body">
+                <!--begin::Widget5-->
+                <div class="m-widget20">
+                  <div class="m-widget20__number m--font-success">{{dashBoardData.driversCount}}</div>
+                  <div class="m-widget20__chart" style="height:160px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                    <canvas id="m_chart_bandwidth1" width="325" height="160" class="chartjs-render-monitor" style="display: block; width: 325px; height: 160px;"></canvas>
+                  </div>
+                </div>
+                <!--end::Widget 5-->				 
+              </div>
+            </div>
+        <!--end:: Widgets/Top Products-->	
+          </div>
+          <div class="col-xl-3">
+            <div class="m-portlet m-portlet--bordered-semi m-portlet--half-height m-portlet--fit " style="min-height: 300px">
+              <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                  <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                      Distance  <i class="fa fa-road m--font-brand"></i>
+                    </h3>
+                  </div>
+                </div>
+                
+              </div>
+              <div class="m-portlet__body">
+                <!--begin::Widget5-->
+                <div class="m-widget20">
+                  <div class="m-widget20__number m--font-success">670</div>
+                  <div class="m-widget20__chart" style="height:160px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                    <canvas id="m_chart_bandwidth1" width="325" height="160" class="chartjs-render-monitor" style="display: block; width: 325px; height: 160px;"></canvas>
+                  </div>
+                </div>
+                <!--end::Widget 5-->				 
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>

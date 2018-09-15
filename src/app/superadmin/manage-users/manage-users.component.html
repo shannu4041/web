@@ -1,0 +1,192 @@
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Manage Users
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a  class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a  class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            Manage Users
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div>
+<div class="m-content" *ngIf="showCreateUser">
+    <form (ngSubmit)="submitForm(f)" #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+        <div class=" row">
+            <div class="col-md-12">
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head" *ngIf="!showUpdateUser">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    Add User
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px c-borderbtm">
+                        <div class="col-md-12">
+                            <div class=" row">
+                                <!-- <div class="col-md-3">
+                                    <div class="c-User_icon">
+                                        <img alt="user" class="m--img-rounded m--marginless m--img-centered" src="../../assets/images/user5.jpg">
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-md-3 c-margintop20">
+                                    <app-dropzone placeholder="Upload Profile Photo" identifier="profile_pic_path" [inline]="true" name="profile_pic_path" [(ngModel)]="user.profile_pic_path" [config]="config"></app-dropzone>
+                                </div> -->
+                                <div class="col-md-12">
+                                    <div class=" row">
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="first_name" [(ngModel)]="user.first_name" formGroupCssClass="c-form_group" label="First Name:" placeholder="Enter First Name" name="first_name" ></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="lastName" [(ngModel)]="user.last_name" formGroupCssClass="c-form_group" label="Last Name" placeholder="Enter Last Name" name="last_name"></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="email" [(ngModel)]="user.email" required email formGroupCssClass="c-form_group" label="Email" placeholder="Enter Email" name="email"></app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="phoneNumber" [(ngModel)]="user.mobileno" required number formGroupCssClass="c-form_group" label="Phone Number" placeholder="Enter Phone Number" name="mobileno">
+                                            </app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20">
+                                            <app-textbox identifier="emp_code" [(ngModel)]="user.emp_code" required formGroupCssClass="c-form_group" label="Employee Code" placeholder="Enter Employee Code" name="emp_code">
+                                            </app-textbox>
+                                        </div>
+                                        <div class="col-md-6 c-marginbtm20" *ngIf="this.user.id == null">
+                                            <app-textbox identifier="user_password" [(ngModel)]="user.user_password" required formGroupCssClass="c-form_group" label="Password" placeholder="Enter Password" name="user_password">
+                                            </app-textbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px c-borderbtm" >
+                        <div class="col-md-12" >
+                            <div class=" row">
+                                <div class="col-md-6  c-marginbtm20">
+                                    <app-select2 [options]="profiles" required formGroupCssClass="c-form_group" identifier="tbprofis" name="profile_id"  class="m-select2 m-select2--air" [multiple]="true" label="Profile:" [(ngModel)]="user.profile_id" optionsValueField="id" optionsTextField="name" ></app-select2>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="m-portlet__body padding-left-right-5px">
+                        <div class="col-md-12">
+                            <div class=" row">
+
+                                <div class="col-md-4  c-marginbtm20">
+                                    <app-textbox identifier="address" [(ngModel)]="user.address.address"  formGroupCssClass="c-form_group" label="Address" placeholder="Enter Address" name="address" appendIcon="la la-map-marker"></app-textbox>
+                                </div>
+
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="tbStreet" [(ngModel)]="user.address.street"  formGroupCssClass="c-form_group" label="Streent" placeholder="Enter Street" name="street" ></app-textbox>
+                                </div>
+
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="city" [(ngModel)]="user.address.city"  formGroupCssClass="c-form_group" label="City" placeholder="Enter City" name="city" ></app-textbox>
+                                </div>
+
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="tbState" [(ngModel)]="user.address.state"  formGroupCssClass="c-form_group" label="State" placeholder="Enter State" name="state"></app-textbox>
+                                </div>
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-selectbox identifier="country" formGroupCssClass="c-form_group" label="Country:" [options]="countries" name="country" placeholder="-- Select Country --" [(ngModel)]="user.address.country" ></app-selectbox>
+                                </div>
+                                <div class="col-md-4 c-marginbtm20">
+                                    <app-textbox identifier="zipCode" [(ngModel)]="user.address.pincode"  formGroupCssClass="c-form_group" label="Zipcode" placeholder="Enter Zipcode" name="pincode"></app-textbox>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="m-portlet__foot m-portlet__foot--fit">
+                        <div class="m-form__actions m-form__actions m-form__actions--solid">
+                            <div class=" row">
+                                <div class="col-lg-12 text-center">
+                                    <app-button buttonType="submit" buttonText="ADD" buttonIcon="la la-plus" *ngIf="!showUpdateUser" cssClass="m-btn--pill btn-info m-btn--air m-btn m-btn--custom btn-custom-style">
+                                    </app-button>
+                                    <app-button buttonType="submit" buttonText="Update" buttonIcon="la la-refresh" *ngIf="showUpdateUser" cssClass="m-btn--pill btn-info m-btn--air m-btn m-btn--custom btn-custom-style">
+                                    </app-button>
+                                    <!--<app-button buttonType="submit" buttonText="Update" buttonIcon="la la-plus" *ngIf="showUpdateUser" cssClass="m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style">
+                                    </app-button>-->
+                                    <app-button buttonText="Cancel" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style" (click)="toggleCreateUser(false)" buttonIcon="la la-close"></app-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="m-content c-page-min-height"  *ngIf="!showCreateUser">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Manage User
+                    </h3>
+                </div>
+            </div>
+
+            <div class="m-portlet__head-tools">
+               <app-button buttonText="Add User" (click)="toggleCreateUser()" cssClass="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" buttonIcon="la la-plus"></app-button>
+
+            </div>
+        </div>
+
+        <div class="m-portlet__body" >
+            <app-datatable [showGridControls]="false">
+            <p-dataTable #usersAdminDT [value]="users" table-body  [rows]="10" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,20,25]" [lazy]="true" scrollable="true" sortMode="multiple" (onLazyLoad)="getAllUsers($event)" [hidden]="showEditForm">
+                <p-column field="name" header="User Name" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell c-action-width180">
+                </p-column>
+                <p-column field="email" [style]="{'width':'250px'}" header="Contact Info" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+                    <ng-template let-userdt="rowData" pTemplate="body">
+                        <span style="width: 150px;">
+                            <p>{{userdt.email}}
+                                <br/> {{userdt.mobileno}}</p>
+                        </span>
+                    </ng-template>
+                </p-column>
+                <p-column field="profile_name" header="Profile Name" [style]="{'width':'250px'}" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+                </p-column>
+                <p-column field="emp_code" header="Employee Code" [style]="{'width':'250px'}" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+                </p-column>
+                <p-column styleClass="col-button c-action-width120">
+                    <ng-template let-userdt="rowData" pTemplate="body">
+                        <a (click)="editUser(userdt.id)" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="Edit">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </ng-template>
+                </p-column>
+            </p-dataTable>
+            </app-datatable>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,148 @@
+<div class="m-subheader ">
+  <div class="d-flex align-items-center">
+      <div class="mr-auto">
+          <h3 class="m-subheader__title m-subheader__title--separator">
+            {{globals.switchLanguageValue.manage_menus}}
+          </h3>
+          <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+              <li class="m-nav__item m-nav__item--home">
+                  <a href="#" class="m-nav__link m-nav__link--icon">
+                      <i class="m-nav__link-icon la la-home"></i>
+                  </a>
+              </li>
+              <li class="m-nav__separator">
+                  -
+              </li>
+              <li class="m-nav__item">
+                  <a href="" class="m-nav__link">
+                      <span class="m-nav__link-text">
+                        {{globals.switchLanguageValue.manage_menus}}
+                      </span>
+                  </a>
+              </li>
+              <li class="m-nav__separator">
+                  -
+              </li>
+              <li class="m-nav__item">
+                  <a href="" class="m-nav__link">
+                      <span class="m-nav__link-text">
+                        {{globals.switchLanguageValue.manage_menus_add}}
+                      </span>
+                  </a>
+              </li>
+          </ul>
+      </div>
+      <div>
+
+      </div>
+  </div>
+</div>
+<div class="m-content c-page-min-height" *ngIf="showAddManageUsers">
+  <form (ngSubmit)="SubmitForm(f)" #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+      <div class=" row">
+          <div class="col-md-12">
+              <div class="m-portlet m-portlet--tab">
+                  <div class="m-portlet__head">
+                      <div class="m-portlet__head-caption">
+                          <div class="m-portlet__head-title">
+                              <span class="m-portlet__head-icon m--hide">
+                                  <i class="la la-gear"></i>
+                              </span>
+                              <h3 class="m-portlet__head-text">
+                                {{globals.switchLanguageValue.manage_menus_add}}
+                              </h3>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="m-portlet__body padding-left-right-5px c-borderbtm" >
+                      <div class="col-md-12" >
+                          <div class=" row">
+                              <div class="col-md-6 text-center c-marginbtm20 ">
+                                      <app-textbox identifier="menuname" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.manage_menus_name}} :" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.manage_menus_name}}" 
+                                      [inline]="true" labelColumns=4 [(ngModel)]="managemenus.menuname" textBoxColumns=8 name="menuname"  required></app-textbox>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-12" >
+                          <div class=" row">
+                              <div class="col-md-6 text-center c-marginbtm20">
+                                <app-textbox identifier="menuurl" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.manage_menus_url}} :" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.manage_menus_url}}" 
+                                      [inline]="true" labelColumns=4 [(ngModel)]="managemenus.menuurl" textBoxColumns=8 name="menuurl"  required></app-textbox>
+                              </div>
+                          </div>
+                      </div>
+                       <div class="col-md-12" >
+                          <div class=" row" *ngFor="let actions of managemenus.actions_info; index as i;">
+                              <div class="col-md-6 text-center c-marginbtm20 ">
+                                      <app-textbox identifier="actionsName{{i}}" formGroupCssClass="c-form_group" label="Actions Name :" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.manage_menus_name}}" 
+                                      [inline]="true" labelColumns=4 [(ngModel)]="actions.action_name" textBoxColumns=8 name="actionsName{{i}}" ></app-textbox>
+                              </div>
+                              <div class="col-md-1" *ngIf="i>0">
+                                <app-button buttonText="Delete" cssClass="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill m-btn--air" buttonIcon="la la-trash-o"
+                                    (onClick)="deleteContactInfo($event, i)"></app-button>
+                            </div>
+                          </div>
+                          
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide" (click)="addActions($event)">
+                                    <i class="la la-plus"></i> {{globals.switchLanguageValue.common_button_add}}
+                                </button>
+                            </div>
+                        
+                      </div>
+                  </div> 
+                  
+                  <div class="m-portlet__foot m-portlet__foot--fit">
+                      <div class="m-form__actions m-form__actions m-form__actions--solid">
+                          <div class=" row">
+                              <div class="col-lg-12 text-center">
+                                  <app-button buttonType="submit" buttonText="{{showcreatButton ? globals.switchLanguageValue.common_button_add : globals.switchLanguageValue.common_button_update }}" buttonIcon="{{showcreatButton ? 'la la-plus' : 'la la-refresh'}} " cssClass="m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style"></app-button>
+                                  <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" cssClass="btn-custom-style  m-btn--pill m-btn--air btn-warning m-btn m-btn--custom m-demo-icon__class" (click)="toggleCreateTracker()" buttonIcon="la la-close"></app-button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </form>
+</div>
+
+<div class="m-content" *ngIf="showManageusersGrid">
+  <div class="m-portlet m-portlet--mobile">
+      <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+              <div class="m-portlet__head-title">
+                  <h3 class="m-portlet__head-text">
+                    {{globals.switchLanguageValue.manage_menus}}
+                    </h3>
+              </div>
+          </div>
+          <div class="m-portlet__head-tools">
+              <app-button buttonText="{{globals.switchLanguageValue.manage_menus_add}}" cssClass="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" (click)="toggleCreateTracker()" buttonIcon="la la-plus"></app-button>
+          </div>
+          
+      </div>
+      <div class="m-portlet__body">
+          <app-datatable #cd  [showHeader]="false" filterText="Manage Menus Filters" (onRefreshClick)="getManageMenus($event,false,true)"
+          filterWidth="700px">
+          <!-- <div table-filter-body>
+              <div class=" row">
+              </div>
+          </div> -->
+          <p-dataTable table-body [value]="managemenuslist" [rows]="10" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,20,25]" [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="getManageMenus($event)" scrollable="true" sortMode="multiple" [hidden]="showEditForm">
+              <p-column field="menuname" header="{{globals.switchLanguageValue.manage_menus_name}}" [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width180">
+              </p-column>
+              <p-column field="action_name"  header="{{globals.switchLanguageValue.manage_menus_action_name}} " [sortable]="true" 
+              styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width120 word_break" [style]="{'word-break': 'break-word'}"></p-column>
+              <p-column styleClass="col-button text-center m-datatable__cell--center m-datatable__cell c-action-width120">
+                  <ng-template let-menusdt="rowData" pTemplate="body">
+                      <a (click)="editManageUsers(menusdt.id)" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="{{globals.switchLanguageValue.common_edit}} "><i class="fa fa-edit"></i></a>
+                  </ng-template>
+              </p-column>
+          </p-dataTable>
+      </app-datatable>
+      </div>
+  </div>
+</div>

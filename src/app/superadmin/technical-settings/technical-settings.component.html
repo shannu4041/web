@@ -1,0 +1,175 @@
+<div class="m-subheader ">
+   <div class="d-flex align-items-center">
+      <div class="mr-auto">
+         <h3 class="m-subheader__title m-subheader__title--separator">
+            {{globals.switchLanguageValue.technical_settings}}
+         </h3>
+         <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+            <li class="m-nav__item m-nav__item--home">
+               <a href="" class="m-nav__link m-nav__link--icon">
+               <i class="m-nav__link-icon la la-home"></i>
+               </a>
+            </li>
+            <li class="m-nav__separator">
+               -
+            </li>
+            <li class="m-nav__item">
+               <a href="" class="m-nav__link">
+               <span class="m-nav__link-text">
+                {{globals.switchLanguageValue.common_settings}}
+               </span>
+               </a>
+            </li>
+            <li class="m-nav__separator">
+               -
+            </li>
+            <li class="m-nav__item">
+               <a href="" class="m-nav__link">
+               <span class="m-nav__link-text">
+                {{globals.switchLanguageValue.technical_settings}}
+               </span>
+               </a>
+            </li>
+         </ul>
+      </div>
+      <div>
+      </div>
+   </div>
+</div>
+
+<div class="m-content">
+<form (ngSubmit)="submitForm(f)" #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+   <div class="row">
+      <div class="col-lg-12">  
+         <!--begin::Portlet-->
+      <div class="m-portlet m-portlet--head-sm" data-portlet="true" id="m_portlet_tools_3">
+         <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+               <div class="m-portlet__head-title">
+                  <h3 class="m-portlet__head-text">
+                    {{globals.switchLanguageValue.settings_SMTP_Settings}}
+                  </h3>
+               </div>         
+            </div>
+            <div class="m-portlet__head-tools">
+               <ul class="m-portlet__nav">
+                  <li class="m-portlet__nav-item">
+                     <a href="#" data-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Collapse"><i class="la la-angle-down"></i></a>  
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="m-portlet__body">
+            <div class="row">
+               <div class="col-md-6 c-marginbtm20">
+                  <app-textbox identifier="tbEmailSMTP" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.email_SMTP}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.email_SMTP}}" name="tbEmailSMTP"
+                  [(ngModel)]="technialSettings.smtp_host" required>
+                  </app-textbox>
+               </div>
+               <div class="col-md-6 c-marginbtm20">
+                  <app-textbox identifier="tbPort" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.port_number}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.port_number}}" name="tbPort"
+                  [(ngModel)]="technialSettings.smtp_port" required>
+                  </app-textbox>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-6 c-marginbtm20">
+                  <app-textbox identifier="tbusername" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_email}} {{globals.switchLanguageValue.common_user_name}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_user_name}}" name="tbusername"
+                  [(ngModel)]="technialSettings.smtp_username" required>
+                  </app-textbox>
+               </div>
+               <div class="col-md-6 c-marginbtm20">
+                  <app-textbox identifier="tbpassword" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_email}} {{globals.switchLanguageValue.common_password}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_password}}" name="tbpassword"
+                  [(ngModel)]="technialSettings.smtp_password" required>
+                  </app-textbox>
+               </div>
+            </div>
+         </div>
+      </div>    
+      <!--end::Portlet-->
+      </div>
+      <!--begin::Portlet-->
+      <div class="col-lg-12">  
+              <div class="m-portlet m-portlet--head-sm" data-portlet="true" id="m_portlet_tools_3">
+         <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+               <div class="m-portlet__head-title">
+                  <h3 class="m-portlet__head-text">
+                    {{globals.switchLanguageValue.google_settings}} 
+                  </h3>
+               </div>         
+            </div>
+            <div class="m-portlet__head-tools">
+               <ul class="m-portlet__nav">
+                  <li class="m-portlet__nav-item">
+                     <a href="#" data-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Collapse"><i class="la la-angle-down"></i></a>  
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="m-portlet__body">
+            <div class="row">
+               <div class="col c-marginbtm20">
+                  <app-textbox identifier="tbgoogleapikey" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.google_maps_API_key}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.google_maps_API_key}}" name="tbgoogleapikey"
+                  [(ngModel)]="technialSettings.map_api_key" required>
+                  </app-textbox>
+               </div>
+               <div class="col c-marginbtm20">
+                  <app-textbox identifier="tbfcmandroidkey" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.FCM_android_key}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.FCM_android_key}}" name="tbfcmandroidkey"
+                  [(ngModel)]="technialSettings.fcm_android_key" required>
+                  </app-textbox>
+               </div>
+            </div>
+         </div>
+      </div>    
+      </div>
+      <div class="col-lg-12">  
+              <div class="m-portlet m-portlet--head-sm" data-portlet="true" id="m_portlet_tools_3">
+         <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+               <div class="m-portlet__head-title">
+                  <h3 class="m-portlet__head-text">
+                    {{globals.switchLanguageValue.iOS_settings}}
+                  </h3>
+               </div>         
+            </div>
+            <div class="m-portlet__head-tools">
+               <ul class="m-portlet__nav">
+                  <li class="m-portlet__nav-item">
+                     <a href="#" data-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Collapse"><i class="la la-angle-down"></i></a>  
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="m-portlet__body">
+            <div class="row">
+               <div class="col-12 c-marginbtm20">
+                  <app-textbox identifier="tbfcmioskey" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.iOS_FCM_key}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.iOS_FCM_key}}" name="tbfcmioskey"
+                  [(ngModel)]="technialSettings.ios_fcm_key" required>
+                  </app-textbox>
+               </div>
+               <div class="col-12 c-marginbtm20">
+                  <p>{{globals.switchLanguageValue.iOS_PEM_files}}:</p>
+                   <app-dropzone placeholder="Upload iOS FCM Files" formGroupCssClass="c-magleft0" identifier="ios_pem_file" [inline]="true" name="iosfcmfiles"
+                   [(ngModel)]="technialSettings.ios_pem_file" [config]="config"></app-dropzone>
+                   <p>{{technialSettings.ios_pem_file}}</p>
+               </div>
+            </div>
+         </div>
+      </div>    
+      </div>
+      <div class="col-12 text-center">
+      <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions">
+                    <div class=" row">
+                        <div class="col-lg-12 text-center">
+                             <app-button buttonType="submit" buttonText="{{globals.switchLanguageValue.common_button_update}}" cssClass="btn-custom-style m-btn--pill m-btn--air btn-success m-btn m-btn--custom" buttonIcon="la la-refresh"></app-button>
+                            <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" cssClass="btn-custom-style  m-btn--pill m-btn--air btn-warning m-btn m-btn--custom m-demo-icon__class" buttonIcon="la la-remove" (onClick)="cancelButtonClick($event)" ></app-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+   </div>  
+</form>
+</div>

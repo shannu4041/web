@@ -1,0 +1,416 @@
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+
+    <!-- BEGIN: Subheader -->
+    <div class="m-subheader ">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">{{globals.switchLanguageValue.common_Drivers}}</h3>
+                <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                    <li class="m-nav__item m-nav__item--home">
+                        <a  class="m-nav__link m-nav__link--icon">
+                            <i class="m-nav__link-icon la la-home"></i>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">-</li>
+                    <li class="m-nav__item">
+                        <a  class="m-nav__link">
+                            <span class="m-nav__link-text">{{globals.switchLanguageValue.common_Drivers}}</span>
+                        </a>
+                    </li>
+                    <li class="m-nav__separator">-</li>
+                    <li class="m-nav__item" *ngIf="!showUpdateDriver">
+                        <a  class="m-nav__link">
+                            <span class="m-nav__link-text">{{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.common_Drivers}}</span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item" *ngIf="showUpdateDriver">
+                        <a  class="m-nav__link">
+                            <span class="m-nav__link-text">{{globals.switchLanguageValue.common_edit}} {{globals.switchLanguageValue.common_Drivers}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- end Side bar -->
+    <div class="m-content c-page-min-height" *ngIf="showDriverTable">
+        <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            {{globals.switchLanguageValue.common_Drivers}}
+                        </h3>
+                    </div>
+                </div>
+                <div class="m-portlet__head-tools">
+                    <!--  <button class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" (click)="toggleCreateAccount()">
+                                <span>
+                                      <i class="la la-plus"></i>
+                                      <span>
+                                          Add Drivers
+                                      </span>
+                                </span>
+                            </button> -->
+                    <app-button buttonText="{{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.driver_driver}}" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.addDriver" cssClass="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" (click)="toggleCreateAccount(false)"
+                        buttonIcon="la la-plus"></app-button>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+
+                <!-- <app-datatable (onRefreshClick)="getAllDriversData($event,false,true)" (onSearchClick)="getAllDriversData($event,true)" (onClearClick)="closepopup()"
+                    (onResetClick)="resetSearch()" filterWidth="700px"> -->
+                
+                <!-- <app-datatable (onRefreshClick)="getAllDriversData($event,false,true)" (onSearchClick)="getAllDriversData($event,true)" (onClearClick)="closepopup()"
+                    (onResetClick)="resetSearch()" filterWidth="700px" (onPrintClick)="downloadDriver(paging.sortBy, paging.sortDirection, 'print', paging.search)"
+                    (onExportPDFClick)="downloadDriver(paging.sortBy, paging.sortDirection, 'excel', paging.search)" 
+                    (onExportExcelClick)="downloadDriver(paging.sortBy, paging.sortDirection, 'pdf', paging.search)">
+                    <div table-filter-body> -->
+                <app-datatable #cd filterText="{{globals.switchLanguageValue.driver_driver}} {{globals.switchLanguageValue.common_label_filter}}" (onSearchClick)="getAllDriversData($event)" (onClearClick)="closepopup($event)" (onResetClick)="resetSearch($event)"
+                (onRefreshClick)="getAllDriversData($event,false,true)" (onPrintClick)="downloadDriver(this.paging.sortBy,this.paging.sortDirection,'print', this.paging.search)"
+                (onExportPDFClick)="downloadDriver(this.paging.sortBy,this.paging.sortDirection,'excel', this.paging.search)" [showDownload]="globals.getprofileaction == null ? true : globals.getprofileaction.driverExport"
+                (onExportExcelClick)="downloadDriver(this.paging.sortBy,this.paging.sortDirection,'pdf', this.paging.search)" [showPrint]="globals.getprofileaction == null ? true : globals.getprofileaction.driverExport"
+                filterWidth="700px" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getDriversAll">
+                <div table-filter-body>
+                        <div class="row">
+                            <div class="col-xl-6 c-marginbtm20">
+                                <app-textbox identifier="DriverName" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.driver_driver}} {{globals.switchLanguageValue.users_Name}}:" 
+                                placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.driver_driver}} {{globals.switchLanguageValue.users_Name}}"
+                                    name="driver_name" [(ngModel)]="paging.search.driver_name"></app-textbox>
+                            </div>
+                            <div class="col-xl-6 c-marginbtm20">
+                                <app-selectbox identifier="businessgroup" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.users_Bussiness_Group}}:" [options]="bussinessgroup"
+                                    (onChange)="getBusinessUnitsList(paging.search.business_group_id)" name="business_group_id"
+                                    [(ngModel)]="paging.search.business_group_id" placeholder="-- Select --" optionsValueField="id"
+                                    optionsTextField="group_name"></app-selectbox>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 c-marginbtm20">
+                                <app-selectbox identifier="businessunit" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_Business_Unit}}:" [options]="busssinessunit"
+                                    name="business_unit_id" [(ngModel)]="paging.search.business_unit_id" placeholder="-- Select --"
+                                    optionsValueField="id" optionsTextField="unit_name"></app-selectbox>
+                            </div>
+                            <div class="col-md-6 c-marginbtm20">
+
+                                <app-selectbox identifier="license_expiry_date" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.driver_license_expiry_date}}:" [options]="licenseValidity"
+                                    name="license_expiry_date" placeholder="-- Select Licence Validity --" [(ngModel)]="paging.search.license_validity"
+                                    optionsValueField="value" optionsTextField="name"></app-selectbox>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 c-marginbtm20">
+
+                                <app-select2 [options]="Status" [(ngModel)]="paging.search.status" identifier="status" name="status" class="m-select2 m-select2--air"
+                                    [multiple]="true" label="{{globals.switchLanguageValue.account_column_status}}:" optionsValueField="id" optionsTextField="name"></app-select2>
+                            </div>
+                        </div>
+                </div>
+                    <p-dataTable table-body [value]="driverslist" [rows]="10" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,20,25]"
+                        [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="getAllDriversData($event)" scrollable="true"
+                        sortMode="multiple" [hidden]="showEditForm" >
+                        <p-column field="" header="{{globals.switchLanguageValue.common_Drivers}}" [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width180">
+                            <ng-template let-userdt="rowData" pTemplate="body">
+                                <span class="c-action-width180">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img alt="drivers" class="m--img-rounded m--marginless m--img-centered" src="{{userdt.profile_pic_path}}" width="30px" height="30px">
+
+                                        </div>
+                                        <div class="col-8 c-form_group">
+                                            <p>{{userdt.name}}</p>
+                                        </div>
+
+                                    </div>
+                                </span>
+                            </ng-template>
+                        </p-column>
+                        <p-column field="group_name" header="{{globals.switchLanguageValue.users_Bussiness_Group}}" [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width120"></p-column>
+
+                        <p-column field="unit_name" header="{{globals.switchLanguageValue.common_Business_Unit}}" [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width120"></p-column>
+                        <p-column field="license_expiry" header="{{globals.switchLanguageValue.driver_license_validity}} " [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width120">
+                            <ng-template let-userdt="rowData" pTemplate="body">
+                                <span class="m-badge c-badge m-badge--wide" [ngClass]="(userdt.license_expiry=='VALID')?'m-badge--success':'m-badge--danger'">{{userdt.license_expiry=='EXPIRY'?'Expired':'Valid'}}</span>
+                                <!--<span>{{userdt.license_expiry}}</span>-->
+
+                            </ng-template>
+                        </p-column>
+
+                        <p-column field="status" header="{{globals.switchLanguageValue.account_column_status}}" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.DriverStatus"
+                        [sortable]="true" styleClass="text-left m-datatable__cell--center m-datatable__cell c-action-width60">
+
+                            <ng-template let-userdt="rowData" pTemplate="body">
+                                <!-- <span class="m-badge   m-badge--wide" [ngClass]="(a.status==1)?'m-badge--success':'m-badge--danger'">{{a.status==1?'Active':'In-Active'}}</span>-->
+                                <span class="m-switch m-switch--outline m-switch--icon m-switch--brand">
+                                    <label>
+                                        <input type="checkbox" checked="checked" name="status" id="status" [checked]="userdt.status == true" (click)="buttonClick(userdt.id)">
+                                        <span></span>
+
+                                    </label>
+                                </span>
+                            </ng-template>
+                        </p-column>
+                        <p-column styleClass="col-button c-action-width120">
+                            <ng-template let-userdt="rowData" pTemplate="body">
+                                <a (click)="editDriver(userdt.id,$event)"  *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getDriverById"
+                                class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="{{globals.switchLanguageValue.common_edit}} ">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a (click)="getDriverHistory(userdt.id)" *ngIf="globals.getprofileaction == null ? true : globals.getprofileaction.getDriverHistory" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design" title="{{globals.switchLanguageValue.tracker_History}} "><i class="la la-file-text"></i></a>
+                            </ng-template>
+                        </p-column>
+                    </p-dataTable>
+                </app-datatable>
+            </div>
+        </div>
+    </div>
+
+    <!-- add Driver  && Edit Driver-->
+
+    <div class="m-content" *ngIf="showCreateDriver">
+        <form (ngSubmit)="submitForm(f)" #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+            <div class=" row">
+                <div class="col-md-12">
+                    <div class="m-portlet m-portlet--tab">
+                        <div class="m-portlet__head" *ngIf="!showUpdateDriver">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        {{globals.switchLanguageValue.common_button_add}} {{globals.switchLanguageValue.common_Drivers}}
+                                    </h3>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__head" *ngIf="showUpdateDriver">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">
+                                        {{globals.switchLanguageValue.common_edit}} {{globals.switchLanguageValue.common_Drivers}}
+                                    </h3>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body padding-left-right-5px c-borderbtm">
+                            <div class="col-md-12">
+                                <div class=" row">
+                                    <!--  <div class="c-User_icon">
+                                                <img alt="driver" class="m--img-rounded m--marginless m--img-centered" src="{{driver.profile_pic_path}}">
+                                                
+                                           </div>-->
+                                    <div class="col-md-3 c-margintop20">
+                                        <app-dropzone placeholder="Upload Driver Photo" identifier="profile_pic_path" [inline]="true" name="profile_pic_path" [(ngModel)]="driver.profile_pic_path"
+                                            [config]="config"></app-dropzone>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-md-6 c-marginbtm20">
+                                                <app-textbox identifier="Name" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.users_Name}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.users_Name}}" name="name" [(ngModel)]="driver.name"
+                                                    required></app-textbox>
+                                            </div>
+                                            <div class="col-md-6 c-marginbtm20">
+                                                <app-datepicker name="dob" identifier="tbDOB" [(ngModel)]="driver.dob" (onClick)="DOBClick($event)" formGroupCssClass="c-form_group"
+                                                    label="{{globals.switchLanguageValue.common_date_of_birth}}" [inline]="false" [showPickerOnTop]="false" required></app-datepicker>
+                                            </div>
+                                            <div class="col-md-6 c-marginbtm20">
+                                                <app-textbox identifier="license_number:" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.driver_license_number}} :" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.driver_license_number}}"
+                                                    name="license_number" [(ngModel)]="driver.license_number" required></app-textbox>
+                                            </div>
+                                            <div class="col-md-6 c-marginbtm20">
+                                                <app-selectbox identifier="gender" label="{{globals.switchLanguageValue.driver_select_gender}}" [(ngModel)]="driver.gender" [options]="gender" name="gender" placeholder="Select Gender"
+                                                    optionsValueField="id" optionsTextField="gender" formGroupCssClass="c-form_group"
+                                                    required></app-selectbox>
+                                            </div>
+                                            <div class="col-md-6 c-marginbtm20">
+                                                <app-datepicker identifier="license_expiry_date:" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.driver_licenses_expiry_date}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.driver_licenses_expiry_date}}"
+                                                    name="license_expiry_date" [showPickerOnTop]="true" [(ngModel)]="driver.license_expiry_date"
+                                                    (onClick)="DOBClick($event)" required></app-datepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body padding-left-right-5px">
+                            <div class="col-md-12">
+                                <div class=" row">
+                                    <div class="col-md-4 c-marginbtm20">
+                                        <app-selectbox identifier="businessgroup" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.users_Bussiness_Group}}:" [options]="bussinessgroup"
+                                            (onChange)="getBusinessUnitsList(driver.business_group_id,$event)" name="business_group_id"
+                                            [(ngModel)]="driver.business_group_id" placeholder="-- Select --" optionsValueField="id"
+                                            optionsTextField="group_name" required></app-selectbox>
+                                    </div>
+                                    <div class="col-md-4 c-marginbtm20">
+                                        <app-selectbox identifier="businessunit" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_Business_Unit}}:" [options]="busssinessunit"
+                                            name="business_unit_id" [(ngModel)]="driver.business_unit_id" placeholder="-- Select --"
+                                            optionsValueField="id" optionsTextField="unit_name" required></app-selectbox>
+                                    </div>
+                                    <div class="col-md-4">
+                                            <app-textbox identifier="assignvehicle" *ngIf="showUpdateDriver && driver.vehicle_id!=null" [setDisabled]=true formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.driver_assign_vehicle}} :"
+                                            name="license_number" [(ngModel)]="driver.vehicle_id.registration_number" required></app-textbox>
+                                        <!-- <app-selectbox identifier="assignvehicle" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.driver_assign_vehicle}} :" [options]="UnassignedVehicle"
+                                            name="vehicle_id" [(ngModel)]="driver.vehicle_id" placeholder="-- Select --" optionsValueField="id"
+                                            optionsTextField="registration_number" required></app-selectbox> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" row">
+                <div class="col-md-12">
+                    <div class="m-portlet m-portlet--tab">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <span class="m-portlet__head-icon m--hide">
+                                        <i class="la la-gear"></i>
+                                    </span>
+                                    <h3 class="m-portlet__head-text">{{globals.switchLanguageValue.account_column_contactinfo}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body padding-left-right-5px">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6 c-marginbtm20">
+                                        <app-textbox identifier="email" formGroupCssClass="c-form_group" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_email}}" name="email" required
+                                            [(ngModel)]="driver.contact_info.email" label="{{globals.switchLanguageValue.common_label_email}}:"></app-textbox>
+                                    </div>
+                                    <div class="col-md-6 c-marginbtm20">
+                                        <app-textbox identifier="mobileno" formGroupCssClass="c-form_group" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_phone}}" name="mobileno" required
+                                            [(ngModel)]="driver.contact_info.mobileno" label="{{globals.switchLanguageValue.common_label_phone}}:" inputType="number"></app-textbox>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 c-marginbtm20">
+                                        <app-textbox identifier="address" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_address}}:" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_address}}" name="address"
+                                            appendIcon="la la-map-marker" [(ngModel)]="driver.address_info.address" required></app-textbox>
+                                    </div>
+                                    <div class="col-md-6 c-marginbtm20">
+                                        <app-textbox identifier="street" formGroupCssClass="c-form_group" [(ngModel)]="driver.address_info.street" label="{{globals.switchLanguageValue.common_label_street}}:"
+                                            placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_street}}" name="street" required></app-textbox>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 c-marginbtm20">
+                                        <app-textbox identifier="city" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.account_column_city}}:" [(ngModel)]="driver.address_info.city" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.account_column_city}}"
+                                            name="city" required></app-textbox>
+                                    </div>
+                                    <div class="col-md-6 c-marginbtm20">
+                                        <app-textbox identifier="state" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_state}}:" [(ngModel)]="driver.address_info.state" placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_state}}"
+                                            name="state" required></app-textbox>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 c-marginbtm20">
+                                        <app-selectbox identifier="country" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.account_column_country}}:" [options]="countries" name="country"
+                                            [(ngModel)]="driver.address_info.country" placeholder="-- Select --" optionsValueField="id"
+                                            optionsTextField="name" required></app-selectbox>
+                                    </div>
+                                    <div class="col-md-6 c-marginbtm20">
+                                        <app-textbox identifier="pincode" formGroupCssClass="c-form_group" label="{{globals.switchLanguageValue.common_label_zipcode}}:" [(ngModel)]="driver.address_info.pincode"
+                                            placeholder="{{globals.switchLanguageValue.common_placeholder_enter}} {{globals.switchLanguageValue.common_label_zipcode}}" name="pincode" required></app-textbox>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__foot m-portlet__foot--fit">
+                <div class="m-form__actions m-form__actions">
+                    <div class=" row">
+                        <div class="col-lg-12 text-center">
+                            <app-button buttonType="submit" buttonText="{{globals.switchLanguageValue.common_button_update}}" *ngIf="(showUpdateDriver) && (globals.getprofileaction == null ? true : globals.getprofileaction.updateDriver)" cssClass="btn-custom-style m-btn--pill m-btn--air btn-success m-btn m-btn--custom"
+                                buttonIcon="la la-plus"></app-button>
+                            <app-button buttonType="submit" buttonText="{{globals.switchLanguageValue.common_button_add}}" *ngIf="!showUpdateDriver" cssClass="btn-custom-style m-btn--pill m-btn--air btn-info m-btn m-btn--custom"
+                                buttonIcon="la la-plus"></app-button>
+                            <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" cssClass="btn-custom-style  m-btn--pill m-btn--air btn-warning m-btn m-btn--custom m-demo-icon__class"
+                                buttonIcon="la la-close" (onClick)="cancelButtonClick($event)"></app-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <!-- Driver History-->
+    <div class="m-content" *ngIf="showDriverHistory">
+            <form class="m-form m-form--fit m-form--label-align-right">
+                <div class=" row">
+                    <div class="col-md-12">
+                        <div class="m-portlet m-portlet--tab">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide"><i class="la la-gear"></i></span>
+                                        <h3 class="m-portlet__head-text">Driver History</h3>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="col-md-12">
+                                  <label>
+                                          {{driverName}} 
+                                  </label>
+                                </div>
+                            <div class="m-portlet__body c-nopadding">
+                                <div class="m-portlet__body padding-left-right-5px" *ngFor="let driverHistory of driversHistory">
+                                   <!--  <div class="col-md-12 text-right">
+                                        
+                                    </div>  -->
+                                    <div class="col-md-12" >
+                                            <label>
+                                                   {{driverHistory.registration_number}} 
+                                            </label>
+                                        <div class="m-list-timeline " *ngIf="driversHistory.length==0? false: true; else noHistroy">
+                                            <div class="m-list-timeline__items c-adding-padding-left" >
+                                                    
+                                                    <div class="m-list-timeline__item" >
+                                                           
+                                                        <span class="m-list-timeline__time c-date-left">Start Date:</span>
+                                                        <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                                                        <span class="m-list-timeline__text"> {{driverHistory.start_date}} </span>
+                                                    </div>
+                                                    <div class="m-list-timeline__item" >
+                                                            
+                                                         <span class="m-list-timeline__time c-date-left">End Date:</span>
+                                                         <span class="m-list-timeline__badge m-list-timeline__badge--primary"></span>
+                                                         <span class="m-list-timeline__text"> {{driverHistory.end_date}} </span>
+                                                     </div>
+                                                 
+                                            </div>
+                                        </div>
+                                        <ng-template #noHistroy>
+                                            <h5 >No history for this driver</h5>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__foot m-portlet__foot--fit">
+                                <div class="m-form__actions m-form__actions m-form__actions--solid">
+                                    <div class=" row">
+                                        <div class="col-lg-12 text-center">
+                                            <app-button buttonText="{{globals.switchLanguageValue.common_button_cancel}}" (onClick)="closeDriverHistory()"
+                                            cssClass="btn-custom-style  m-btn--pill m-btn--air btn-warning m-btn m-btn--custom m-demo-icon__class"  buttonIcon="la la-close"></app-button>
+                                        </div>
+                                    </div>
+                                </div>
+                         </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+</div>

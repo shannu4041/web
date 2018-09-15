@@ -1,0 +1,19 @@
+<div class="m-form__group {{ this.formGroupCssClass }} form-group {{this.inline ? 'row inlineformrow' : '' }}">
+        <label *ngIf="label" for="{{identifier}}" class="{{labelCssClass}}" >
+            {{label}}
+            <span *ngIf="this.validators && this.validators.length > 0" class="validationindicator">*</span>
+        </label>
+        <div class="{{switchDivCssClass}}">
+            <span class="m-switch m-switch--outline m-switch--icon m-switch--brand">
+                <label>
+                    <input type="checkbox" name="{{name}}" (change)="fireChange($event)"
+                     [(ngModel)]="value" #field="ngModel" >
+                    <span></span>{{value}}
+                </label>
+            </span>
+            
+            <div *ngIf="helpText" class="m-form__help">
+                {{helpText}}
+            </div>
+        </div>
+    </div>

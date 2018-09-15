@@ -1,0 +1,21 @@
+<div class="form-group m-form__group {{ this.formGroupCssClass }} {{this.inline ? 'row inlineformrow' : '' }}">
+		<label *ngIf="label" for="{{identifier}}" class="{{labelCssClass}}" >
+			{{label}}
+			<span *ngIf="this.validators && this.validators.length > 0" class="validationindicator">*</span>
+		</label>
+		<div class="{{textBoxDivCssClass}}">
+			<div class="{{textBoxGroupCssClass}}">
+				  <select class="form-control m-input--air" disabled="{{setDisabled}}"
+					  [(ngModel)]="value"
+					  [ngClass]="{invalid: (invalid | async)}"
+					  [id]="identifier" name="{{name}}" (change)="fireChange($event)" >
+					<option value="" disabled selected *ngIf="placeholder">{{placeholder}}</option>
+					<option *ngFor="let option of options" [ngValue]="option[optionsValueField]">{{option[optionsTextField]}}</option>
+				  </select> 
+			</div>
+	
+			<div *ngIf="helpText" class="m-form__help">
+				{{helpText}}
+			</div>
+		</div>
+	</div>

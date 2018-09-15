@@ -1,0 +1,29 @@
+<div class="m-content">
+  <div class="m-portlet m-portlet--mobile">
+      <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+              <div class="m-portlet__head-title">
+                  <h3 class="m-portlet__head-text">
+                      Account List
+                  </h3>
+              </div>
+          </div>
+      </div>
+      <div class="m-portlet__body">
+          <p-dataTable [value]="accountlist"  [lazy]="true" (onLazyLoad)="getAllAccountList($event)" scrollable="false" sortMode="multiple" [globalFilter]="gb" #dt [hidden]="showEditForm">
+              <p-column field="account_name"  header="Account" [sortable]="true" [style]="{'width':'150px'}" styleClass="text-center m-datatable__cell--center m-datatable__cell"></p-column>
+              <p-column styleClass="col-button c-action-width120">
+                  <ng-template let-userdt="rowData" pTemplate="body">
+                      <app-button
+                       [routerLink]="['/admin',userdt.account_encrypt_id]"
+                       
+                        buttonText="Select" cssClass="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" buttonIcon="fa fa-arrow-right"></app-button>
+                  </ng-template>
+              </p-column>
+          </p-dataTable>
+      </div>
+  </div>
+</div>
+<!--(click)="selectId(userdt.account_id)"-->
+<!--[routerLink]="['/admin',userdt.account_encrypt_id]"-->
+

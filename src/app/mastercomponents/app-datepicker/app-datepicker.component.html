@@ -1,0 +1,27 @@
+<div class="form-group m-form__group {{ this.formGroupCssClass }} {{this.inline ? 'row inlineformrow' : '' }}">
+	<label *ngIf="label" for="{{identifier}}" class="{{labelCssClass}}" >
+		{{label}}
+		<span *ngIf="this.validators && this.validators.length > 0" class="validationindicator">*</span>
+	</label>
+	<div class="{{textBoxDivCssClass}}">
+		<div class="{{textBoxGroupCssClass}}">
+			<div class="input-group">
+			  <input class="form-control m-input m-input--air {{cssClass}} {{ (invalid | async) ? 'invalid' : ''}}" 
+					placeholder="{{placeholder}}" type="text"
+					 [(ngModel)]="value" #datepicker #field="ngModel" name="{{name}}" 
+					 (click)="fireClick($event)" (change)="fireChange($event)" (blur)="fireBlur($event)" (focus)="fireFocus($event)">
+			  <button class="input-group-addon" (click)="iconClick($event)" type="button">
+				<i class="m-demo-icon__preview flaticon-time-3"></i>
+			  </button>
+			</div>
+		</div>
+		<validation class="{{model.control.touched ? 'ng-touched' : 'ng-untouched'}} {{ (invalid | async) ? 'invalid' : ''}}"
+			[@flyInOut]="'in,out'"
+			*ngIf="(invalid | async)"
+			[messages]="failures | async">
+		</validation>
+		<div *ngIf="helpText" class="m-form__help">
+			{{helpText}}
+		</div>
+	</div>
+</div>

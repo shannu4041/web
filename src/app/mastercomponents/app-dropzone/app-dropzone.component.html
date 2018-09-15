@@ -1,0 +1,23 @@
+<div class="form-group m-form__group {{ this.formGroupCssClass }} {{this.inline ? 'row inlineformrow' : '' }}">
+    <label *ngIf="label" for="{{identifier}}" class="{{labelCssClass}}" >
+                {{label}}
+                <span *ngIf="this.validators && this.validators.length > 0" class="validationindicator">*</span>
+    </label>
+    <div class="{{textBoxDivCssClass}}">
+        <input type="hidden" [(ngModel)] ="value" #field="ngModel">
+        <dropzone [config]="config" 
+         [message]="'Drop files here or click to upload.'" 
+        (error)="onUploadError($event)"
+        (success)="firesuccess($event)"
+        (removefile)="fireRemovedFile($event)">
+        </dropzone>
+        <validation class="{{model.control.touched ? 'ng-touched' : 'ng-untouched'}} {{ (invalid | async) ? 'invalid' : ''}}"
+        [@flyInOut]="'in,out'"
+        *ngIf="(invalid | async)"
+        [messages]="failures | async">
+        </validation>
+        <div *ngIf="helpText" class="m-form__help">
+			{{helpText}}
+		</div>
+    </div>
+</div>

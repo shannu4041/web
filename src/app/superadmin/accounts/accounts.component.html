@@ -1,0 +1,917 @@
+<div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Excel Upload
+            </h3>
+            <!-- <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            {{globals.switchLanguageValue.account_pagetitle}}
+                        </span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            {{globals.switchLanguageValue.account_pagesubtitle}}
+                        </span>
+                    </a>
+                </li>
+            </ul> -->
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div>
+<!-- gird -->
+
+<div class="m-content c-page-min-height" *ngIf="!showCGIDetails">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                    Excel Upload
+                    </h3>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="m-portlet__body" *ngIf="!showCGIDetails">
+                <div class="col-md-12">
+                    <div class="row">
+                        <!-- <div class="col-md-3 c-marginbtm20">
+                                <app-datepicker name="dob" identifier="tbDOB"  formGroupCssClass="c-form_group"
+                                    label="From Date" [inline]="false" [(ngModel)]="this.paging.search.fromdate" [showPickerOnTop]="false" required></app-datepicker>
+                            </div>
+                            <div class="col-md-3 c-marginbtm20">
+                                    <app-datepicker name="dob" identifier="tbDOB"  formGroupCssClass="c-form_group"
+                                        label="To Date" [inline]="false" [(ngModel)]="this.paging.search.todate" [showPickerOnTop]="false" required></app-datepicker>
+                                </div>
+                            <div class="col-md-3 c-marginbtm20 ">
+                                    <app-button buttonText="Search" cssClass="pull-left btn m-btn--pill btn-danger m-btn--air m-btn m-btn--custom btn-custom-style c-button2"
+                                    buttonIcon="la la-close" (click)="searchGrid($event,true)"></app-button>
+                                </div> -->
+                        <div class="col-md-3 c-marginbtm20">
+                            <app-button buttonText="Upload" (click)="closepopups()" cssClass="pull-right btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style c-button2"
+                            buttonIcon="la la-close" ></app-button>
+                        </div>
+                        
+
+                    </div>
+                </div>
+                    <div *ngIf="showCGITable">
+                    <!-- download button -->
+                        <!-- <div class="row">
+                            <div class="col-md-12 c-marginbtm20">
+                                <app-button buttonText="Download Excel" (click)="downloadExcel(this.paging.sortBy,this.paging.sortDirection,'excel', this.paging.search)" cssClass="pull-right btn m-btn--pill btn-info m-btn--air m-btn m-btn--custom">
+                                </app-button>
+                            </div>
+                        </div> -->
+                    <!-- download button end -->
+           <!--  <app-datatable #cd [showGridControls]="false"  >
+            <p-dataTable table-body [value]="cgilist" [rows]="50" styleClass="tr-gridheight" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[50,75,100,125,150]" [totalRecords]="totalRecords"
+            [lazy]="true" (onLazyLoad)="getAllCGIData($event)" scrollable="true"  [hidden]="showEditForm">
+            <p-column field="cgid" header="CGI" [style]="{'width':'150px'}"
+                styleClass="text-center paddingleft0 wordwrap " [sortable]="true"></p-column>
+           
+            <p-column field="customer_full_name" header="Customer Name" [sortable]="true" [style]="{'width':'150px'}" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+            </p-column>
+            <p-column field="is_email_search_processed" header="Email Processed" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell c-action-width120">
+                 <ng-template let-userdt="rowData" pTemplate="body">
+                    <span style="text-align:center;">
+                        <label>
+                            <span class="fa fa-remove processedfalse" *ngIf="userdt.is_email_search_processed== 0"></span> 
+                            <span class="fa fa-check processedtrue" style="color: #28a745;font-size: initial;" *ngIf="userdt.is_email_search_processed== 1"></span>
+                            <span class="fa fa-minus processednull" style="color: #6f42c1;font-size: initial;" *ngIf="userdt.is_email_search_processed== null"></span>
+                        </label>
+                    </span>
+                </ng-template>
+            </p-column>
+            <p-column field="is_tc_processed" header="TC Processed" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell c-action-width120">
+
+                <ng-template let-userdt="rowData" pTemplate="body">
+                    <span class="m-switch m-switch--outline m-switch--icon m-switch--brand">
+                        <label>
+                            <span class="fa fa-remove processedfalse" *ngIf="userdt.is_tc_processed== 0"></span> 
+                            <span class="fa fa-check processedtrue" *ngIf="userdt.is_tc_processed== 1"></span>
+                            <span class="fa fa-minus processednull" *ngIf="userdt.is_tc_processed== null"></span>
+                        </label>
+                    </span>
+                </ng-template>
+            </p-column>
+            <p-column field="is_probe_processed" header="Probe42 Processed" [sortable]="true" styleClass="text-center m-datatable__cell--center m-datatable__cell c-action-width120">
+                <ng-template let-userdt="rowData" pTemplate="body">
+                    <span class="m-switch m-switch--outline m-switch--icon m-switch--brand">
+                        <label>
+                            <span class="fa fa-remove processedfalse" *ngIf="userdt.is_probe_processed== 0"></span> 
+                            <span class="fa fa-check processedtrue" *ngIf="userdt.is_probe_processed== 1"></span>
+                            <span class="fa fa-minus processednull" *ngIf="userdt.is_probe_processed== null"></span>
+                        </label>
+                    </span>
+                </ng-template>
+            </p-column>
+            <p-column header="Input Details" styleClass="col-button text-center m-datatable__cell--center m-datatable__cell c-action-width120">
+                <ng-template let-details="rowData" pTemplate="body">
+               <a (click)="getCGIDetailsId(details.id)" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design">Details</a>
+                </ng-template>
+            </p-column>
+        </p-dataTable>
+
+            </app-datatable> -->
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- gird end -->
+
+<!-- input details -->
+<!-- <div class="m-content" *ngIf="showInputDetails">
+	<div class="row">
+		<div class="col-lg-12">     
+			<div class="m-portlet">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title head-title">
+							<h3 class="m-portlet__head-text">
+								Input Details
+                            </h3>
+                           
+                            <span class="back-button">
+                                <app-button buttonText="Back"  cssClass="btn btn-sm m-btn--pill m-btn--air btn-info m-btn m-btn--custom m-pull-right vertical-middle" buttonIcon="la la-backward"
+                                    (onClick)="showCGIGirdDetails($event,true,fromdate,todate)"></app-button>
+                            </span>
+						</div>
+					</div>
+				</div>
+				<div class="m-portlet__body">
+                        <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>CGI Id:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <h5 >{{details.cgid}}</h5>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label >Customer Name:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <h5 >{{details.customer_full_name}}</h5>
+                                </div>
+                            </div>
+					<ul class="nav nav-tabs nav-fill" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active show" data-toggle="tab" href="#m_tabs_1_1" >
+								Input
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link " [ngClass]="{'isprocessed':details.is_tc_processed == 1,'isnotprocessed':details.is_tc_processed == 0}" data-toggle="tab" href="#m_tabs_1_2" >
+								Truecaller
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link " data-toggle="tab" href="#m_tabs_1_3" >
+								Naukri
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" [ngClass]="{'isprocessed':details.is_probe_processed == 1,'isnotprocessed':details.is_probe_processed == 0}" data-toggle="tab" href="#m_tabs_1_4" >
+								Probe42
+							</a>
+                        </li>
+                        <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#m_tabs_1_5" >
+                                    Google Search
+                                </a>
+                            </li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
+							<div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Date Of Birth:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.dob}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Mother Name:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.mother_maiden_name}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Father Name:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.father_name}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Spouse Name:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.spouse_name}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Employer Name:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.employer_name}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>PAN Number:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.pan_nbr}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Email Id:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.email_id}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Aadhar Number:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.aadhar_nbr}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Driver License:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.drivers_license_no}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Passport:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.passport_no}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Voter Id:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.voter_id_no}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Food Card Or Ration Number</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.food_card_or_ration_no}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Customer Profile:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.customer_profile}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Additional Details:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.additional_details}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Email 1:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.email1}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Email 2:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.email2}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Email 3:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.email3}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Email 4:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.email4}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Mobile 1:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.mobile1}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Mobile 2:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.mobile2}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Mobile 3:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.mobile3}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Mobile 4:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.mobile4}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Mobile 5:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.mobile5}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Mobile 6:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.mobile6}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Mobile 7:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.mobile7}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Mobile 8:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.mobile8}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Mobile 9:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.mobile9}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Address 1:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.address1}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Address 2:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.address2}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Address 3:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.address3}}</label>
+                                </div>
+                            </div>
+                            <div class=" row">
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                    <label>Address 4:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <label >{{details.address4}}</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20 text-center">
+                                        <label>Probe Input:</label>
+                                    </div>
+                                    <div class="col-md-3 c-marginbtm20">
+                                        <label >{{details.probe_input}}</label>
+                                    </div>
+                            </div>
+                            <div class=" row">
+                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                        <label>Probe DIN:</label>
+                                    </div>
+                                    <div class="col-md-3 c-marginbtm20">
+                                        <label >{{details.probe_din}}</label>
+                                    </div>
+                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                            <label>Probe DOB:</label>
+                                        </div>
+                                        <div class="col-md-3 c-marginbtm20">
+                                            <label >{{details.probe_dob}}</label>
+                                        </div>
+                                </div>
+                                <div class=" row">
+                                        <div class="col-md-3 c-marginbtm20 text-center">
+                                            <label>Probe Address:</label>
+                                        </div>
+                                        <div class="col-md-3 c-marginbtm20">
+                                            <label >{{details.probe_address}}</label>
+                                        </div>
+                                    </div>
+                        </div>
+						<div class="tab-pane" id="m_tabs_1_2" role="tabpanel">
+                            <div class="row">
+                                    <table class="table table-striped m-table">
+                                        <thead>
+                                                <tr>
+                                                        <th>
+                                                            Input 
+                                                        </th>
+                                                        <th>
+                                                             Person Name
+                                                        </th>
+                                                        <th>
+                                                            Name Accuracy
+                                                        </th>
+                                                        <th>
+                                                            Tag
+                                                        </th>
+                                                        <th>
+                                                            Provider 
+                                                        </th>
+                                                        <th>
+                                                            Email
+                                                        </th>
+                                                        <th>
+                                                            Address
+                                                        </th>
+                                                        <th>
+                                                            Verified
+                                                        </th>
+                                                        <th>
+                                                            Email Google Search
+                                                        </th>
+                                                    </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngIf="details.tc_p1_input==null? false: true">
+                                                
+                                                <td>
+                                                    {{details.tc_p1_input}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p1_name}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p1_nameaccuracy}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p1_tag}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p1_provider}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p1_email}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p1_address}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p1_verified}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p1_email_google_search}}
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="details.tc_p2_input==null? false: true">
+                                                
+                                                <td>
+                                                    {{details.tc_p2_input}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p2_name}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p2_nameaccuracy}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p2_tag}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p2_provider}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p2_email}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p2_address}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p2_verified}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p2_email_google_search}}
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="details.tc_p3_input==null? false: true">
+                                                
+                                                <td>
+                                                    {{details.tc_p3_input}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p3_name}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p3_nameaccuracy}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p3_tag}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p3_provider}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p3_email}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p3_address}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p3_verified}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p3_email_google_search}}
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="details.tc_p4_input==null? false: true">
+                                                
+                                                <td>
+                                                    {{details.tc_p4_input}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p4_name}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p4_nameaccuracy}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p4_tag}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p4_provider}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p4_email}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p4_address}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p4_verified}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p4_email_google_search}}
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="details.tc_p5_input==null? false: true">
+                                                
+                                                <td>
+                                                    {{details.tc_p5_input}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p5_name}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p5_nameaccuracy}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p5_tag}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p5_provider}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p5_email}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p5_address}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p5_verified}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p5_email_google_search}}
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="details.tc_p6_input==null? false: true">
+                                                
+                                                <td>
+                                                    {{details.tc_p6_input}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p6_name}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p6_nameaccuracy}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p6_tag}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p6_provider}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p6_email}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p6_address}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p6_verified}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p6_email_google_search}}
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="details.tc_p7_input==null? false: true">
+                                                
+                                                <td>
+                                                    {{details.tc_p7_input}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p7_name}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p7_nameaccuracy}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p7_tag}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p7_provider}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p7_email}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p7_address}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p7_verified}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p7_email_google_search}}
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="details.tc_p8_input==null? false: true">
+                                                
+                                                <td>
+                                                    {{details.tc_p8_input}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p8_name}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p8_nameaccuracy}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p8_tag}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p8_provider}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p8_email}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p8_address}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p8_verified}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p8_email_google_search}}
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="details.tc_p9_input==null? false: true">
+                                                
+                                                <td>
+                                                    {{details.tc_p9_input}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p9_name}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p9_nameaccuracy}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p9_tag}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p9_provider}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p9_email}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p9_address}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p9_verified}}
+                                                </td>
+                                                <td>
+                                                    {{details.tc_p9_email_google_search}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                        </div>
+						<div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
+                               <h4>Naukri</h4>
+                        </div>
+						<div class="tab-pane" id="m_tabs_1_4" role="tabpanel">
+                           <h4>Probe42</h4> 
+                        
+                             <div *ngFor="let pInput of probe">
+                                <div class=" row">
+                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                        <label>ID:</label>
+                                    </div>
+                                    <div class="col-md-3 c-marginbtm20">
+                                        <label>{{pInput.id}}</label>
+                                    </div>
+                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                        <label>Input Id:</label>
+                                    </div>
+                                    <div class="col-md-3 c-marginbtm20">
+                                        <label >{{pInput.input_id}}</label>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                        <label>Company Name</label>
+                                    </div>
+                                    <div class="col-md-3 c-marginbtm20">
+                                        <label>{{pInput.company}}</label>
+                                    </div>
+                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                        <label>Address:</label>
+                                    </div>
+                                    <div class="col-md-3 c-marginbtm20">
+                                        <label >{{pInput.address}}</label>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                        <label>Email:</label>
+                                    </div>
+                                    <div class="col-md-3 c-marginbtm20">
+                                        <label>{{pInput.email}}</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <table class="table table-striped m-table">
+                                        <thead>
+                                                <tr>
+                                                        <th>
+                                                            ID 
+                                                        </th>
+                                                        <th>
+                                                             CGI ID
+                                                        </th>
+                                                        <th>
+                                                            Company ID
+                                                        </th>
+                                                        <th>
+                                                            Name
+                                                        </th>
+                                                        <th>
+                                                            Pan 
+                                                        </th>
+                                                        <th>
+                                                            Din
+                                                        </th>
+                                                        <th>
+                                                            DOB
+                                                        </th>
+                                                        <th>
+                                                            Address
+                                                        </th>
+                                                    </tr>
+                                        </thead>
+                                        <tbody *ngFor="let director of pInput.directors">
+                                            <tr>
+                                                <td>
+                                                    {{director.id}}
+                                                </td>
+                                                <td>
+                                                    {{director.cgid}}
+                                                </td>
+                                                <td>
+                                                    {{director.companyid}}
+                                                </td>
+                                                <td>
+                                                    {{director.name}}
+                                                </td>
+                                                <td>
+                                                    {{director.Pan}}
+                                                </td>
+                                                <td>
+                                                    {{director.din}}
+                                                </td>
+                                                <td>
+                                                    {{director.dob}}
+                                                </td>
+                                                <td>
+                                                    {{director.address}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="tab-pane" id="m_tabs_1_5" role="tabpanel">
+                                Google Search
+                            </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> -->
+
+<!-- Input Details END -->
+
+
+<ng-template #showfilterpopup let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">File Upload</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <form (ngSubmit)="SubmitForm(f)" #f="ngForm" myForm class="m-form m-form--fit m-form--label-align-right" novalidate>
+    <div class="modal-body">
+        <div class=row>
+                <div class="col-md-12">
+                        <div class=" row">
+                            <div class="col-md-6 c-marginbtm20">
+                                    <app-dropzone placeholder="Upload Driver Photo" identifier="filepath" [inline]="true" [(ngModel)]="person.filepath" name="filepath" 
+                                    [config]="config"></app-dropzone>
+                            </div>
+                            <!-- <div class="col-md-6 c-marginbtm20"> -->
+                                 <!-- <app-selectbox [options]="user_cgi" required [(ngModel)]="person.user_id" formGrupCssClass="c-form_group" identifier="tbprofis" name="profile_id"  class="m-select2 m-select2--air"  label="Profile:" optionsValueField="id" optionsTextField="name" ></app-selectbox> -->
+                                <!--  <app-textbox identifier="emp_code" [(ngModel)]="person.emp_code" formGroupCssClass="c-form_group" label="Eomployee Code:" placeholder="Enter Employee Code" name="emp_code" ></app-textbox> -->
+                                 
+                            <!-- </div> -->
+                        </div>
+                    </div>
+        </div>
+            
+            
+    </div>
+    <div class="modal-footer m-form__actions--solid">
+        <div class="col-lg-12 text-center">
+                <app-button buttonText="Save" buttonType="submit" cssClass="btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom btn-custom-style"
+                buttonIcon="la la-close" ></app-button>
+            <app-button buttonText="Close" cssClass="btn m-btn--pill btn-warning m-btn--air m-btn m-btn--custom btn-custom-style"
+                buttonIcon="la la-close" (onClick)="closepopups()"></app-button>
+        </div>
+    </div>
+</form>
+</ng-template>

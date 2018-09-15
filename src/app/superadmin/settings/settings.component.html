@@ -1,0 +1,82 @@
+<div *ngIf="showSettings">
+        <div class="m-subheader ">
+                <div class="d-flex align-items-center">
+                   <div class="mr-auto">
+                      <h3 class="m-subheader__title m-subheader__title--separator">
+                        {{globals.switchLanguageValue.common_settings}}
+                      </h3>
+                      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                         <li class="m-nav__item m-nav__item--home">
+                            <a href="" class="m-nav__link m-nav__link--icon">
+                            <i class="m-nav__link-icon la la-home"></i>
+                            </a>
+                         </li>
+                         <li class="m-nav__separator">
+                            -
+                         </li>
+                         <li class="m-nav__item">
+                            <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text">
+                                {{globals.switchLanguageValue.common_settings}}
+                            </span>
+                            </a>
+                         </li>
+                         
+                      </ul>
+                   </div>
+                   <div>
+                   </div>
+                </div>
+             </div>
+             <div class="m-content">
+                <div class="row">
+                   <div class="col-sm-6 col-md-3">
+                      <div class="tile-container">
+                         <a  class="tile-content" (click)="toggleSettings()" >
+                         <span class="tile-icon">
+                         <i class="la la-sitemap"></i>
+                         </span>
+                         <span class="m-nav-grid__text tile-heading">{{globals.switchLanguageValue.technical_settings}}</span>
+                         </a>
+                      </div>
+                   </div>
+                   <div class="col-sm-6 col-md-3">
+                      <div class="tile-container">
+                         <a class="tile-content" (click)="toggleLanguages()">
+                         <span class="tile-icon">
+                         <i class="la la-sitemap"></i>
+                         </span>
+                         <span class="m-nav-grid__text tile-heading">{{globals.switchLanguageValue.language_settings}}</span>
+                         </a>
+                      </div>
+                   </div>
+                   <div class="col-sm-6 col-md-3">
+                      <div class="tile-container">
+                         <a href="" class="tile-content">
+                         <span class="tile-icon">
+                         <i class="la la-sitemap"></i>
+                         </span>
+                         <span class="m-nav-grid__text tile-heading">{{globals.switchLanguageValue.common_settings}}</span>
+                         </a>
+                      </div>
+                   </div>
+                   <div class="col-sm-6 col-md-3">
+                      <div class="tile-container">
+                         <a href="" class="tile-content">
+                         <span class="tile-icon">
+                         <i class="la la-sitemap"></i>
+                         </span>
+                         <span class="m-nav-grid__text tile-heading">Organization</span>
+                         </a>
+                      </div>
+                   </div>
+                   <!-- <router-outlet></router-outlet> -->
+                </div>
+             </div>
+</div>
+<!-- <div class="m-grid__item m-grid__item--fluid m-wrapper" >
+    <router-outlet></router-outlet>
+</div> -->
+
+<app-technical-settings *ngIf="showtechnicalsettings"></app-technical-settings>
+<app-languages *ngIf="showlanguages"></app-languages>

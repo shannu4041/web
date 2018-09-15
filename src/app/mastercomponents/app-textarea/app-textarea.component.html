@@ -1,0 +1,20 @@
+<div class="form-group m-form__group {{ this.formGroupCssClass }} {{this.inline ? 'row inlineformrow' : '' }}">
+	<label *ngIf="label" for="{{identifier}}" class="{{labelCssClass}}" >
+		{{label}}
+	</label>
+	<div class="{{textBoxDivCssClass}}">
+		<textarea class="form-control m-input m-input--air {{cssClass}} {{ (invalid | async) ? 'invalid' : ''}}" [id]="identifier" 
+			placeholder="{{placeholder}}"
+			[(ngModel)]="value" #field="ngModel" name="{{name}}" rows="{{textAreaRows}}"
+			(click)="fireClick($event)" (change)="fireChange($event)" (blur)="fireBlur($event)" (focus)="fireFocus($event)">
+		</textarea>
+		<validation class="{{model.control.touched ? 'ng-touched' : 'ng-untouched'}} {{ (invalid | async) ? 'invalid' : ''}}"
+			[@flyInOut]="'in,out'"
+			*ngIf="(invalid | async)"
+			[messages]="failures | async">
+		</validation>
+		<div *ngIf="helpText" class="m-form__help">
+			{{helpText}}
+		</div>
+	</div>
+</div>

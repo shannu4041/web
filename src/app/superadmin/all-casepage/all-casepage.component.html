@@ -1,0 +1,95 @@
+<div class="m-subheader ">
+  <div class="d-flex align-items-center">
+      <div class="mr-auto">
+          <h3 class="m-subheader__title m-subheader__title--separator">
+                  All Cases
+          </h3>
+          <!-- <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+              <li class="m-nav__item m-nav__item--home">
+                  <a href="#" class="m-nav__link m-nav__link--icon">
+                      <i class="m-nav__link-icon la la-home"></i>
+                  </a>
+              </li>
+              <li class="m-nav__separator">
+                  -
+              </li>
+              <li class="m-nav__item">
+                  <a href="" class="m-nav__link">
+                      <span class="m-nav__link-text">
+                          {{globals.switchLanguageValue.account_pagetitle}}
+                      </span>
+                  </a>
+              </li>
+              <li class="m-nav__separator">
+                  -
+              </li>
+              <li class="m-nav__item">
+                  <a href="" class="m-nav__link">
+                      <span class="m-nav__link-text">
+                          {{globals.switchLanguageValue.account_pagesubtitle}}
+                      </span>
+                  </a>
+              </li>
+          </ul> -->
+      </div>
+      <div>
+
+      </div>
+  </div>
+</div>
+<!-- gird -->
+
+<div class="m-content c-page-min-height" >
+  <div class="m-portlet m-portlet--mobile">
+      <div class="m-portlet__head">
+          <div class="m-portlet__head-caption">
+              <div class="m-portlet__head-title">
+                  <h3 class="m-portlet__head-text">
+                      All Cases
+                  </h3>
+              </div>
+          </div>
+      </div>
+      
+      
+      <div class="m-portlet__body" >
+                  <div >
+          <app-datatable #cd  filterText="All Cases Filter" (onSearchClick)="getAllCases($event)" (onClearClick)="closepopup($event)"
+          filterWidth="700px" (onResetClick)="resetSearch($event)" (onRefreshClick)="getAllCases($event,false,true)" [showPrint]="false" [showDownload]="false">
+          <div table-filter-body>
+            <div class="row">
+                <div class="col-md-6 c-marginbtm20">
+                    <app-textbox identifier="Search" formGroupCssClass="c-form_group" placeholder="Enter Cgid" prependIcon="la la-search"
+                        name="Search" label="Cgid:" [(ngModel)]="paging.search.cgid"></app-textbox>
+                </div>
+                <div class="col-md-6 c-marginbtm20">
+                    <app-textbox identifier="Search" formGroupCssClass="c-form_group" placeholder="Enter User Name" prependIcon="la la-search"
+                        name="Search" label="User Name:" [(ngModel)]="paging.search.username"></app-textbox>
+                </div>
+              <div class="col-md-6 c-marginbtm20">
+                <app-datepicker name="dob" identifier="tbDOB"  formGroupCssClass="c-form_group"
+                    label="From Date" [inline]="false" [(ngModel)]="this.paging.search.fromdate" [showPickerOnTop]="false" ></app-datepicker>
+              </div>
+              <div class="col-md-6 c-marginbtm20">
+                <app-datepicker name="dob" identifier="tbDOB"  formGroupCssClass="c-form_group"
+                    label="To Date" [inline]="false" [(ngModel)]="this.paging.search.todate" [showPickerOnTop]="false" ></app-datepicker>
+                  </div>
+          </div>
+          </div>
+          <p-dataTable table-body [value]="allcases" [rows]="100" styleClass="tr-gridheight" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[100,150,200,250,300]" [totalRecords]="totalRecords"
+          [lazy]="true" (onLazyLoad)="getAllCases($event)" scrollable="true"  >
+          <p-column field="cgid" header="CGI" [style]="{'width':'150px'}"
+              styleClass="text-center paddingleft0 wordwrap " [sortable]="true"></p-column>
+         
+          <p-column field="customer_full_name" header="Customer Name" [sortable]="true" [style]="{'width':'150px'}" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+          </p-column>
+          <p-column field="username" header="User Name" [sortable]="true" [style]="{'width':'150px'}" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+            </p-column>
+      </p-dataTable>
+
+          </app-datatable></div>
+      </div>
+  </div>
+</div>
+
+<!-- gird end -->

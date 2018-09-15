@@ -1,0 +1,816 @@
+<!-- <div class="m-subheader ">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Queue
+            </h3>
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div> -->
+<div class="m-content c-page-min-height" *ngIf="!showCGIDetails">
+        <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="m-portlet__body" >
+                        <div >
+                            <div class="col-md-6">
+                                    <div class=" row">
+                                        <div class="col-md-3 c-marginbtm20">
+                                            <label class="m-radio m-radio--bold">
+                                                <input  type="radio" name="cases" [value]="false" [(ngModel)]="paging.search.searchoption" (change)="getAllQueue($event)">All Cases
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-3 c-marginbtm20">
+                                            <label class="m-radio m-radio--bold" >
+                                                <input  type="radio" name="cases" [value]="true" [(ngModel)]="paging.search.searchoption" (change)="getAllQueue($event)">My Cases
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                        <!-- download button end -->
+                <app-datatable #cd filterText="Queues Filter" [showPrint]="false" [showDownload]="false" [showRefresh]="false" filterWidth="700px" 
+                (onSearchClick)="getAllQueue($event)" (onClearClick)="closepopup($event)" (onResetClick)="resetSearch($event)">
+                    <div table-filter-body>
+                        <div class="row">
+                            <div class="col-md-6 c-marginbtm20">
+                                <app-textbox identifier="Search" formGroupCssClass="c-form_group" placeholder="Enter Cgid" prependIcon="la la-search"
+                                    name="Search" label="Cgid:" [(ngModel)]="paging.search.cgid"></app-textbox>
+                            </div>
+                        </div>
+                    </div>
+                <p-dataTable table-body [value]="queuegrid" [rows]="100" styleClass="tr-gridheight" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[100,150,200,250,300]" [totalRecords]="totalRecords"
+                [lazy]="true" (onLazyLoad)="getAllQueue($event)" scrollable="true" >
+                <p-column field="cgid" header="CGI" [style]="{'width':'150px'}"
+                    styleClass="text-center paddingleft0 wordwrap " [sortable]="true"></p-column>
+               
+                <p-column field="customer_full_name" header="Customer Name" [sortable]="true" [style]="{'width':'150px'}" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+                </p-column>
+                <p-column field="username" header="User Name" *ngIf="paging.search.searchoption == false , true" [sortable]="true" [style]="{'width':'150px'}" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+                </p-column>
+                <!-- <p-column field="status" header="Status" [sortable]="true" [style]="{'width':'150px'}" styleClass="text-center m-datatable__cell--center m-datatable__cell">
+                </p-column> -->
+                <p-column header="Input Details" styleClass="col-button text-center m-datatable__cell--center m-datatable__cell c-action-width120">
+                    <ng-template let-detail="rowData" pTemplate="body">
+                        <!-- <app-button buttonText="Details" (onClick)="getCGIDetailsId(details.id)" cssClass="btn btn-info btn-sm m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" buttonIcon="fa fa-arrow-right"></app-button> -->
+                   <!-- <a (click)="getCGIDetailsId(details.id)" class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design">Details</a> -->
+                   <a (click)="getCGIDetailsId(detail.id)"  class="m-nav__link btn m-btn m-btn--pill c-btn-hover-design">Details</a>
+                    </ng-template>
+                    
+                </p-column>
+            </p-dataTable>
+    
+                </app-datatable></div>
+            </div>
+        </div>
+    </div>
+<div *ngIf="showInputDetails">
+        <div class="m-portlet" style="position: fixed;z-index:1;width: 1034px;margin-left:30px;">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title head-title">
+                           <!--  <h3 class="m-portlet__head-text">
+                                Input Details
+                            </h3> -->
+                            
+                            <!-- <span class="back-button">  
+                                <app-button buttonText="Back"  cssClass="btn btn-sm m-btn--pill m-btn--air btn-info m-btn m-btn--custom m-pull-right vertical-middle" buttonIcon="la la-backward"
+                                (onClick)="showCGIGirdDetails($event,true)">   ></app-button>
+                            </span > -->
+                            <div class="row" style="margin-top:20px;">
+                                    <div class="col-md-1 c-marginbtm20 text-center">
+                                        <label>CGI Id:</label>
+                                    </div>
+                                    <div class="col-md-3 c-marginbtm20">
+                                        <h5 >{{details.cgid}}</h5>
+                                    </div>
+                                    <div class="col-md-2 c-marginbtm20 text-center">
+                                        <label >Customer Name:</label>
+                                    </div>
+                                    <div class="col-md-4 c-marginbtm20">
+                                        <h5 >{{details.customer_full_name}}</h5>
+                                    </div>
+                                    <div class="col-md-1 c-marginbtm20">
+                                        <app-button buttonText="Back"  cssClass="btn btn-sm m-btn--pill m-btn--air btn-info m-btn m-btn--custom m-pull-right vertical-middle" buttonIcon="la la-backward"
+                                        (onClick)="showCGIGirdDetails($event,true)">   ></app-button>
+                                    </div>
+                                </div>  
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="m-portlet__body">
+                        <div class=" row" >
+                                <div class="col-md-1 c-marginbtm20 text-center">
+                                    <label>CGI Id:</label>
+                                </div>
+                                <div class="col-md-3 c-marginbtm20">
+                                    <h5 >{{details.cgid}}</h5>
+                                </div>
+                                <div class="col-md-2 c-marginbtm20 text-center">
+                                    <label >Customer Name:</label>
+                                </div>
+                                <div class="col-md-4 c-marginbtm20">
+                                    <h5 >{{details.customer_full_name}}</h5>
+                                </div>
+                                <div class="col-md-1 c-marginbtm20">
+                                    <app-button buttonText="Back"  cssClass="btn btn-sm m-btn--pill m-btn--air btn-info m-btn m-btn--custom m-pull-right vertical-middle" buttonIcon="la la-backward"
+                                    (onClick)="showCGIGirdDetails($event,true)">   ></app-button>
+                                </div>
+                            </div>  
+                </div> -->
+            </div>
+<div class="m-content" >
+    <div class="row">
+        <div class="col-lg-12">                
+            <div class="row" style="margin-top:75px;">
+                <div class="col-lg-12">
+                     <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                            <i class="flaticon-statistics"></i>
+                                        </span>
+                                        <h2 class="m-portlet__head-label m-portlet__head-label--danger">
+                                            <span>
+                                                Input Details
+                                            </span>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                    <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Date Of Birth:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.dob}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Father Name:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.father_name}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Mother Name:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.mother_maiden_name}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Spouse Name:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.spouse_name}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Employer Name:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.employer_name}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>PAN Number:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.pan_nbr}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Email Id:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.email_id}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Aadhar Number:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.aadhar_nbr}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Driver License:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.drivers_license_no}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Passport:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.passport_no}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Voter Id:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.voter_id_no}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Food Card Or Ration Number</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.food_card_or_ration_no}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Customer Profile:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.customer_profile}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Additional Details:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.additional_details}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Email 1:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.email1}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Email 2:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.email2}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Email 3:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.email3}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Email 4:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.email4}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Mobile 1:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.mobile1}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Mobile 2:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.mobile2}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Mobile 3:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.mobile3}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Mobile 4:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.mobile4}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Mobile 5:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.mobile5}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Mobile 6:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.mobile6}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Mobile 7:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.mobile7}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Mobile 8:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.mobile8}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Mobile 9:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.mobile9}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Address 1:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.address1}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Address 2:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.address2}}</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Address 3:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.address3}}</label>
+                                            </div>
+                                        </div>
+                                        <div class=" row">
+                                            <div class="col-md-3 c-marginbtm20 text-center">
+                                                <label>Address 4:</label>
+                                            </div>
+                                            <div class="col-md-3 c-marginbtm20">
+                                                <label >{{details.address4}}</label>
+                                            </div>
+                                            <!-- <div class="col-md-3 c-marginbtm20 text-center">
+                                                    <label>Probe Input:</label>
+                                                </div>
+                                                <div class="col-md-3 c-marginbtm20">
+                                                    <label >{{details.probe_input}}</label>
+                                                </div> -->
+                                        </div>
+                                        <!-- <div class=" row">
+                                                <div class="col-md-3 c-marginbtm20 text-center">
+                                                    <label>Probe DIN:</label>
+                                                </div>
+                                                <div class="col-md-3 c-marginbtm20">
+                                                    <label >{{details.probe_din}}</label>
+                                                </div>
+                                                <div class="col-md-3 c-marginbtm20 text-center">
+                                                        <label>Probe DOB:</label>
+                                                    </div>
+                                                    <div class="col-md-3 c-marginbtm20">
+                                                        <label >{{details.probe_dob}}</label>
+                                                    </div>
+                                            </div> -->
+                                            <!-- <div class=" row">
+                                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                                        <label>Probe Address:</label>
+                                                    </div>
+                                                    <div class="col-md-3 c-marginbtm20">
+                                                        <label >{{details.probe_address}}</label>
+                                                    </div>
+                                                </div> -->
+                            </div>
+                        </div>
+                </div>
+                   
+            </div>
+            <div class="row">
+                    <div class="col-lg-12" >
+                         <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <span class="m-portlet__head-icon m--hide">
+                                                <i class="flaticon-statistics"></i>
+                                            </span>
+                                            <h2 class="m-portlet__head-label m-portlet__head-label--danger">
+                                                <span>
+                                                   Truecaller
+                                                </span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body">
+                                        <div class="row">
+                                                <table class="table table-striped m-table">
+                                                    <thead>
+                                                            <tr>
+                                                                    <th>
+                                                                        Source
+                                                                    </th>
+                                                                    <th>
+                                                                       Input
+                                                                    </th>
+                                                                    <th>
+                                                                       Source Input
+                                                                    </th>
+                                                                    <th>
+                                                                       Name
+                                                                    </th>
+                                                                    <th>
+                                                                       Accuracy
+                                                                    </th>
+                                                                    <th>
+                                                                       Tag
+                                                                    </th>
+                                                                    <th>
+                                                                       Email
+                                                                    </th>
+                                                                    <th>
+                                                                        Verified
+                                                                    </th>
+                                                                    <!-- <th>
+                                                                        View
+                                                                    </th> -->
+                                                                </tr>
+                                                    </thead>
+                                                    <tbody >
+                                                        <tr *ngFor="let trueCallerData of truecaller">
+                                                            <td>
+                                                                {{trueCallerData.source}} 
+                                                            </td>
+                                                            <td>
+                                                                {{trueCallerData.input}}
+                                                            </td>
+                                                            <td>
+                                                                {{trueCallerData.source_input}}
+                                                            </td>
+                                                            <td>
+                                                                {{trueCallerData.name}}
+                                                            </td>
+                                                            <td>
+                                                                {{trueCallerData.accuracy}}
+                                                            </td>
+                                                            <td>
+                                                                {{trueCallerData.tag}}
+                                                            </td>
+                                                            <td>
+                                                                {{trueCallerData.email}}
+                                                            </td>
+                                                            <td>
+                                                                {{trueCallerData.verified}}
+                                                            </td>
+                                                            <!-- <td>
+                                                                <a target="_blank" href={{trueCallerData.screenshot}}>View</a>
+
+                                                            </td> -->
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                </div>
+                            </div>
+                    </div>
+                       
+            </div>
+            <div class="row">
+                    <div class="col-lg-12">
+                            <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <span class="m-portlet__head-icon m--hide">
+                                                <i class="flaticon-statistics"></i>
+                                            </span>
+                                            <h2 class="m-portlet__head-label m-portlet__head-label--danger">
+                                                <span>
+                                                    Naukri
+                                                </span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body">
+                                        <div class="row">
+                                                <table class="table table-striped m-table">
+                                                    <thead>
+                                                            <tr>
+                                                                    <th>
+                                                                        Source 
+                                                                    </th>
+                                                                    <th>
+                                                                       Input
+                                                                    </th>
+                                                                    <th>
+                                                                        Source Input
+                                                                    </th>
+                                                                    <th>
+                                                                        Name
+                                                                    </th>
+                                                                    <th>
+                                                                        Mobile
+                                                                    </th>
+                                                                    <th>
+                                                                         Email
+                                                                    </th>
+                                                                    <th>
+                                                                        Last Acessed
+                                                                    </th>
+                                                                    <th>
+                                                                       Last Modified
+                                                                    </th>
+                                                                    <!-- <th>
+                                                                        Resume
+                                                                    </th>
+                                                                    <th>
+                                                                        View
+                                                                    </th> -->
+                                                                </tr>
+                                                    </thead>
+                                                    <tbody >
+                                                        <tr *ngFor="let NaukriData of naukri">
+                                                            <td>
+                                                                {{NaukriData.source}} 
+                                                            </td>
+                                                            <td>
+                                                                {{NaukriData.input}}
+                                                            </td>
+                                                            <td>
+                                                                {{NaukriData.source_input}}
+                                                            </td>
+                                                            <td>
+                                                                    {{NaukriData.name}}
+                                                            </td>
+                                                            <td>
+                                                                    {{NaukriData.phone_number}}
+                                                            </td>
+                                                            <td>
+                                                                    {{NaukriData.email}} 
+                                                                </td>
+                                                                <td>
+                                                                        {{NaukriData.last_accessed}}
+                                                                </td>
+                                                                <td>
+                                                                        {{NaukriData.last_modified}}
+                                                                </td>
+                                                                <!-- <td>
+                                                                    Resume
+                                                                </td>
+                                                                <td>
+                                                                    <a target="_blank" href={{NaukriData.screenshot}}>View</a>
+                                                                </td> -->
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                </div>
+                            </div>
+                    </div>
+                        
+            </div>
+            <div class="row">
+                    <div class="col-lg-12">
+                         <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <span class="m-portlet__head-icon m--hide">
+                                                <i class="flaticon-statistics"></i>
+                                            </span>
+                                            <h2 class="m-portlet__head-label m-portlet__head-label--danger">
+                                                <span>
+                                                   Probe42
+                                                </span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body">
+                                        <div *ngFor="let pInput of probe">
+                                                <div class=" row">
+                                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                                        <label>Source:</label>
+                                                    </div>
+                                                    <div class="col-md-3 c-marginbtm20">
+                                                        <label>{{pInput.source}}</label>
+                                                    </div>
+                                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                                        <label>Input:</label>
+                                                    </div>
+                                                    <div class="col-md-3 c-marginbtm20">
+                                                        <label >{{pInput.input}}</label>
+                                                    </div>
+                                                </div>
+                                                <div class=" row">
+                                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                                        <label>Source Input</label>
+                                                    </div>
+                                                    <div class="col-md-3 c-marginbtm20">
+                                                        <label>{{pInput.source_input}}</label>
+                                                    </div>
+                                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                                        <label>Din:</label>
+                                                    </div>
+                                                    <div class="col-md-3 c-marginbtm20">
+                                                        <label >{{pInput.din}}</label>
+                                                    </div>
+                                                </div>
+                                                <div class=" row">
+                                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                                        <label>Date Of Birth:</label>
+                                                    </div>
+                                                    <div class="col-md-3 c-marginbtm20">
+                                                        <label >{{pInput.dob}}</label>
+                                                    </div>
+                                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                                        <label>Address:</label>
+                                                    </div>
+                                                    <div class="col-md-3 c-marginbtm20">
+                                                        <label>{{pInput.address}}</label>
+                                                    </div>
+                                                    
+                                                </div>
+                                                
+                                                    <div *ngIf="this.pInput.companies != null">
+                                                            <div class=" row">
+                                                                    <div class="col-md-12 c-marginbtm20 text-center">
+                                                                        <h3>Company Details</h3>
+                                                                    </div>
+                                                                </div>
+                                                            <div class=" row">
+                                                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                                                            <label>Company:</label>
+                                                                        </div>
+                                                                        <div class="col-md-3 c-marginbtm20">
+                                                                            <label>{{pInput.companies.company}}</label>
+                                                                        </div>
+                                                                    <div class="col-md-3 c-marginbtm20 text-center">
+                                                                            <label>Address:</label>
+                                                                        </div>
+                                                                        <div class="col-md-3 c-marginbtm20">
+                                                                            <label>{{pInput.companies.address}}</label>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                        <table class="table table-striped m-table">
+                                                                            <thead>
+                                                                                    <tr>
+                                                                                            <th>
+                                                                                               Name
+                                                                                            </th>
+                                                                                            <th>
+                                                                                               Date Of Birth
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                DIN
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Pan
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                Address
+                                                                                            </th>
+                                                                                            <!-- <th>
+                                                                                                View
+                                                                                            </th> -->
+                                                                                        </tr>
+                                                                            </thead>
+                                                                            <tbody >
+                                                                                <tr *ngFor="let director of pInput.companies.directors">
+                                                                                    <td>
+                                                                                        {{director.name}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{director.dob}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{director.din}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{director.Pan}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{director.address}}
+                                                                                    </td>
+                                                                                    <!-- <td>
+                                                                                        <a href={{director.screenshot}} target="_blank">View</a>
+                                                                                    </td> -->
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>  
+                                                    </div>
+                                                    
+                                                </div> 
+                                </div>
+                            </div>
+                    </div>
+                       
+                </div>
+                <div class="row">
+                        <div class="col-lg-12">
+                             <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi">
+                                    <div class="m-portlet__head">
+                                        <div class="m-portlet__head-caption">
+                                            <div class="m-portlet__head-title">
+                                                <span class="m-portlet__head-icon m--hide">
+                                                    <i class="flaticon-statistics"></i>
+                                                </span>
+                                                <h2 class="m-portlet__head-label m-portlet__head-label--danger">
+                                                    <span>
+                                                      Google
+                                                    </span>
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m-portlet__body">
+                                            <div class="row">
+                                                <dir class="col-lg-12">
+                                                    <div class="table-responsive">
+                                                     <table class="table table-striped m-table">
+                                                        <thead>
+                                                                <tr>
+                                                                        <th>
+                                                                            Source 
+                                                                        </th>
+                                                                        <th>
+                                                                            Input 
+                                                                        </th>
+                                                                        <th>
+                                                                            Source Input
+                                                                        </th>
+                                                                        <th>
+                                                                            URL
+                                                                        </th>
+                                                                        <!-- <th>
+                                                                            View 
+                                                                        </th> -->
+                                                                    </tr>
+                                                        </thead>
+                                                        <tbody >
+                                                            <tr *ngFor="let GoogleData of google">
+                                                                <td>
+                                                                    {{GoogleData.source}} 
+                                                                </td>
+                                                                <td>
+                                                                    {{GoogleData.input}}
+                                                                </td>
+                                                                <td>
+                                                                    {{GoogleData.source_input}}
+                                                                </td>
+                                                                <td *ngIf="GoogleData.google_search_output != null ">
+                                                                    <ng-container  *ngFor="let googleurls of GoogleData.google_search_output.split(',')">
+                                                                        
+                                                                        <a target="_blank" href={{googleurls}}>{{googleurls}}</a><br>
+                                                                    </ng-container >
+                                                                    
+                                                                </td>
+                                                              <!--   <td>
+                                                                    <a target="_blank" href={{GoogleData.screenshot}}>View</a>
+                                                                </td> -->
+                                                                
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                </dir>
+                                                
+                                                   
+                                            </div>
+                                    </div>
+                                </div>
+                        </div>
+                           
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 c-marginbtm20 text-right">
+                            <app-button buttonText="Remove From Queue" (click)="updateCGIStatus(details.ID)" cssClass="pull-right btn m-btn--pill btn-success m-btn--air m-btn m-btn--custom  c-button2"
+                            ></app-button>
+                        </div>
+                    </div>
+        </div>
+    </div>
+</div>
+</div>
