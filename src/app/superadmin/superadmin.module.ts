@@ -22,7 +22,6 @@ import { NguiMapModule} from '@ngui/map';
 /* import { LanguagesComponent } from './languages/languages.component';
 import { MasterusersComponent } from './users/masterusers.component';
 import { TrackersComponent } from "./trackers/trackers.component";
-import { SettingsComponent } from "./settings/settings.component";
 import { TechnicalSettingsComponent } from "./technical-settings/technical-settings.component";
 import { ManagemenusComponent } from "./managemenus/managemenus.component"; */
 import { AddQueueComponent } from '../superadmin/add-queue/add-queue.component';
@@ -30,6 +29,7 @@ import { AllCasepageComponent } from "../superadmin/all-casepage/all-casepage.co
 import { ManageUsersComponent } from "../superadmin/manage-users/manage-users.component";
 import { PermissionsComponent } from "../superadmin/permissions/permissions.component";
 import { Helper } from "./helper";
+import { SettingsNewComponent } from './settings-new/settings-new.component';
 
 
 @NgModule({
@@ -52,6 +52,7 @@ import { Helper } from "./helper";
         AllCasepageComponent,
         ManageUsersComponent,
         PermissionsComponent,
+        SettingsNewComponent,
         
     ],
     imports: [

@@ -8,13 +8,16 @@ import { Globals } from '../../globals/global';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  styleUrls: ['./settings.component.css'],
+  
+
 })
 export class SettingsComponent implements OnInit {
   
   showSettings:boolean = true;
   showtechnicalsettings: boolean = false;
   showlanguages: boolean = false;
+
   @ViewChild(TechnicalSettingsComponent)
   private technicalSettingsComponent: TechnicalSettingsComponent;
   constructor(private globals: Globals) { }

@@ -37,12 +37,12 @@ import { DashboardService } from './services/dashboard_service'; */
 import { AppHelper } from "./apphelper";
 import { AddqueueService } from "./services/addqueue.service";
 import { AllCasesService } from "./services/allcases.services";
-import { SettingsComponent } from './admin/settings/settings.component';
+
+
 
 @NgModule({
     declarations: [
         AppComponent,
-        SettingsComponent
     ],
     imports: [
 		FormsModule,
